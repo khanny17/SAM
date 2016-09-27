@@ -10,4 +10,5 @@ To get code running:
 - Run the installer
 - Clone the source code (git clone https://github.com/khanny17/SAM)
 - Enter source directory
-- run npm install
+- run ```npm install```
+- run ```node dist/server.js```
