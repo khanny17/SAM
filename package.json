@@ -19,6 +19,8 @@
     "jshint": "^2.8.0",
     "method-override": "~2.0.2",
     "mongoose": "~3.8.0",
+    "mysql": "^2.11.1",
+    "sequelize": "^3.24.3",
     "stream-series": "^0.1.1"
   }
 }

@@ -5,7 +5,7 @@ var express        = require('express');
 var app            = express();
 var bodyParser     = require('body-parser');
 var methodOverride = require('method-override');
-
+var Sequelize      = require('sequelize');
 
 // Configuration
     
@@ -45,6 +45,33 @@ api.forEach(function(service){
 
 // ------------------
 
+// Sequelize
+var sequelize = new Sequelize('swen_745', 'b70785980f9954', '608a8b63', {
+    host: 'us-cdbr-azure-east-c.cloudapp.net',
+    dialect: 'mysql',
+
+    pool: {
+        max: 5,
+        min: 0,
+        idle: 10000
+    }
+});
+sequelize
+    .authenticate()
+    .then(function(err) {
+        console.log('Connection has been established successfully.');
+    })
+    .catch(function (err) {
+        console.log('Unable to connect to the database:', err);
+    });
+
+var User   = sequelize.import(__dirname + "/app/models/user");
+User.findAll().then(function (user) {
+    console.log((user));
+
+});
+
+//--------------------
 
 // Start App 
 app.listen(port);               
