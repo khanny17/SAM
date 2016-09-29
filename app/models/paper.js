@@ -1,5 +1,5 @@
-var User = require('user');
-var Submission = require('submission');
+var User = require(__dirname + '/user');
+//var Submission = require('submission');
 
 module.exports = function(sequelize, DataTypes) {
     var Paper = sequelize.define("paper", {
@@ -9,9 +9,9 @@ module.exports = function(sequelize, DataTypes) {
         Document: DataTypes.BLOB,
         Version: DataTypes.INTEGER
     });
-    
-    Paper.belongsTo(User, { as: 'ContactAuthor' });
-    Paper.belongsTo(Submission);
-    
-    return PaperModel;
+
+  //  Paper.belongsTo(User, { as: 'ContactAuthor' });
+ //   Paper.belongsTo(Submission);
+    console.log("@@@@@@@@")
+    return Paper;
 };

@@ -23,6 +23,7 @@ var sources = {
 
     appjs: 'public/js/app.js',
     angularFiles:  ['public/js/**/*'],
+    nodeFiles:  ['app/**/*'],
     index: 'public/index.html',
     injectedJs:  ['public/js/**/*.js', '!public/js/app.js'],
     libs: 'public/libs/**/*',
@@ -37,6 +38,7 @@ var dest = {
     css: 'dist/public/css',
     dist: 'dist/',
     angularFiles: 'dist/public/js',
+    nodeFiles: 'dist/app',
     libs: 'dist/public/libs',
     public: 'dist/public',
     views: 'dist/public/views'
@@ -82,7 +84,12 @@ gulp.task('angularFiles', function(){
     .pipe(gulp.dest(dest.angularFiles));
 });
 
-gulp.task('move', ['libs', 'views', 'server', 'angularFiles']);
+gulp.task('nodeFiles', function(){
+    return gulp.src(sources.nodeFiles)
+        .pipe(gulp.dest(dest.nodeFiles));
+});
+
+gulp.task('move', ['libs', 'views', 'server', 'angularFiles', 'nodeFiles']);
 
 // ------------------
 

@@ -66,6 +66,16 @@ sequelize
     });
 
 var User   = sequelize.import(__dirname + "/app/models/user");
+var Paper   = sequelize.import(__dirname + "/app/models/paper");
+
+Paper.sync().then(function(){
+    return Paper.create({
+        Title: '123455'
+});
+
+
+});
+
 User.findAll().then(function (user) {
     console.log((user));
 
