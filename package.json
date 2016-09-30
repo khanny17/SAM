@@ -2,6 +2,7 @@
   "name": "SAM2017",
   "main": "server.js",
   "license": "MIT",
+  "repository": "https://github.com/khanny17/SAM",
   "scripts": {
     "start": "node dist/server.js",
     "postinstall": "bower install && gulp"

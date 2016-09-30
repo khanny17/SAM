@@ -1,17 +1,30 @@
-var User = require(__dirname + '/user');
-//var Submission = require('submission');
+(function () {
+    'use strict';
 
-module.exports = function(sequelize, DataTypes) {
-    var Paper = sequelize.define("paper", {
-        ID: DataTypes.INTEGER,
-        Title: DataTypes.STRING,
-        Description: DataTypes.STRING,
-        Document: DataTypes.BLOB,
-        Version: DataTypes.INTEGER
-    });
+    module.exports = function(sequelize, DataTypes) {
+        var Paper = sequelize.define("paper", {
+            Title: {
+                type: DataTypes.STRING,
+                required: true
+            },
+            Description: DataTypes.STRING,
+            Document: DataTypes.BLOB,
+            Version: DataTypes.INTEGER
+        }, 
+        
+        {
+        
+            classMethods: 
+            {
+                associate: function(models){
+                    Paper.belongsTo(models.User, { as: 'ContactAuthor' });
+                }
+            }
+        
+        });
 
-  //  Paper.belongsTo(User, { as: 'ContactAuthor' });
- //   Paper.belongsTo(Submission);
-    console.log("@@@@@@@@")
-    return Paper;
-};
+        return Paper;
+
+    };
+
+}());
