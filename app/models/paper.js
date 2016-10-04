@@ -17,7 +17,7 @@
             classMethods: 
             {
                 associate: function(models){
-                    Paper.belongsTo(models.User, { as: 'ContactAuthor' });
+                    Paper.belongsTo(models.user, { as: 'ContactAuthor' });
                 }
             }
         });

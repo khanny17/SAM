@@ -2,6 +2,8 @@
 (function () {
     'use strict';
 
+    var fs        = require("fs");
+    var path      = require("path");
     var Sequelize = require('sequelize');
 
     var sequelize = new Sequelize('swen_745', 'b70785980f9954', '608a8b63', {
@@ -28,28 +30,26 @@
 
     // --- Models ---
 
-    //Add the name of your model to this array and it will be included by sequelize
-    var models = {};
-    var modelNames = [
-        'user',
-        'paper'
-    ];
+    var db = {};
 
-    //Go through each name and import the required models
-    modelNames.forEach(function(name){
-        models[name] = sequelize.import(name);
+    //Go through every file in this directory except this one
+    fs
+        .readdirSync(__dirname)
+        .filter(function(file) {
+            return (file.indexOf(".") !== 0) && (file !== "db.js");
+        })
+        .forEach(function(file) {
+            var model = sequelize.import(path.join(__dirname, file));
+            db[model.name] = model;
+        });
+
+    Object.keys(db).forEach(function(modelName) {
+        if ("associate" in db[modelName]) {
+            db[modelName].associate(db);
+        }
     });
 
-    //Call associate on each model so they can set up foreign key relations
-    for (var model in models) {
-        if(models.hasOwnProperty(model)) {
-            if(model.classMethods && model.classMethods.hasOwnProperty('associate')) {
-                model.classMethods.associate(models);
-            }
-        }
-    }
-
-    //Create Tables
+    //Now lets actually create the tables on the db
     sequelize
         .sync({ force: true })
         .then(function() {
@@ -58,6 +58,6 @@
             console.log('An error occurred while creating the table:', err);
         });
 
-    module.exports = models;
+    module.exports = db;
 
 }());
