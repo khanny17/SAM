@@ -1,7 +1,11 @@
 (function () {
     'use strict';
 
-    angular.module('CaribbeanFantasyToursApp', [
+    angular.module('SAMApp', [
         'ui.router',
+
+        'SAMRoutes',
+
+        'HomeControllerModule'
     ]);
 }());

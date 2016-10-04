@@ -15,7 +15,7 @@ var nodemon = require('gulp-nodemon');
 var paths = {
     
 
-    jshintPaths: ['public/js/**/*.js'],
+    jshintPaths: ['public/js/**/*.js', 'app/**/*.js'],
 
 };
 
@@ -29,7 +29,7 @@ var sources = {
     libs: 'public/libs/**/*',
     sass: 'public/sass/**/*.scss',
     server: 'server.js',
-    views: 'public/views/**/*'
+    templates: 'public/templates/**/*'
 
 };
 
@@ -41,7 +41,7 @@ var dest = {
     nodeFiles: 'dist/app',
     libs: 'dist/public/libs',
     public: 'dist/public',
-    views: 'dist/public/views'
+    templates: 'dist/public/templates'
 
 };
 
@@ -69,9 +69,9 @@ gulp.task('libs', function(){
     .pipe(gulp.dest(dest.libs));
 });
 
-gulp.task('views', function(){
-    return gulp.src(sources.views)
-    .pipe(gulp.dest(dest.views));
+gulp.task('templates', function(){
+    return gulp.src(sources.templates)
+    .pipe(gulp.dest(dest.templates));
 });
 
 gulp.task('server', function(){
@@ -89,7 +89,7 @@ gulp.task('nodeFiles', function(){
         .pipe(gulp.dest(dest.nodeFiles));
 });
 
-gulp.task('move', ['libs', 'views', 'server', 'angularFiles', 'nodeFiles']);
+gulp.task('move', ['libs', 'templates', 'server', 'angularFiles', 'nodeFiles']);
 
 // ------------------
 
@@ -101,7 +101,7 @@ gulp.task('move', ['libs', 'views', 'server', 'angularFiles', 'nodeFiles']);
 gulp.task('index', function(){
     return gulp.src(sources.index)
     .pipe(inject(series(gulp.src(sources.injectedJs, {read:false}), gulp.src(sources.appjs, {read:false}) ), {relative:true}))
-    .pipe(gulp.dest(dest.public))
+    .pipe(gulp.dest(dest.public));
 });
 
 gulp.task('sass', function(){
