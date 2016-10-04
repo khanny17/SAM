@@ -7,7 +7,8 @@
             LastName: DataTypes.STRING,
             ID: {
                 type: DataTypes.INTEGER,
-                primaryKey: true
+                primaryKey: true,
+                autoIncrement: true
             }
         });
     };
