@@ -32,7 +32,9 @@
     var models = {};
     var modelNames = [
         'user',
-        'paper'
+        'paper',
+        'submission',
+        'review'
     ];
 
     //Go through each name and import the required models
@@ -54,7 +56,7 @@
         .sync({ force: true })
         .then(function() {
             console.log('Tables Created');
-        }, function (err) { 
+        }, function (err) {
             console.log('An error occurred while creating the table:', err);
         });
 
