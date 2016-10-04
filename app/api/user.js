@@ -8,9 +8,7 @@
 
 
     var init = function(router) {
-        
         router.get('/get-users', endpoints.getUsers);
-
     };
 
     var endpoints = {

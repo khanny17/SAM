@@ -5,7 +5,10 @@
         return sequelize.define("user", {
             FirstName: DataTypes.STRING,
             LastName: DataTypes.STRING,
-            ID: DataTypes.INTEGER
+            ID: {
+                type: DataTypes.INTEGER,
+                primaryKey: true
+            }
         });
     };
 }());

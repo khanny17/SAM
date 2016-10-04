@@ -49,6 +49,14 @@
         }
     }
 
+    //Create Tables
+    sequelize
+        .sync({ force: true })
+        .then(function() {
+            console.log('Tables Created');
+        }, function (err) { 
+            console.log('An error occurred while creating the table:', err);
+        });
 
     module.exports = models;
 
