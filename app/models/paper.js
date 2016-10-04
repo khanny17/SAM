@@ -7,20 +7,19 @@
                 type: DataTypes.STRING,
                 required: true
             },
+            ContributingAuthors: DataTypes.STRING,
             Description: DataTypes.STRING,
             Document: DataTypes.BLOB,
             Version: DataTypes.INTEGER
         }, 
         
         {
-        
             classMethods: 
             {
                 associate: function(models){
                     Paper.belongsTo(models.User, { as: 'ContactAuthor' });
                 }
             }
-        
         });
 
         return Paper;
