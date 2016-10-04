@@ -12,8 +12,8 @@
             classMethods:
             {
                 associate: function(models){
-                    PaperPreference.belongsTo(models.User, { as: 'PCM' });
-                    PaperPreference.belongsTo(models.Submission, { as: 'SubmissionID' });
+                    PaperPreference.belongsTo(models.user, { as: 'PCM' });
+                    PaperPreference.belongsTo(models.submission, { as: 'SubmissionID' });
                 }
             }
         });
