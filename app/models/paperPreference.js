@@ -13,7 +13,7 @@
             {
                 associate: function(models){
                     PaperPreference.belongsTo(models.user, { as: 'PCM' });
-                    PaperPreference.belongsTo(models.submission, { as: 'SubmissionID' });
+                    PaperPreference.belongsTo(models.submission, { as: 'Submission' });
                 }
             }
         });

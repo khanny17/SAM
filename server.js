@@ -34,6 +34,7 @@ app.use(express.static(__dirname + '/public'));
 var api = [
     { route: 'user', file: require(__dirname + '/app/api/user') },
     { route: 'paper', file: require(__dirname + '/app/api/paper') },
+    { route: 'paperPreference', file: require(__dirname + '/app/api/paperPreference') }
 ];
 
 //Mounts routes for each api service in the above list
