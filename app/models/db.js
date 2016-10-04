@@ -32,7 +32,8 @@
     var models = {};
     var modelNames = [
         'user',
-        'paper'
+        'paper',
+        'paperPreference'
     ];
 
     //Go through each name and import the required models
