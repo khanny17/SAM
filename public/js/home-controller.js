@@ -17,6 +17,9 @@
             $http.post('api/user/create', { 
                 firstName: $scope.firstName, 
                 lastName: $scope.lastName
+            })
+            .then(function(response){
+                $scope.users.push(response.data);  
             });
         };
 
