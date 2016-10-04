@@ -34,7 +34,8 @@
         'user',
         'paper',
         'submission',
-        'review'
+        'review',
+        'paperPreference'
     ];
 
     //Go through each name and import the required models
