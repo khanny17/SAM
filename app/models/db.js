@@ -54,7 +54,7 @@
         .sync({ force: true })
         .then(function() {
             console.log('Tables Created');
-        }, function (err) { 
+        }, function (err) {
             console.log('An error occurred while creating the table:', err);
         });
 
