@@ -19,7 +19,11 @@
                 url: '/submit-paper',
                 templateUrl: 'templates/submit-paper.html',
                 controller: 'submitPaperController'
+            })
+            .state('create-user', {
+                url: '/', //The url for the state
+                templateUrl: 'templates/create-user.html', //The path to the html template
+                controller: 'createUserController' //The path to the angular controller
             });
-
     }]);
 }());

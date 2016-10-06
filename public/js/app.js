@@ -8,5 +8,6 @@
 
         'HomeControllerModule',
         'SubmitPaperControllerModule',
+        'CreateUserControllerModule'
     ]);
 }());

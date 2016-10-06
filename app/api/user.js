@@ -24,7 +24,9 @@
         createUser: function(req, res) {
             UserModel.create({
                 FirstName: req.body.firstName,
-                LastName: req.body.lastName
+                LastName: req.body.lastName,
+                Email:req.body.email,
+                Password:req.body.password
             })
             .then(function(user){
                 res.send(user);
