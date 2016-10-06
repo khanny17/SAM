@@ -23,6 +23,8 @@
                     })
                         .then(function (response) {
                             $scope.users.push(response.data);
+                            var user = response.data;
+                            console.log(user.ID);
                         });
                 }
             };
