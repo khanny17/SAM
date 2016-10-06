@@ -21,9 +21,7 @@
 
         createPaper: function(req, res) {
 
-            PaperModel.create({
-                Title: req.body.title
-            })
+            PaperModel.create(req.body)
             .then(function(paper) {
                 console.log('Paper ID: ' + paper.id + ' created');
                 res.send(paper);
