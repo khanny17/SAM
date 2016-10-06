@@ -51,8 +51,15 @@ require(__dirname + '/app/models/db');
 //--------------------
 
 
+// --- Send Single Page Application for all other routes ---
+// Since we route on the frontend, every route except for our api routes should just send
+// index.html. Our frontend JS will handle the routing from there
+app.get('*', function(req, res) {
+    res.sendfile(__dirname + '/public/index.html'); 
+});
 
-// Start App 
+
+// Start App on the port 
 app.listen(port);               
 
 console.log('Server running on ' + port);

@@ -6,6 +6,7 @@
 
         'SAMRoutes',
 
-        'HomeControllerModule'
+        'HomeControllerModule',
+        'SubmitPaperControllerModule',
     ]);
 }());

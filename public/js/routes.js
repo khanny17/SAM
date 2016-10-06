@@ -14,6 +14,11 @@
                 url: '/', //The url for the state
                 templateUrl: 'templates/home.html', //The path to the html template
                 controller: 'homeController' //The path to the angular controller
+            })
+            .state('submitPaper', {
+                url: '/submit-paper',
+                templateUrl: 'templates/submit-paper.html',
+                controller: 'submitPaperController'
             });
 
     }]);

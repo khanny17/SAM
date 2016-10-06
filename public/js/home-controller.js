@@ -12,7 +12,6 @@
             $scope.users = response.data; //data is whatever we sent from the node api
         });
 
-
         $scope.createUser = function() {
             $http.post('api/user/create', { 
                 firstName: $scope.firstName, 

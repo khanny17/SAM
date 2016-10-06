@@ -1,14 +1,6 @@
 <div>
     <h1>{{title}}</h1>
 
-    <div ng-repeat="user in users">
-        <p>ID: {{user.ID}}</p>
-        <p>First Name: {{user.FirstName}}</p>
-        <p>Last Name: {{user.LastName}}</p>
-        <p>-----------</p>
-    </div>
+    <a ui-sref="submitPaper">Submit a Paper</a>
 
-    <input class="form-control" ng-model="firstName" placeholder="First Name" />
-    <input class="form-control" ng-model="lastName" placeholder="Last Name" />
-    <button class="btn btn-default" ng-click="createUser()">Create User</button>
 </div>
