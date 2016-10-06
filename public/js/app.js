@@ -6,6 +6,8 @@
 
         'SAMRoutes',
 
-        'HomeControllerModule'
+        'HomeControllerModule',
+
+        'CreateUserControllerModule'
     ]);
 }());
