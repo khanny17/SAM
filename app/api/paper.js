@@ -22,7 +22,7 @@
         createPaper: function(req, res) {
 
             PaperModel.create({
-                Title: res.body.title
+                Title: req.body.title
             })
             .then(function(paper) {
                 console.log('Paper ID: ' + paper.id + ' created');
