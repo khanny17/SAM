@@ -1,0 +1,12 @@
+<div>
+
+    <p ng-if="loadingPapers">Loading Papers...</p>
+
+    <div ng-repeat="paper in papers">
+        <p>Title: {{paper.Title}}</p>
+        <p>Contributing Authors: {{paper.ContributingAuthors}}</p>
+        <p>Description: {{paper.Description}}</p>
+        <br/>
+    </div>
+
+</div>
