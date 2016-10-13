@@ -5,11 +5,13 @@
         'ui.router',
 
         'SAMRoutes',
+        'AuthModule',
 
         'HomeControllerModule',
         'SubmitPaperControllerModule',
         'ViewPapersControllerModule',
         'CreateUserControllerModule',
         'ViewUserControllerModule',
+        'LoginControllerModule'
     ]);
 }());
