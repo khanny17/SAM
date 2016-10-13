@@ -1,11 +1,13 @@
 <div>
 
     <p ng-if="loadingPapers">Loading Papers...</p>
+    <p ng-if="!loadingPapers"><h2>Submitted Papers</h2></p>
 
     <div ng-repeat="paper in papers">
         <p>Title: {{paper.Title}}</p>
         <p>Contributing Authors: {{paper.ContributingAuthors}}</p>
         <p>Description: {{paper.Description}}</p>
+        <p>Contact Author: {{paper.ContactAuthorID}}</p>
         <br/>
     </div>
 

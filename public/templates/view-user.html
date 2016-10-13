@@ -1,0 +1,19 @@
+<div>
+
+    <p ng-if="loadingUsers">Loading Users...</p>
+    <p ng-if="!loadingUsers"><h2>Registered Users</h2></p>
+
+    <!--
+    <select id="user">
+        <option ng-repeat="user in users" value="{{user.ID}}">{{user.FirstName}}&nbsp;{{user.LastName}}</option>
+    </select>
+    -->
+
+    <div ng-repeat="user in users">
+        <p>First Name {{user.FirstName}}</p>
+        <p>Last Name: {{user.LastName}}</p>
+        <p>ID: {{user.ID}}</p>
+        <br/>
+    </div>
+
+</div>

@@ -15,6 +15,7 @@
 
             $scope.createUser = function() {
                 if (isFormValid()) {
+                    $scope.status = "Creating User...."
                     $http.post('api/user/create', {
                         email: $scope.email,
                         password: $scope.password,
@@ -25,6 +26,7 @@
                             $scope.users.push(response.data);
                             var user = response.data;
                             console.log(user.ID);
+                            $scope.status = "User Created! User Id:"+user.ID;
                         });
                 }
             };

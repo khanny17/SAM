@@ -9,6 +9,7 @@
         'HomeControllerModule',
         'SubmitPaperControllerModule',
         'ViewPapersControllerModule',
-        'CreateUserControllerModule'
+        'CreateUserControllerModule',
+        'ViewUserControllerModule',
     ]);
 }());

@@ -29,6 +29,11 @@
                 url: '/create-user', //The url for the state
                 templateUrl: 'templates/create-user.html', //The path to the html template
                 controller: 'createUserController' //The path to the angular controller
-            });
+            })
+            .state('view-user', {
+            url: '/view-user', //The url for the state
+            templateUrl: 'templates/view-user.html', //The path to the html template
+            controller: 'viewUserController' //The path to the angular controller
+        });
     }]);
 }());
