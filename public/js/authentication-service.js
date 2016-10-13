@@ -37,7 +37,7 @@
 
         var register = function(user) {
             return $q(function(resolve, reject) {
-                $http.post('api/user/signup', user).then(function(result) {
+                $http.post('services/user/signup', user).then(function(result) {
                     if (result.data.success) {
                         resolve(result.data.msg);
                     } else {
@@ -49,7 +49,7 @@
 
         var login = function(user) {
             return $q(function(resolve, reject) {
-                $http.post('api/user/authenticate', user).then(function(result) {
+                $http.post('services/user/authenticate', user).then(function(result) {
                     if (result.data.success) {
                         storeUserCredentials(result.data.token);
                         resolve(result.data.msg);
