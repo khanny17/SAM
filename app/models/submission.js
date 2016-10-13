@@ -1,7 +1,7 @@
 (function () {
     'use strict';
 
-    module.exports = function(sequelize, DataTypes) {
+    module.exports = function(sequelize/*, DataTypes*/) {
         var submission = sequelize.define("submission", {
             // PCC : DataTypes.INTEGER,
             // Reviewer1 : DataTypes.INTEGER,

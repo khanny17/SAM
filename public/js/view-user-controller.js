@@ -11,7 +11,7 @@
 
             $http.get('services/user/get-users')
                 .then(function(response){
-                    console.log('Get User Completed')
+                    console.log('Get User Completed');
                     $scope.users = response.data;
                     $scope.loadingUsers = false;
                 });

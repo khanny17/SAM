@@ -12,7 +12,7 @@
 
         $http.get('services/user/get-users')
             .then(function(response){
-                console.log('Get User Completed')
+                console.log('Get User Completed');
                 $scope.users = response.data;
                 $scope.loadingUser = false;
             });
@@ -20,7 +20,7 @@
 
         $scope.submitPaper = function() {
             $http.post('services/paper/create-paper', $scope.paper)
-            .then(function(response){
+            .then(function(){
                 //TODO go to a different page
                 $scope.paperCreated = true;
             });
