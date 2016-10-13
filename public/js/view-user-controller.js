@@ -9,7 +9,7 @@
             $scope.users = [];
             $scope.loadingUsers = true;
 
-            $http.get('api/user/get-users')
+            $http.get('services/user/get-users')
                 .then(function(response){
                     console.log('Get User Completed')
                     $scope.users = response.data;

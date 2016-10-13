@@ -8,7 +8,7 @@
         $scope.papers = [];
         $scope.loadingPapers = true;
 
-        $http.get('api/paper/get-papers')
+        $http.get('services/paper/get-papers')
         .then(function(response){
             $scope.papers = response.data;
             $scope.loadingPapers = false;

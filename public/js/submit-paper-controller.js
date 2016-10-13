@@ -10,7 +10,7 @@
         $scope.users = [];
         $scope.loadingUser = true;
 
-        $http.get('api/user/get-users')
+        $http.get('services/user/get-users')
             .then(function(response){
                 console.log('Get User Completed')
                 $scope.users = response.data;
@@ -19,7 +19,7 @@
 
 
         $scope.submitPaper = function() {
-            $http.post('api/paper/create-paper', $scope.paper)
+            $http.post('services/paper/create-paper', $scope.paper)
             .then(function(response){
                 //TODO go to a different page
                 $scope.paperCreated = true;

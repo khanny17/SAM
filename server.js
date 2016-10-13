@@ -15,8 +15,8 @@ var port = process.env.PORT || 8080;
 // parse application/json 
 app.use(bodyParser.json()); 
 
-// parse application/vnd.api+json as json
-app.use(bodyParser.json({ type: 'application/vnd.api+json' })); 
+// parse application/vnd.services+json as json
+app.use(bodyParser.json({ type: 'application/vnd.services+json' }));
 
 // parse application/x-www-form-urlencoded
 app.use(bodyParser.urlencoded({ extended: true })); 
@@ -32,16 +32,16 @@ app.use(express.static(__dirname + '/public'));
 // --- Api Routes --- 
 
 var api = [
-    { route: 'user', file: require(__dirname + '/app/api/user') },
-    { route: 'paper', file: require(__dirname + '/app/api/paper') },
-    { route: 'paperPreference', file: require(__dirname + '/app/api/paperPreference') }
+    { route: 'user', file: require(__dirname + '/app/services/user') },
+    { route: 'paper', file: require(__dirname + '/app/services/paper') },
+    { route: 'paperPreference', file: require(__dirname + '/app/services/paperPreference') }
 ];
 
-//Mounts routes for each api service in the above list
+//Mounts routes for each services service in the above list
 api.forEach(function(service){
     var router = express.Router();      //Create a new Router object
     service.file.init(router);           //Initialize the endpoints
-    app.use('/api/' + service.route, router); //Mount sub-api
+    app.use('/services/' + service.route, router); //Mount sub-services
 });
 
 // ------------------
@@ -52,7 +52,7 @@ require(__dirname + '/app/models/db');
 
 
 // --- Send Single Page Application for all other routes ---
-// Since we route on the frontend, every route except for our api routes should just send
+// Since we route on the frontend, every route except for our services routes should just send
 // index.html. Our frontend JS will handle the routing from there
 app.get('*', function(req, res) {
     res.sendfile(__dirname + '/public/index.html'); 
