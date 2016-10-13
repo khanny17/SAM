@@ -5,7 +5,7 @@
 
         .controller('createUserController', ['$scope', '$http', function($scope, $http) {
 
-            $scope.title = "SAM 2017 - Create User";
+            $scope.title = "SAM 2017 - User Registration";
 
             $http.get('api/user/get-users')
                 .then(function(response){
@@ -32,7 +32,7 @@
             function isFormValid()
             {
                 if (($scope.email) && ($scope.password) && ($scope.firstName)) {
-                    console.log('form not valid')
+                    console.log('form  valid')
                     return true;
                 }
                 return false;
