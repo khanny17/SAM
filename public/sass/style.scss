@@ -8,6 +8,10 @@ html, body, .page-wrapper {
     font-family: $body-font;
 }
 
+.page-wrapper {
+    overflow: auto;
+}
+
 body {
     overflow: hidden;
 }

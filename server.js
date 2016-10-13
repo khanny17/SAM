@@ -29,22 +29,11 @@ app.use(express.static(__dirname + '/public'));
 
 
 
-// --- Api Routes --- 
 
-var api = [
-    { route: 'user', file: require(__dirname + '/app/services/user') },
-    { route: 'paper', file: require(__dirname + '/app/services/paper') },
-    { route: 'paperPreference', file: require(__dirname + '/app/services/paperPreference') }
-];
+//Set up the api endpoints
+require(__dirname + '/app/services/index').init(express, app);
+// -------------------
 
-//Mounts routes for each services service in the above list
-api.forEach(function(service){
-    var router = express.Router();      //Create a new Router object
-    service.file.init(router);           //Initialize the endpoints
-    app.use('/services/' + service.route, router); //Mount sub-services
-});
-
-// ------------------
 
 // --- Sequelize ---
 require(__dirname + '/app/models/db');
