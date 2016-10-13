@@ -5,6 +5,8 @@ var express        = require('express');
 var app            = express();
 var bodyParser     = require('body-parser');
 var methodOverride = require('method-override');
+var passport       = require('passport');
+var jwt            = require('jwt-simple');
 
 // Configuration
     
@@ -29,15 +31,17 @@ app.use(express.static(__dirname + '/public'));
 
 
 
+// Use the passport package in our application
+require(__dirname + '/app/config/passport')(passport);
+app.use(passport.initialize());
+
 
 //Set up the api endpoints
 require(__dirname + '/app/services/index').init(express, app);
-// -------------------
 
 
 // --- Sequelize ---
 require(__dirname + '/app/models/db');
-//--------------------
 
 
 // --- Send Single Page Application for all other routes ---
