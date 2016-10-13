@@ -32,7 +32,7 @@
             function isFormValid()
             {
                 if (($scope.email) && ($scope.password) && ($scope.firstName)) {
-                    console.log('form  valid')
+                    console.log('form  valid');
                     return true;
                 }
                 return false;
