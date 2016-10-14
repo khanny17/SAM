@@ -11,7 +11,6 @@
 
 
     var init = function(router) {
-        router.get('/get-users', endpoints.getUsers);
         router.post('/signup', endpoints.signup);
         router.post('/authenticate', endpoints.authenticate);
     };
@@ -61,14 +60,6 @@
             }).catch(function(error){
                 console.log('uh oh' + error);
             });
-        },
-
-
-        getUsers: function(request, response) {
-            UserModel.findAll()
-                .then(function(users){
-                    response.send(users);
-                });
         }
 
     };
