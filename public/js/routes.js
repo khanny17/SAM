@@ -43,7 +43,7 @@
             }])
 
         .run(function ($rootScope, $state, AuthService) {
-            $rootScope.$on('$stateChangeStart', function (event,next, nextParams, fromState) {
+            $rootScope.$on('$stateChangeStart', function (event,next) {
                 if (!AuthService.isAuthenticated()) {
                     console.log(next.name);
                     if (next.name !== 'login' && next.name !== 'signup') {

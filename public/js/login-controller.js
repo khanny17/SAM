@@ -13,7 +13,7 @@
             .then(function() {
                 $state.go('home');
             }, function(errMsg) {
-                console.err(errMsg);
+                console.log(errMsg);
             });
         };
     }]);

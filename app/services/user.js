@@ -12,7 +12,6 @@
 
     var init = function(router) {
         router.get('/get-users', endpoints.getUsers);
-        router.post('/create', endpoints.createUser);
         router.post('/signup', endpoints.signup);
         router.post('/authenticate', endpoints.authenticate);
     };
@@ -28,10 +27,8 @@
                 FirstName: req.body.firstName,
                 LastName: req.body.lastName,
                 Email:req.body.email,
-                Password:req.body.password
-            })
-
-            .then(function(err) {
+                Password: UserModel.hashPassword(req.body.password)
+            }).then(function(err) {
                 if (err) {
                     return res.json({success: false, msg: 'Username already exists.'});
                 }
@@ -43,13 +40,11 @@
         authenticate: function(req, res) {
             UserModel.findOne({
                 email: req.body.email
-            }, function(err, user) {
-                if (err){
-                    throw err;
-                }
-
+            }).then(function(user) {
                 if (!user) {
-                    return res.send({success: false, msg: 'Authentication failed. User not found.'});
+                    var msg = 'Authentication failed. User not found.';
+                    console.log(msg);
+                    return res.send({success: false, msg: msg});
                 }
 
                 // check if password matches
@@ -63,6 +58,8 @@
                         res.send({success: false, msg: 'Authentication failed. Wrong password.'});
                     }
                 });
+            }).catch(function(error){
+                console.log('uh oh' + error);
             });
         },
 
@@ -71,18 +68,6 @@
             UserModel.findAll()
                 .then(function(users){
                     response.send(users);
-                });
-        },
-
-        createUser: function(req, res) {
-            UserModel.create({
-                FirstName: req.body.firstName,
-                LastName: req.body.lastName,
-                Email:req.body.email,
-                Password:req.body.password
-            })
-                .then(function(user){
-                    res.send(user);
                 });
         }
 

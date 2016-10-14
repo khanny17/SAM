@@ -16,7 +16,7 @@
             $scope.createUser = function() {
                 if (isFormValid()) {
                     $scope.status = "Creating User....";
-                    $http.post('services/user/create', {
+                    $http.post('services/user/signup', {
                         email: $scope.email,
                         password: $scope.password,
                         firstName: $scope.firstName,

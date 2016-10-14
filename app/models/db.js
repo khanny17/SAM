@@ -43,6 +43,7 @@
     //Now lets actually create the tables on the db
     sequelize
         .sync()
+        //.sync({ force:true })
         .then(function() {
             console.log('Tables Created');
         }, function (err) {
