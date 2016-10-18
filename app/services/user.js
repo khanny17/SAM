@@ -1,5 +1,3 @@
-//app/api/user.js
-
 (function () {
     'use strict';
 
@@ -27,16 +25,20 @@
                 LastName: req.body.lastName,
                 Email:req.body.email,
                 Password: UserModel.hashPassword(req.body.password)
-            }).then(function(err) {
-                if (err) {
-                    return res.json({success: false, msg: 'Username already exists.'});
-                }
-                res.json({success: true, msg: 'Successful created new user.'});
+            }).then(function(user) {
+                delete user.Password;
+                var msg = 'User ' + user.FirstName + ' ' + user.LastName + ' created successfully';
+                console.log(msg);
+                res.json({success: true, msg: msg});
+            }).catch(function(error){
+                console.log('Error Creating user: ');
+                console.log(error);
             });
 
         },
 
         authenticate: function(req, res) {
+            console.log('Authenticate endpoint called');
             UserModel.findOne({
                 email: req.body.email
             }).then(function(user) {

@@ -16,7 +16,7 @@
                 }
             },
 
-            Password:DataTypes.STRING,
+            Password: DataTypes.STRING(60),
 
             ID: {
                 type: DataTypes.INTEGER,
