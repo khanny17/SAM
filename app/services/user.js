@@ -39,10 +39,19 @@
         },
 
         authenticate: function(req, res) {
-            console.log('Authenticate endpoint called');
-            UserModel.findOne({
-                email: req.body.email
-            }).then(function(user) {
+            UserModel.findAll({
+                where: {
+                    Email: req.body.email
+                }
+            }).then(function(users) {
+                if(users.length > 1) {
+                    console.log('Multiple users with same email');
+                    res.send({success: false, msg: 'Multiple users with same email'});
+                    return;
+                }
+
+                var user = users[0];
+
                 if (!user) {
                     var msg = 'Authentication failed. User not found.';
                     console.log(msg);
