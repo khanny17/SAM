@@ -37,8 +37,19 @@
                 <label class="col-md-4 control-label" for="password">Password</label>
                 <div class="col-md-4">
                     <input id="password" name="password" ng-model="password" type="password" placeholder="Password" class="form-control input-md" required="">
-
                 </div>
+            </div>
+
+            <!-- Password input-->
+            <div class="form-group">
+                <label class="col-md-4 control-label" for="password2">Confirm Password</label>
+                <div class="col-md-4">
+                    <input id="password2" name="password2" ng-model="password2" type="password2" placeholder="Confirm Password" class="form-control input-md" required="">
+                </div>
+            </div>
+
+            <div class="form-group" ng-repeat="error in validation">
+                <label class="col-md-6 control-label" >{{error}}</label>
             </div>
 
             <!-- Button -->
@@ -46,6 +57,7 @@
                 <label class="col-md-4 control-label" for="create"></label>
                 <div class="col-md-4">
                     <button id="create" name="create" type="submit" ng-click="createUser()" class="btn btn-primary">Submit</button>
+                    <button id="cancel" name="cancel" type="button" onclick="window.location.href='/'" class="btn btn-danger">Cancel</button>
                 </div>
             </div>
 

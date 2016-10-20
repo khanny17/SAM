@@ -31,7 +31,8 @@
                 console.log(msg);
                 res.json({success: true, msg: msg});
             }).catch(function(error){
-                console.log('Error Creating user: ');
+                var msg = 'The email address is already registered';
+                res.json({success: false, msg: msg});
                 console.log(error);
             });
 

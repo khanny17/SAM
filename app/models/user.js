@@ -16,7 +16,7 @@
                 }
             },
 
-            Password: DataTypes.STRING(60),
+            Password:DataTypes.STRING(60),
 
             ID: {
                 type: DataTypes.INTEGER,
@@ -29,6 +29,10 @@
 
                 hashPassword: function(password) { 
                     return bcrypt.hashSync(password, bcrypt.genSaltSync(8), null);
+                },
+
+                associate: function(models) {
+                    User.hasMany(models.paper, {as: 'papers'});
                 },
 
             },
