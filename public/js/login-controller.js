@@ -11,7 +11,7 @@
         $scope.login = function() {
             AuthService.login($scope.user)
             .then(function() {
-                $state.go('home');
+                $state.go('inside.home');
             }, function(errMsg) {
                 console.log(errMsg);
             });

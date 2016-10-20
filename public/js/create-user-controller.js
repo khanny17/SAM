@@ -21,7 +21,7 @@
                         }).then(function (response) {
                               //  $scope.users.push(response.data);
                                 $scope.status ='User Created!';
-                                $state.go('home');
+                                $state.go('inside.home');
                             },
                             function (error) {
                                 $scope.validation = [];
