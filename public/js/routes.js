@@ -15,27 +15,32 @@
                         templateUrl: 'templates/login.html',
                         controller: 'loginController'
                     })
-                    .state('home', {
-                        url: '/', //The url for the state
-                        templateUrl: 'templates/home.html', //The path to the html template
-                        controller: 'homeController' //The path to the angular controller
-                    })
-                    .state('submit-paper', {
-                        url: '/submit-paper',
-                        templateUrl: 'templates/submit-paper.html',
-                        controller: 'submitPaperController'
-                    })
-                    .state('view-papers', {
-                        url: '/view-papers',
-                        templateUrl: 'templates/view-papers.html',
-                        controller: 'viewPapersController'
-                    })
                     .state('signup', {
                         url: '/signup', //The url for the state
                         templateUrl: 'templates/create-user.html', //The path to the html template
                         controller: 'createUserController' //The path to the angular controller
                     })
-                    .state('view-user', {
+                    .state('inside', {
+                        abstract: true,
+                        templateUrl: 'templates/inside.html',
+                        controller: 'insideController'
+                    })
+                    .state('inside.home', {
+                        url: '/', //The url for the state
+                        templateUrl: 'templates/home.html', //The path to the html template
+                        controller: 'homeController' //The path to the angular controller
+                    })
+                    .state('inside.submit-paper', {
+                        url: '/submit-paper',
+                        templateUrl: 'templates/submit-paper.html',
+                        controller: 'submitPaperController'
+                    })
+                    .state('inside.view-papers', {
+                        url: '/view-papers',
+                        templateUrl: 'templates/view-papers.html',
+                        controller: 'viewPapersController'
+                    })
+                    .state('inside.view-user', {
                         url: '/view-user', //The url for the state
                         templateUrl: 'templates/view-user.html', //The path to the html template
                         controller: 'viewUserController' //The path to the angular controller

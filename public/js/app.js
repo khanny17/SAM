@@ -8,6 +8,7 @@
         'AuthModule',
 
         'HomeControllerModule',
+        'InsideControllerModule',
         'SubmitPaperControllerModule',
         'ViewPapersControllerModule',
         'CreateUserControllerModule',
