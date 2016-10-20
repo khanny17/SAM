@@ -6,6 +6,7 @@
         .controller('createUserController', ['$scope', '$http', function($scope, $http) {
 
             $scope.title = "SAM 2017 - User Registration";
+            $scope.validation = [];
 
             $http.get('services/user/get-users')
                 .then(function(response){
@@ -23,23 +24,49 @@
                         lastName: $scope.lastName
                     })
                         .then(function (response) {
-                            $scope.users.push(response.data);
-                            var user = response.data;
-                            console.log(user.ID);
-                            $scope.status = "User Created! User Id:"+user.ID;
+                            if (response.data.success) {
+                                $scope.users.push(response.data);
+                                var user = response.data;
+                                console.log(user.user.ID);
+                                $scope.status = "User Created! User Id:" + user.user.ID;
+                            }
+                            else{
+                                $scope.lines = [];
+                                $scope.lines.push("The email address is already in use.");
+                            }
                         });
                 }
             };
 
             function isFormValid()
             {
-                if (($scope.email) && ($scope.password) && ($scope.firstName)) {
-                    console.log('form  valid');
-                    return true;
+                $scope.lines = [];
+
+                if(!$scope.firstName) {
+                    $scope.lines.push("First Name is a required field");
                 }
-                return false;
+
+                if(!$scope.email) {
+                    $scope.lines.push("Email is a required field");
+                }
+
+                if(!$scope.password) {
+                    $scope.lines.push("Password is a required field");
+                }
+
+                if($scope.password !== $scope.password2) {
+                    $scope.lines.push("Password fields must match");
+                }
+
+                if ($scope.lines.length >= 1){
+                    console.log('form not valid');
+                    return false;
+                }
+
+                return true;
             }
 
         }]);
+
 
 }());
