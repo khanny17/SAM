@@ -10,14 +10,15 @@
             ContributingAuthors: DataTypes.STRING,
             Description: DataTypes.STRING,
             Document: DataTypes.BLOB,
-            Version: DataTypes.INTEGER
+            Version: DataTypes.INTEGER,
+
         }, 
         
         {
             classMethods: 
             {
                 associate: function(models){
-                    Paper.belongsTo(models.user, { as: 'ContactAuthor' });
+                    Paper.belongsTo(models.user);
                 }
             }
         });
