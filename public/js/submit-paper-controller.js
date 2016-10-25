@@ -1,21 +1,24 @@
 (function () {
     'use strict';
 
-    angular.module('SubmitPaperControllerModule', [])
+    angular.module('SubmitPaperControllerModule', ['AuthModule'])
 
-    .controller('submitPaperController', ['$scope', '$http', function($scope, $http) {
+    .controller('submitPaperController', ['$scope', '$http','AuthService','$state', function($scope, $http, AuthService,$state) {
         
         $scope.paper = {};
         $scope.title = "SAM 2017 - User Details";
         $scope.users = [];
-        $scope.loadingUser = true;
+        $scope.contactAuthor = AuthService.authenticatedUser().FirstName +" " + AuthService.authenticatedUser().LastName;
+        $scope.paper.userID =  AuthService.authenticatedUser().ID;
 
+/*
         $http.get('services/user/get-users')
             .then(function(response){
                 console.log('Get User Completed');
                 $scope.users = response.data;
                 $scope.loadingUser = false;
             });
+*/
 
 
         $scope.submitPaper = function() {
@@ -23,6 +26,7 @@
             .then(function(){
                 //TODO go to a different page
                 $scope.paperCreated = true;
+                $state.go('inside.home');
             });
         };
 

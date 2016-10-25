@@ -12,6 +12,10 @@
             $state.go('login');
         };
 
+       if ( AuthService.authenticatedUser()!== undefined) {
+           $scope.welcomeMessage = "Welcome " + AuthService.authenticatedUser().FirstName + " " + AuthService.authenticatedUser().LastName;
+       }
+
     }]);
 
 }());

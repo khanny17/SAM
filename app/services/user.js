@@ -63,8 +63,9 @@
                     if (isMatch && !err) {
                         // if user is found and password is right create a token
                         var token = jwt.encode(user, config.secret);
+                         user.Password = "";
                         // return the information including token as JSON
-                        res.json({success: true, token: 'JWT ' + token});
+                        res.json({success: true, token: 'JWT ' + token, user: user});
                     } else {
                         res.send({success: false, msg: 'Authentication failed. Wrong password.'});
                     }
