@@ -13,7 +13,14 @@
     var endpoints = {
 
         getPapers: function(request, response) {
-            PaperModel.findAll()
+            console.log(request.query);
+            console.log("----------------------------------------------------------------------------------");
+            console.log(request.query.userID);
+            PaperModel.findAll({
+                where:{
+                    userID:request.query.userID
+                }
+            })
             .then(function(papers){
                 response.send(papers);
             });
