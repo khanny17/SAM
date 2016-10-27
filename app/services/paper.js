@@ -8,6 +8,7 @@
     var init = function(router) {
         router.get('/get-papers', endpoints.getPapers);
         router.post('/create-paper', endpoints.createPaper);
+        router.get('/get-paper', endpoints.getPaper);
     };
 
     var endpoints = {
@@ -24,6 +25,19 @@
             .then(function(papers){
                 response.send(papers);
             });
+        },
+
+        getPaper: function(request, response) {
+            console.log('Get Paper - UserID:' + request.query.userID + ' ; PaperID: ' + request.query.paperID);
+            PaperModel.findOne({
+                where:{
+                    userID:request.query.userID,
+                    id:request.query.paperID
+                }
+            })
+                .then(function(papers){
+                    response.send(papers);
+                });
         },
 
         createPaper: function(req, res) {

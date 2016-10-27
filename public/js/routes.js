@@ -35,6 +35,11 @@
                         templateUrl: 'templates/submit-paper.html',
                         controller: 'submitPaperController'
                     })
+                    .state('inside.update-paper', {
+                        url: '/update-paper/:paperID',
+                        templateUrl: 'templates/update-paper.html',
+                        controller: 'updatePaperController'
+                    })
                     .state('inside.view-papers', {
                         url: '/view-papers',
                         templateUrl: 'templates/view-papers.html',

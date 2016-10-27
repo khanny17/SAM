@@ -12,15 +12,17 @@
 <legend>My Papers</legend>
 
 <div class="row grid table-bordered">
-    <div class="col-sm-4" style="background: burlywood">Title</div>
+    <div class="col-sm-3" style="background: burlywood">Title</div>
     <div class="col-sm-4" style="background: burlywood">Description</div>
     <div class="col-sm-4" style="background: burlywood">Contributing Authors</div>
+    <div class="col-sm-1" style="background: burlywood">Action</div>
 </div>
 
 <div class="row grid table-bordered" ng-repeat="paper in papers">
-    <div class="col-sm-4">{{paper.Title}}</div>
+    <div class="col-sm-3">{{paper.Title}}</div>
     <div class="col-sm-4">{{paper.Description}}</div>
     <div class="col-sm-4">{{paper.ContributingAuthors}}</div>
+    <div class="col-sm-1"><a href="/update-paper/{{paper.id}}">Update</a></div>
 </div>
 
 <br/>

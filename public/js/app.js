@@ -13,6 +13,7 @@
         'ViewPapersControllerModule',
         'CreateUserControllerModule',
         'ViewUserControllerModule',
-        'LoginControllerModule'
+        'LoginControllerModule',
+        'UpdatePaperControllerModule'
     ]);
 }());

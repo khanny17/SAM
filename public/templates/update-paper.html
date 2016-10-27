@@ -1,0 +1,46 @@
+<form ng-submit="updatePaper()" class="form-horizontal">
+    <fieldset>
+        <legend>Update Paper</legend>
+
+        <div class="form-group">
+            <label class="col-md-4 control-label">Contact Author:</label>
+            <div class="col-md-4">
+                <label class="control-label">{{contactAuthor}}</label>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="col-md-4 control-label">Paper Title: *</label>
+            <div class="col-md-4">
+                <input class="form-control" ng-model="paper.Title" placeholder="Title" required/>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="col-md-4 control-label">Paper Description: *</label>
+            <div class="col-md-4">
+            <textarea class="form-control" ng-model="paper.Description" placeholder="Description" style="height:150px"
+                      required></textarea>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="col-md-4 control-label">Contributing Authors:</label>
+            <div class="col-md-4">
+            <textarea class="form-control" ng-model="paper.ContributingAuthors" placeholder="Contributing Authors"
+                      style="height:150px"></textarea>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="col-md-4 control-label"></label>
+            <div class="col-md-8">
+                <button class="btn btn-primary" type="submit">Update</button>
+                <button class="btn btn-danger" type="button" onclick="window.location.href='/home.html'">Cancel</button>
+            </div>
+        </div>
+    </fieldset>
+</form>
+
+<p ng-if="paperCreated">Paper Submitted Successfully</p>
+

@@ -10,6 +10,7 @@
         $scope.users = [];
         $scope.contactAuthor = AuthService.authenticatedUser().FirstName +" " + AuthService.authenticatedUser().LastName;
         $scope.paper.userID =  AuthService.authenticatedUser().ID;
+        $scope.paper.Status='Pending Submission';
 
 /*
         $http.get('services/user/get-users')
