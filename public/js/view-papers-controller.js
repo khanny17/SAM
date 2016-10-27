@@ -9,6 +9,7 @@
         $scope.title = "SAM 2017 - Submit Paper";
         $scope.contactAuthor = AuthService.authenticatedUser().FirstName +" " + AuthService.authenticatedUser().LastName;
         $scope.userID =  AuthService.authenticatedUser().ID;
+        $scope.loadingPaper = true;
 
         $http.get('services/paper/get-papers', {params: { userID:  $scope.userID }})
         .then(function(response){
