@@ -11,7 +11,7 @@
             Description: DataTypes.STRING,
             Document: DataTypes.BLOB,
             Version: DataTypes.INTEGER,
-
+            Status: DataTypes.ENUM('Pending Submission','Submitted','Review Pending','Review In-Progress','Review Conflict','Review Complete')
         }, 
         
         {
