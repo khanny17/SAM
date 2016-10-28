@@ -7,6 +7,7 @@
         var User = sequelize.define("user", {
             FirstName: DataTypes.STRING,
             LastName: DataTypes.STRING,
+            Role: DataTypes.ENUM('Author','PCC','PCM','Admin'),
             Email: {
                 type: DataTypes.STRING,
                 unique: true,
