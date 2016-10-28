@@ -19,6 +19,14 @@
                 });
 
 
+            $scope.updatePaper = function() {
+                $http.post('services/paper/update-paper', $scope.paper)
+                    .then(function(){
+                        $state.go('inside.home');
+                    });
+            };
+
+
         }]);
 
 }());

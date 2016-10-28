@@ -9,6 +9,7 @@
         router.get('/get-papers', endpoints.getPapers);
         router.post('/create-paper', endpoints.createPaper);
         router.get('/get-paper', endpoints.getPaper);
+        router.post('/update-paper', endpoints.updatePaper);
     };
 
     var endpoints = {
@@ -47,6 +48,19 @@
                 console.log('Paper ID: ' + paper.id + ' created');
                 res.send(paper);
             });
+        },
+
+        updatePaper: function(req, res) {
+            console.log(req.body);
+            PaperModel.update({
+                ContributingAuthors:req.body.ContributingAuthors,
+                Description:req.body.Description,
+                Title:req.body.Title
+            },{ where: {id: req.body.id} })
+                .then(function(paper) {
+                    console.log('Paper ID: ' + paper.id + ' updated');
+                    res.send(paper);
+                });
         }
 
     };
