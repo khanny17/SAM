@@ -14,6 +14,7 @@
         'CreateUserControllerModule',
         'ViewUserControllerModule',
         'LoginControllerModule',
-        'UpdatePaperControllerModule'
+        'UpdatePaperControllerModule',
+        'UpdateUserRoleControllerModule',
     ]);
 }());

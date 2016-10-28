@@ -40,6 +40,11 @@
                         templateUrl: 'templates/update-paper.html',
                         controller: 'updatePaperController'
                     })
+                    .state('inside.update-user-role', {
+                        url: '/update-user-role',
+                        templateUrl: 'templates/update-user-role.html',
+                        controller: 'updateUserRoleController'
+                    })
                     .state('inside.view-papers', {
                         url: '/view-papers',
                         templateUrl: 'templates/view-papers.html',

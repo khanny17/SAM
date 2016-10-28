@@ -11,9 +11,17 @@
     var init = function(router) {
         router.post('/signup', endpoints.signup);
         router.post('/authenticate', endpoints.authenticate);
+        router.get('/get-users', endpoints.getUsers);
     };
 
     var endpoints = {
+
+        getUsers: function(req, res) {
+            UserModel.findAll({attributes: ['FirstName', 'LastName', 'Role', 'ID']})
+                .then(function(users) {
+                    res.send(users);
+            });
+        },
 
         signup: function(req, res) {
             if (!req.body.email || !req.body.password) {
