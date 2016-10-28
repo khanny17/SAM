@@ -24,7 +24,8 @@
                 FirstName: req.body.firstName,
                 LastName: req.body.lastName,
                 Email:req.body.email,
-                Password: UserModel.hashPassword(req.body.password)
+                Password: UserModel.hashPassword(req.body.password),
+                Role:'Author' //By default, a user is given an 'author' role when provisioned
             }).then(function(user) {
                 delete user.Password;
                 var msg = 'User ' + user.FirstName + ' ' + user.LastName + ' created successfully';
