@@ -23,10 +23,17 @@
 
 
         $scope.submitPaper = function() {
+            document.getElementById("overlayScreen").style.width = "100%";
+            document.getElementById("overlayScreen").style.height = "100%";
+
             $http.post('services/paper/create-paper', $scope.paper)
             .then(function(){
                 //TODO go to a different page
                 $scope.paperCreated = true;
+
+                document.getElementById("overlayScreen").style.width = "0%";
+                document.getElementById("overlayScreen").style.height = "0%";
+
                 $state.go('inside.home');
             });
         };
