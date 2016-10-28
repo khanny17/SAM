@@ -95,7 +95,7 @@
 
     function RemoveFromPCM()
     {
-        if ($("#selectPCM option").length ==1){
+        if ($("#selectPCM option").length == $("#selectPCM > option:selected").length){
             alert("There should be at least 1 PCM");
             return;
         }
@@ -127,7 +127,7 @@
 
     function RemoveFromPCC()
     {
-        if ($("#selectPCC option").length ==1){
+        if ($("#selectPCC option").length == $("#selectPCC > option:selected").length){
             alert("There should be at least 1 PCC");
             return;
         }
