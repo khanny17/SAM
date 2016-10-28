@@ -15,16 +15,16 @@
 
             <div class="row">
                 <div class="col-md-5">
-                    <select id='selectAll' multiple size='10' style="width:100%">
+                    <select id='selectAllUsers_PCM' multiple size='10' style="width:100%">
                         <option ng-repeat="user in pcm_AllUsers" value='{{user.id}}'>{{user.FirstName}}&nbsp;{{user.LastName}}</option>
                     </select>
                 </div>
                 <div class="col-md-1">
-                    <button type='button' class="btn btn-default btn-sm" type="button" id='Src2Dest'
-                            onclick='Move2Source();'><span class="glyphicon glyphicon-arrow-right"></span></button>
+                    <button type='button' class="btn btn-default btn-sm" type="button" id='btn-AddToPCM'
+                            onclick='AddToPCM();'><span class="glyphicon glyphicon-arrow-right"></span></button>
                     <br/>
-                    <button type='button' class="btn btn-default btn-sm" type="button" id='Dest2Src'
-                            onclick='Move2Destination();'><span class="glyphicon glyphicon-arrow-left"></span></button>
+                    <button type='button' class="btn btn-default btn-sm" type="button" id='btn-RemoveFromPCM'
+                            onclick='RemoveFromPCM();'><span class="glyphicon glyphicon-arrow-left"></span></button>
                 </div>
                 <div class="col-md-5">
                     <select id='selectPCM' multiple size='10' style="width:100%">
@@ -47,16 +47,16 @@
 
             <div class="row">
                 <div class="col-md-5">
-                    <select id='selectAll' multiple size='10' style="width:100%">
+                    <select id='selectAllUsers_PCC' multiple size='10' style="width:100%">
                         <option ng-repeat="user in pcc_AllUsers" value='{{user.id}}'>{{user.FirstName}}&nbsp;{{user.LastName}}</option>
                     </select>
                 </div>
                 <div class="col-md-1">
                     <button type='button' class="btn btn-default btn-sm" type="button" id='Src2Dest'
-                            onclick='Move2Source();'><span class="glyphicon glyphicon-arrow-right"></span></button>
+                            onclick='AddToPCC();'><span class="glyphicon glyphicon-arrow-right"></span></button>
                     <br/>
                     <button type='button' class="btn btn-default btn-sm" type="button" id='Dest2Src'
-                            onclick='Move2Destination();'><span class="glyphicon glyphicon-arrow-left"></span></button>
+                            onclick='RemoveFromPCC();'><span class="glyphicon glyphicon-arrow-left"></span></button>
                 </div>
                 <div class="col-md-5">
                     <select id='selectPCC' multiple size='10' style="width:100%">
@@ -78,3 +78,68 @@
 
 <p ng-if="paperCreated">Paper Submitted Successfully</p>
 
+<script>
+    function AddToPCM()
+    {
+        var selectedItems = $("#selectAllUsers_PCM > option:selected");
+        if (selectedItems.length >= 1){
+            selectedItems.each(function(){
+                $(this).remove();
+                $(this).appendTo("#selectPCM");
+            })
+        }
+        else{
+            alert('Please select a user');
+        }
+    }
+
+    function RemoveFromPCM()
+    {
+        if ($("#selectPCM option").length ==1){
+            alert("There should be at least 1 PCM");
+            return;
+        }
+        var selectedItems = $("#selectPCM > option:selected");
+        if (selectedItems.length >= 1){
+            selectedItems.each(function(){
+                $(this).remove();
+                $(this).appendTo("#selectAllUsers_PCM");
+            })
+        }
+        else{
+            alert('Please select a PCM');
+        }
+    }
+
+    function AddToPCC()
+    {
+        var selectedItems = $("#selectAllUsers_PCC > option:selected");
+        if (selectedItems.length >= 1){
+            selectedItems.each(function(){
+                $(this).remove();
+                $(this).appendTo("#selectPCC");
+            })
+        }
+        else{
+            alert('Please select a user');
+        }
+    }
+
+    function RemoveFromPCC()
+    {
+        if ($("#selectPCC option").length ==1){
+            alert("There should be at least 1 PCC");
+            return;
+        }
+        var selectedItems = $("#selectPCC > option:selected");
+        if (selectedItems.length >= 1){
+            selectedItems.each(function(){
+                $(this).remove();
+                $(this).appendTo("#selectAllUsers_PCC");
+            })
+        }
+        else{
+            alert('Please select a PCC');
+        }
+    }
+</script>
