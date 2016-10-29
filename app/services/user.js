@@ -12,6 +12,7 @@
         router.post('/signup', endpoints.signup);
         router.post('/authenticate', endpoints.authenticate);
         router.get('/get-users', endpoints.getUsers);
+        router.post('/update-roles',endpoints.updateRoles);
     };
 
     var endpoints = {
@@ -21,6 +22,42 @@
                 .then(function(users) {
                     res.send(users);
             });
+        },
+
+        updateRoles: function(req, res) {
+
+            var newPCM = req.body.params.newPCM;
+            var newPCC = req.body.params.newPCC;
+
+            UserModel.update({
+                    Role: 'Author'
+                }, {
+                    where: ["Role = 'PCM' or Role = 'PCC'"]
+                }
+            );
+
+            for (var i = 0; i < newPCM.length; i++) {
+                UserModel.update({
+                        Role: 'PCM'
+                    }, {
+                        where: {
+                            ID: newPCM[i]
+                        }
+                    }
+                );
+            }
+            for (var i = 0; i < newPCC.length; i++) {
+                UserModel.update({
+                        Role: 'PCC'
+                    }, {
+                        where: {
+                            ID: newPCC[i]
+                        }
+                    }
+                );
+            }
+
+            res.json({success: true});
         },
 
         signup: function(req, res) {

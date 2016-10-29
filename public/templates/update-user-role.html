@@ -1,22 +1,21 @@
-<form ng-submit="updatePaper()" class="form-horizontal">
+<form ng-submit="updateRoles()" class="form-horizontal">
     <fieldset>
         <legend>Update User Role</legend>
 
         <div class="jumbotron" style="padding-bottom: 20px;padding-left: 10px;padding-right: 10px;padding-top: 10px;">
-            <div class="row">
-                <div class="col-md-12"><h4>PCM Assignment</h4></div>
-            </div>
 
             <div class="row">
-                <div class="col-md-5">All Users</div>
+                <div class="col-md-3">All Users</div>
                 <div class="col-md-1">&nbsp;</div>
-                <div class="col-md-5">PCM Users</div>
+                <div class="col-md-3">PCM Users</div>
+                <div class="col-md-1">&nbsp;</div>
+                <div class="col-md-3">PCC Users</div>
             </div>
 
             <div class="row">
-                <div class="col-md-5">
+                <div class="col-md-3">
                     <select id='selectAllUsers_PCM' multiple size='10' style="width:100%">
-                        <option ng-repeat="user in pcm_AllUsers" value='{{user.id}}'>{{user.FirstName}}&nbsp;{{user.LastName}}</option>
+                        <option ng-repeat="user in allUsers" value='{{user.ID}}'>{{user.FirstName}}&nbsp;{{user.LastName}}</option>
                     </select>
                 </div>
                 <div class="col-md-1">
@@ -26,29 +25,9 @@
                     <button type='button' class="btn btn-default btn-sm" type="button" id='btn-RemoveFromPCM'
                             onclick='RemoveFromPCM();'><span class="glyphicon glyphicon-arrow-left"></span></button>
                 </div>
-                <div class="col-md-5">
+                <div class="col-md-3">
                     <select id='selectPCM' multiple size='10' style="width:100%">
-                        <option ng-repeat="user in pcmUsers" value='{{user.id}}'>{{user.FirstName}}&nbsp;{{user.LastName}}</option>
-                    </select>
-                </div>
-            </div>
-        </div>
-
-        <div class="jumbotron" style="padding-bottom: 20px;padding-left: 10px;padding-right: 10px;padding-top: 10px;">
-            <div class="row">
-                <div class="col-md-12"><h4>PCC Assignment</h4></div>
-            </div>
-
-            <div class="row">
-                <div class="col-md-5">All Users</div>
-                <div class="col-md-1">&nbsp;</div>
-                <div class="col-md-5">PCC Users</div>
-            </div>
-
-            <div class="row">
-                <div class="col-md-5">
-                    <select id='selectAllUsers_PCC' multiple size='10' style="width:100%">
-                        <option ng-repeat="user in pcc_AllUsers" value='{{user.id}}'>{{user.FirstName}}&nbsp;{{user.LastName}}</option>
+                        <option ng-repeat="user in pcmUsers" value='{{user.ID}}'>{{user.FirstName}}&nbsp;{{user.LastName}}</option>
                     </select>
                 </div>
                 <div class="col-md-1">
@@ -58,9 +37,9 @@
                     <button type='button' class="btn btn-default btn-sm" type="button" id='Dest2Src'
                             onclick='RemoveFromPCC();'><span class="glyphicon glyphicon-arrow-left"></span></button>
                 </div>
-                <div class="col-md-5">
+                <div class="col-md-3">
                     <select id='selectPCC' multiple size='10' style="width:100%">
-                        <option ng-repeat="user in pccUsers" value='{{user.id}}'>{{user.FirstName}}&nbsp;{{user.LastName}}</option>
+                        <option ng-repeat="user in pccUsers" value='{{user.ID}}'>{{user.FirstName}}&nbsp;{{user.LastName}}</option>
                     </select>
                 </div>
             </div>
@@ -113,7 +92,12 @@
 
     function AddToPCC()
     {
-        var selectedItems = $("#selectAllUsers_PCC > option:selected");
+        if ($("#selectPCM option").length == $("#selectPCM > option:selected").length){
+            alert("There should be at least 1 PCM");
+            return;
+        }
+
+        var selectedItems = $("#selectPCM > option:selected");
         if (selectedItems.length >= 1){
             selectedItems.each(function(){
                 $(this).remove();
@@ -135,7 +119,7 @@
         if (selectedItems.length >= 1){
             selectedItems.each(function(){
                 $(this).remove();
-                $(this).appendTo("#selectAllUsers_PCC");
+                $(this).appendTo("#selectPCM");
             })
         }
         else{
