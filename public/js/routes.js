@@ -66,7 +66,10 @@
                     .state('inside.rate-paper-pcc', {
                       url: '/rate-paper',
                       templateUrl: 'templates/rate-paper-pcc.html',
-                      controller: 'ratePaperPCCController'
+                      controller: 'ratePaperPCCController',
+                      data: {
+                        permissions: ['PCC']
+                      }
                     });
             }])
 
