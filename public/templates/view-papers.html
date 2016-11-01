@@ -1,29 +1,43 @@
 <style>
-    .row.grid:nth-child(1){
-        background:lavenderblush;
+    .row.grid:nth-child(1) {
+        background: lavenderblush;
     }
-    .row.grid:nth-child(even){
-        background:lavender;
+
+    .row.grid:nth-child(even) {
+        background: lavender;
     }
 </style>
 
 <p ng-if="loadingPapers">Loading Papers...</p>
 
 <legend>My Papers</legend>
+<span ng-if="papers.length >= 1">
+    <div class="row grid table-bordered">
+        <div class="col-sm-3" style="background: burlywood">Title</div>
+        <div class="col-sm-3" style="background: burlywood">Description</div>
+        <div class="col-sm-3" style="background: burlywood">Contributing Authors</div>
+        <div class="col-sm-2" style="background: burlywood">Status</div>
+        <div class="col-sm-1" style="background: burlywood">Action</div>
+    </div>
 
-<div class="row grid table-bordered">
-    <div class="col-sm-3" style="background: burlywood">Title</div>
-    <div class="col-sm-4" style="background: burlywood">Description</div>
-    <div class="col-sm-4" style="background: burlywood">Contributing Authors</div>
-    <div class="col-sm-1" style="background: burlywood">Action</div>
-</div>
+    <div class="row grid table-bordered" ng-repeat="paper in papers">
+        <div class="col-sm-3">{{paper.Title}}</div>
+        <div class="col-sm-3">{{paper.Description}}</div>
+        <div class="col-sm-3">{{paper.ContributingAuthors}}</div>
+        <div class="col-sm-2">{{paper.Status}}</div>
+        <div ng-if="paper.Status === 'Pending Submission'" class="col-sm-1">
+            <a href="#" onclick="alert('not implemented')">Submit</a>  <!-- TODO implement submit functionality-->
+            <a href="/update-paper/{{paper.id}}">Update</a>
+        </div>
+        <div ng-if="paper.Status != 'Pending Submission'" class="col-sm-1">
+            N/A
+        </div>
+    </div>
+</span>
 
-<div class="row grid table-bordered" ng-repeat="paper in papers">
-    <div class="col-sm-3">{{paper.Title}}</div>
-    <div class="col-sm-4">{{paper.Description}}</div>
-    <div class="col-sm-4">{{paper.ContributingAuthors}}</div>
-    <div class="col-sm-1"><a href="/update-paper/{{paper.id}}">Update</a></div>
-</div>
+<span ng-if="papers.length == 0">
+    No Papers Available for {{contactAuthor}}.<br>
+</span>
 
 <br/>
 <button class="btn btn-primary" type="button" onclick="window.location.href='/home.html'">Back</button>
