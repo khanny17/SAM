@@ -3,8 +3,13 @@
     <h2>Home</h2>
 
     <p>Pages:</p>
-    <a ui-sref="inside.submit-paper">Submit a Paper</a>
-    <a ui-sref="inside.view-papers">View Papers</a>
-    <a ui-sref="inside.update-user-role">Update User Role</a>
-
+    <div ng-if="user.Role == 'Author'">
+      <a ui-sref="inside.submit-paper">Submit a Paper</a>
+      <a ui-sref="inside.view-papers">View Papers</a>
+      <a ui-sref="inside.update-user-role">Update User Role</a>
+    </div>
+    <div ng-if="user.Role == 'PCC'">
+      <a ui-sref="inside.view-papers">View Papers</a>
+      <a ui-sref="inside.rate-paper">Rate Paper</a>
+    </div>
 </div>

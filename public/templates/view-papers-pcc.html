@@ -1,0 +1,46 @@
+<style>
+    .row.grid:nth-child(1){
+        background:lavenderblush;
+    }
+    .row.grid:nth-child(even){
+        background:lavender;
+    }
+</style>
+
+<p ng-if="loadingPapers">Loading Papers...</p>
+<p ng-if="!loadingPapers"><h2>Submitted Papers</h2></p>
+<legend>View papers for PCC</legend>
+
+<div class="row grid table-bordered">
+    <div class="col-sm-3" style="background: burlywood">Title</div>
+    <div class="col-sm-4" style="background: burlywood">Description</div>
+    <div class="col-sm-4" style="background: burlywood">Contributing Authors</div>
+    <div class="col-sm-4" style="background: burlywood">contact Author</div>
+    <div class="col-sm-1" style="background: burlywood">Revision</div>
+    <div class="col-sm-1" style="background: burlywood">Action</div>
+</div>
+
+<div class="row grid table-bordered" ng-repeat="paper in papers">
+    <div class="col-sm-3">{{paper.Title}}</div>
+    <div class="col-sm-4">{{paper.Description}}</div>
+    <div class="col-sm-4">{{paper.ContributingAuthors}}</div>
+    <div class="col-sm-3">{{paper.user.FirstName}} {{paper.user.LastName}}</div>
+    <div class="col-sm-1">{{paper.Version}}</div>
+    <div class="col-sm-1"><a href="#">Assign</a></div>
+</div>
+
+<!-- <div>
+    <p ng-if="loadingPapers">Loading Papers...</p>
+    <p ng-if="!loadingPapers"><h2>Submitted Papers</h2></p>
+
+    <div ng-repeat="paper in papers">
+        <p>Title: {{paper.Title}}</p>
+        <p>Contributing Authors: {{paper.ContributingAuthors}}</p>
+        <p>Description: {{paper.Description}}</p>
+        <p>Contact Author: {{paper.ContactAuthorID}}</p>
+        <p>Revision : {{paper.Version}}</p>
+
+        <br/>
+    </div>
+</div>
+-->

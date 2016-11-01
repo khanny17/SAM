@@ -10,6 +10,7 @@
         router.post('/create-paper', endpoints.createPaper);
         router.get('/get-paper', endpoints.getPaper);
         router.post('/update-paper', endpoints.updatePaper);
+        router.get('/get-all-papers', endpoints.getAllPapers);
     };
 
     var endpoints = {
@@ -22,6 +23,17 @@
                 where:{
                     userID:request.query.userID
                 }
+            })
+            .then(function(papers){
+                response.send(papers);
+            });
+        },
+
+        getAllPapers: function(request, response) {
+            console.log(request.query);
+            console.log("----------------------------------------------------------------------------------");
+            console.log(request.query.userID);
+            PaperModel.findAll({
             })
             .then(function(papers){
                 response.send(papers);

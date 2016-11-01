@@ -16,5 +16,7 @@
         'LoginControllerModule',
         'UpdatePaperControllerModule',
         'UpdateUserRoleControllerModule',
+        'ViewPapersPCCControllerModule',
+        'RatePaperPCCControllerModule'
     ]);
 }());

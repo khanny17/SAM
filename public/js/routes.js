@@ -54,6 +54,16 @@
                         url: '/view-user', //The url for the state
                         templateUrl: 'templates/view-user.html', //The path to the html template
                         controller: 'viewUserController' //The path to the angular controller
+                    })
+                    .state('inside.view-papers-pcc', {
+                      url: '/view-papers-pcc',
+                      templateUrl: 'templates/view-papers-pcc.html',
+                      controller: 'viewPapersPCCController'
+                    })
+                    .state('inside.rate-paper-pcc', {
+                      url: '/rate-paper',
+                      templateUrl: 'templates/rate-paper-pcc.html',
+                      controller: 'ratePaperPCCController'
                     });
             }])
 
