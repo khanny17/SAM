@@ -27,7 +27,7 @@
     <div class="wrapper">
         <div class="sidebar">
             <ul class="list-group">
-                <button type="button" class="list-group-item" ng-repeat="link in links" ui-sref="{{link.stateName}}">{{link.name}}</button>
+                <button type="button" class="list-group-item" ng-class="{active: isCurrentState(link.stateName)}" ng-repeat="link in links" ui-sref="{{link.stateName}}">{{link.name}}</button>
             </ul>
         </div>
 

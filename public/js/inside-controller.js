@@ -16,6 +16,10 @@
                 $scope.welcomeMessage = "Welcome " + AuthService.authenticatedUser().FirstName + " " + AuthService.authenticatedUser().LastName;
             }
 
+            $scope.isCurrentState = function(stateName){
+                return $state.current.name === stateName;
+            }
+
             //Set up the sidebar links
             var states = $state.get(); //get all the states
             //Links is the list of links the user will see
