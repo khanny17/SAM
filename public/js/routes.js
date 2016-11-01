@@ -58,7 +58,10 @@
                     .state('inside.view-papers-pcc', {
                       url: '/view-papers-pcc',
                       templateUrl: 'templates/view-papers-pcc.html',
-                      controller: 'viewPapersPCCController'
+                      controller: 'viewPapersPCCController',
+                      data: {
+                        permissions: ['PCC']
+                      }
                     })
                     .state('inside.rate-paper-pcc', {
                       url: '/rate-paper',
@@ -74,6 +77,12 @@
                     if (next.name !== 'login' && next.name !== 'signup') {
                         event.preventDefault();
                         $state.go('login');
+                    }
+                } else if(next.data && next.data.permissions){ //check if the state requires permissions
+                    if(!next.data.permissions.includes(AuthService.authenticatedUser().Role)) { //If the user doesn't have perms
+                        console.log("User does not have permission to access state: " + next.name);
+                        event.preventDefault();
+                        $state.go('inside.home');
                     }
                 }
             });
