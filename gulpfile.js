@@ -26,6 +26,7 @@ var sources = {
     nodeFiles:  ['app/**/*'],
     index: 'public/index.html',
     injectedJs:  ['public/js/**/*.js', '!public/js/app.js'],
+    img: 'public/img/*',
     libs: 'public/libs/**/*',
     sass: 'public/sass/**/*.scss',
     server: 'server.js',
@@ -41,6 +42,7 @@ var dest = {
     nodeFiles: 'dist/app',
     libs: 'dist/public/libs',
     public: 'dist/public',
+    img: 'dist/public/img',
     templates: 'dist/public/templates'
 
 };
@@ -89,7 +91,12 @@ gulp.task('nodeFiles', function(){
         .pipe(gulp.dest(dest.nodeFiles));
 });
 
-gulp.task('move', ['libs', 'templates', 'server', 'angularFiles', 'nodeFiles']);
+gulp.task('img', function(){
+    return gulp.src(sources.img)
+        .pipe(gulp.dest(dest.img));
+});
+
+gulp.task('move', ['libs', 'templates', 'server', 'angularFiles', 'nodeFiles', 'img']);
 
 // ------------------
 

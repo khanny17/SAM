@@ -1,0 +1,21 @@
+.wrapper {
+    display: flex;
+
+    .sidebar {
+        flex: 0 0 auto;
+        background: light-gray;
+        overflow: auto;
+
+        ul {
+            padding: 0;
+            margin: 0;
+            list-style: none;
+        }
+
+
+    }
+
+    .container {
+        flex: 1 0 auto;
+    }
+}

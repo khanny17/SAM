@@ -1,7 +1,7 @@
 <div>
 
     <!-- Navbar -->
-    <nav class="navbar navbar-default navbar-static-top">
+    <nav class="navbar navbar-default navbar-static-top" style="margin-bottom: 0;">
         <div class="container">
             <!-- Brand and toggle get grouped for better mobile display -->
             <div class="navbar-header">
@@ -11,7 +11,7 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a class="navbar-brand" href="#">{{title}}</a>
+                <a class="navbar-brand" ui-sref="inside.home">{{title}}</a>
             </div>
 
             <ul class="nav navbar-nav navbar-right">
@@ -21,33 +21,24 @@
         </div>
     </nav>
 
-<style>
-    .overlay {
-        /* Height & width depends on how you want to reveal the overlay (see JS below) */
-        height: 0%;
-        width: 0%;
-        position: fixed; /* Stay in place */
-        z-index: 1; /* Sit on top */
-        left: 0;
-        top: 0;
-        background-color: rgb(95,95,95); /* Black fallback color */
-        background-color: rgba(95,95,95, 0.6); /* Black w/opacity */
-        overflow-x: hidden; /* Disable horizontal scroll */
-        transition: 0s; /* 0.5 second transition effect to slide in or slide down the overlay (height or width, depending on reveal) */
-    }
-    /* Position the content inside the overlay */
-    .overlay-content {
-        position: relative;
-        top: 25%; /* 25% from the top */
-        width: 100%; /* 100% width */
-        text-align: center; /* Centered text/links */
-        margin-top: 30px; /* 30px top margin to avoid conflict with the close button on smaller screens */
-    }
-</style>
 
-    <div class="container">
-        <div class="overlay" id="overlayScreen"><div class="overlay-content">Processing...Please Wait...<br/><br/><img src="../img/loading.gif"/></div></div>
-        <div ui-view></div>
+
+
+    <div class="wrapper">
+        <div class="sidebar">
+            <ul class="list-group">
+                <button type="button" class="list-group-item" ng-class="{active: isCurrentState(link.stateName)}" ng-repeat="link in links" ui-sref="{{link.stateName}}">{{link.name}}</button>
+            </ul>
+        </div>
+
+        <div class="container">
+            <!-- Loading Screen Overlay -->
+            <div class="overlay" id="overlayScreen">
+                <div class="overlay-content">Processing...Please Wait...<br/><br/><img src="img/loading.gif"/></div>
+            </div>
+
+            <div ui-view></div>
+        </div>
     </div>
 </div>
 
