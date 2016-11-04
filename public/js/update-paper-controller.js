@@ -18,7 +18,7 @@
 
             $http.get('services/paper/get-paper', {params: { userID:  $scope.userID, paperID: $scope.paperID }})
                 .then(function(response){
-                    $scope.paper = response.data;
+                    $scope.paper = response.data.paper;
                     $scope.loadingPapers = false;
                     document.getElementById("overlayScreen").style.width = "0%";
                     document.getElementById("overlayScreen").style.height = "0%";
@@ -30,7 +30,7 @@
                 document.getElementById("overlayScreen").style.width = "100%";
                 document.getElementById("overlayScreen").style.height = "100%";
 
-                $http.post('services/paper/update-paper', $scope.paper, $scope.userID)
+                $http.post('services/paper/update-paper', $scope.paper)
                     .then(function(){
 
                         document.getElementById("overlayScreen").style.width = "0%";

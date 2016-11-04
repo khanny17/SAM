@@ -83,19 +83,34 @@
 
         getPaper: function(request, response) {
             console.log('Get Paper - UserID:' + request.query.userID + ' ; PaperID: ' + request.query.paperID);
-            PaperModel.findOne({
+            return PaperModel.findOne({
                 where:{
                     userID:request.query.userID,
                     id:request.query.paperID
                 }
             }).then(function(paper){
-                    PaperVersion.find({
+                    return PaperVersion.find({
                        where:{
                            paperId:paper.id,
                            Version:paper.CurrentVersion
                        }
                     }).then(function(version){
-                        response.send(version);
+                        var paperObj={
+                            ID: version.ID,
+                            Title:version.Title,
+                            ContributingAuthors:version.ContributingAuthors,
+                            Description:version.Description,
+                            Version:version.Version,
+                            PaperFormat:version.PaperFormat,
+                            createdAt:version.createdAt,
+                            updatedAt:version.updatedAt,
+                            paperId:version.paperId,
+                            userID:version.userID,
+                            Status:paper.Status,
+                            originalCreatedDate:paper.createdAt
+                        };
+
+                        response.send({success: true,  paper: paperObj});
                     });
                 });
         },
@@ -127,17 +142,17 @@
         updatePaper: function(req, res) {
             console.log(req.body);
             PaperVersion.create({
-                paperId:req.body.paperID,
-                userId:req.body.userID,
-                Version:req.body.Version,
+                paperId:req.body.paperId,
+                userID:req.body.userID,
+                Version:(req.body.Version + 1),
                 ContributingAuthors:req.body.ContributingAuthors,
                 Description:req.body.Description,
                 Title:req.body.Title,
                 PaperFormat:"PDF"
             }).then(function(version){
                 PaperModel.update({
-                    CurrentVersion:req.body.Version
-                },{ where: {id: req.body.paperID} })
+                    CurrentVersion:(req.body.Version +1)
+                },{ where: {id: req.body.paperId} })
                     .then(function(paper) {
                         res.json({success: true, paper: paper, version:version});
                     });

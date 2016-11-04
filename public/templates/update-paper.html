@@ -33,6 +33,35 @@
         </div>
 
         <div class="form-group">
+            <label class="col-md-4 control-label">Status:</label>
+            <div class="col-md-4">
+                <label class="col-md-4 control-label" >{{paper.Status}}</label>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="col-md-4 control-label">Created On:</label>
+            <div class="col-md-5">
+                <label class="col-md-5 control-label" >{{paper.originalCreatedDate | date:'medium'}}</label>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="col-md-4 control-label">Last Updated:</label>
+            <div class="col-md-5">
+                <label class="col-md-5 control-label" >{{paper.updatedAt | date:'medium'}}</label>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="col-md-4 control-label">Current Version/Revision:</label>
+            <div class="col-md-4">
+                <label class="col-md-1 control-label" >{{paper.Version}}</label>
+            </div>
+        </div>
+
+
+        <div class="form-group">
             <label class="col-md-4 control-label"></label>
             <div class="col-md-8">
                 <button class="btn btn-primary" type="submit">Update</button>
