@@ -5,7 +5,8 @@
         var PaperVersion = sequelize.define("paperVersion", {
                 ID: {
                     type: DataTypes.INTEGER,
-                    primaryKey: true
+                    primaryKey: true,
+                    autoIncrement: true
                 },
                 Title: {
                     type: DataTypes.STRING,
@@ -14,13 +15,15 @@
                 ContributingAuthors: DataTypes.STRING,
                 Description: DataTypes.STRING,
                 Document: DataTypes.BLOB,
-                Version: DataTypes.INTEGER,
+                Version: DataTypes.FLOAT,
+                PaperFormat:DataTypes.ENUM('DOC','PDF')
             },
             {
                 classMethods:
                 {
                     associate: function(models){
                         PaperVersion.belongsTo(models.paper);
+                        PaperVersion.belongsTo(models.user);
                     }
                 }
             });

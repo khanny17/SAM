@@ -16,7 +16,7 @@
 
         $http.get('services/paper/get-papers', {params: { userID:  $scope.userID }})
         .then(function(response){
-            $scope.papers = response.data;
+            $scope.papers = response.data.paperList;
             $scope.loadingPapers = false;
             document.getElementById("overlayScreen").style.width = "0%";
             document.getElementById("overlayScreen").style.height = "0%";

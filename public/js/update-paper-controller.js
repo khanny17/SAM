@@ -30,7 +30,7 @@
                 document.getElementById("overlayScreen").style.width = "100%";
                 document.getElementById("overlayScreen").style.height = "100%";
 
-                $http.post('services/paper/update-paper', $scope.paper)
+                $http.post('services/paper/update-paper', $scope.paper, $scope.userID)
                     .then(function(){
 
                         document.getElementById("overlayScreen").style.width = "0%";

@@ -20,10 +20,9 @@
         },
 
         createPaperRevision: function(req, res) {
-
             PaperRevisionModel.create(req.body)
                 .then(function(paperRevision) {
-                    console.log('Paper Revision ID: ' + paperRevision.id + ' created');
+                    console.log('Paper Revision ID: ' + paperRevision.id + ' for Paper: '+ paperRevision.paperID +'created');
                     res.send(paperRevision);
                 });
         }

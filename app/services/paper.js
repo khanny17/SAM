@@ -3,7 +3,9 @@
     'use strict';
 
     var db = require('../models/db');
+
     var PaperModel = db.paper;
+    var PaperVersion = db.paperVersion;
 
     var init = function(router) {
         router.get('/get-papers', endpoints.getPapers);
@@ -19,13 +21,52 @@
             console.log(request.query);
             console.log("----------------------------------------------------------------------------------");
             console.log(request.query.userID);
-            PaperModel.findAll({
+            var papers;
+            console.log("---Exec: Paper.findAll---");
+            return PaperModel.findAll({
                 where:{
                     userID:request.query.userID
                 }
-            })
-            .then(function(papers){
-                response.send(papers);
+            }).then(function(data){
+                papers = data;
+                console.log("---Exec: PaperVersion.findAll---");
+             //   return PaperVersion.query("SELECT * FROM 'paperVersions' WHERE 'userID' ='1'", { type: PaperVersion.QueryTypes.SELECT})
+                return PaperVersion.findAll({
+                        where:{
+                            userID:request.query.userID
+                        }
+                });
+                }).then(function (versions) {
+                    var paperList=[];
+                var paperObj;
+                    for(var i=0; i<papers.length; i++){
+                        for (var j=0; j<versions.length;j++){
+                            if (papers[i].id === versions[j].paperId && papers[i].CurrentVersion === versions[j].Version){
+                                paperObj={
+                                    ID: versions[j].ID,
+                                    Title:versions[j].Title,
+                                    ContributingAuthors:versions[j].ContributingAuthors,
+                                    Description:versions[j].Description,
+                                    Version:versions[j].Version,
+                                    PaperFormat:versions[j].PaperFormat,
+                                    createdAt:versions[j].createdAt,
+                                    updatedAt:versions[j].updatedAt,
+                                    paperId:versions[j].paperId,
+                                    userID:versions[j].userID,
+                                    Status:papers[i].Status,
+                                    originalCreatedDate:papers[i].createdAt
+                                };
+                                paperList.push(paperObj);
+                            }
+                        }
+                    }
+                    console.log("--Sending response to client---");
+
+                for (var i=0; i<paperList.length;i++){
+                console.log(paperList[i].Status +";" + paperList[i].ID)
+                }
+
+                response.send({success: true,  paperList: paperList});
             });
         },
 
@@ -47,34 +88,61 @@
                     userID:request.query.userID,
                     id:request.query.paperID
                 }
-            })
-                .then(function(papers){
-                    response.send(papers);
+            }).then(function(paper){
+                    PaperVersion.find({
+                       where:{
+                           paperId:paper.id,
+                           Version:paper.CurrentVersion
+                       }
+                    }).then(function(version){
+                        response.send(version);
+                    });
                 });
         },
 
         createPaper: function(req, res) {
             console.log(req.body);
-            PaperModel.create(req.body)
+            PaperModel.create({
+                userID:req.body.userID,
+                Status:'Pending Submission',
+                CurrentVersion:1.0
+            })
             .then(function(paper) {
-                console.log('Paper ID: ' + paper.id + ' created');
-                res.send(paper);
+                console.log("--------");
+                console.log(req.body.userID);
+                PaperVersion.create({
+                    paperId:paper.id,
+                    userID:req.body.userID,
+                    Version:1.0,
+                    ContributingAuthors:req.body.ContributingAuthors,
+                    Description:req.body.Description,
+                    Title:req.body.Title,
+                    PaperFormat:"PDF" //TODO - change this
+                }).then(function(version){
+                    res.json({success: true, paper: paper, version:version});
+                });
             });
         },
 
         updatePaper: function(req, res) {
             console.log(req.body);
-            PaperModel.update({
+            PaperVersion.create({
+                paperId:req.body.paperID,
+                userId:req.body.userID,
+                Version:req.body.Version,
                 ContributingAuthors:req.body.ContributingAuthors,
                 Description:req.body.Description,
-                Title:req.body.Title
-            },{ where: {id: req.body.id} })
-                .then(function(paper) {
-                    console.log('Paper ID: ' + paper.id + ' updated');
-                    res.send(paper);
-                });
+                Title:req.body.Title,
+                PaperFormat:"PDF"
+            }).then(function(version){
+                PaperModel.update({
+                    CurrentVersion:req.body.Version
+                },{ where: {id: req.body.paperID} })
+                    .then(function(paper) {
+                        res.json({success: true, paper: paper, version:version});
+                    });
+            });
         }
-
     };
 
     module.exports = {
