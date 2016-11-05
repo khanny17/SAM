@@ -3,7 +3,7 @@
 
     angular.module('ViewPapersControllerModule',  ['AuthModule'])
 
-    .controller('viewPapersController', ['$scope', '$http','AuthService','$state', function($scope, $http, AuthService,$state) {
+    .controller('viewPapersController', ['$scope', '$http','AuthService','$state','$window', function($scope, $http, AuthService,$state,$window) {
 
         $scope.papers = [];
         $scope.title = "SAM 2017 - Submit Paper";
@@ -23,6 +23,10 @@
         });
 
         $scope.submitPaper = function(paperId) {
+            var result = $window.confirm("Paper submission cannot be reverted. Proceed with submission?");
+            if(result!=true)
+                return;
+
             document.getElementById("overlayScreen").style.width = "100%";
             document.getElementById("overlayScreen").style.height = "100%";
 
