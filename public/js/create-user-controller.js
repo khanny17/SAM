@@ -11,6 +11,8 @@
 
                 $scope.createUser = function () {
                     if (isFormValid()) {
+                        document.getElementById("overlayScreen").style.width = "100%";
+                        document.getElementById("overlayScreen").style.height = "100%";
 
                         $scope.status = "Creating User....";
                         AuthService.register({
@@ -21,9 +23,16 @@
                         }).then(function (response) {
                               //  $scope.users.push(response.data);
                                 $scope.status ='User Created!';
+
+                                document.getElementById("overlayScreen").style.width = "0%";
+                                document.getElementById("overlayScreen").style.height = "0%";
+
                                 $state.go('inside.home');
                             },
                             function (error) {
+                                document.getElementById("overlayScreen").style.width = "0%";
+                                document.getElementById("overlayScreen").style.height = "0%";
+
                                 $scope.validation = [];
                                 $scope.validation.push("The email address format is invalid or is already in use.");
                                 $scope.status ='';
