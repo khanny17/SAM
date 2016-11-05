@@ -11,6 +11,8 @@
 <p ng-if="loadingPapers">Loading Papers...</p>
 
 <legend>Paper Version History</legend>
+    <span>Paper Status: {{paper.Status}}</span>
+
     <div class="row grid table-bordered">
         <div class="col-sm-2" style="background: burlywood">Title</div>
         <div class="col-sm-3" style="background: burlywood">Description</div>
@@ -29,6 +31,7 @@
 
         <div  class="col-sm-2">
             <span ng-if="version.Version == paper.CurrentVersion" >Current Version</span>
+            <span ng-if="version.Version != paper.CurrentVersion && paper.Status!='Pending Submission' " >N/A</span>
             <a ng-if="version.Version != paper.CurrentVersion  && paper.Status=='Pending Submission'"  ng-click="updatePaperCurrentVersion(version.Version)"  class="btn btn-sm btn-default">Set As Current Version</a>
         </div>
 
