@@ -13,6 +13,7 @@
         router.get('/get-paper', endpoints.getPaper);
         router.post('/update-paper', endpoints.updatePaper);
         router.get('/get-all-papers', endpoints.getAllPapers);
+        router.get('/get-paper-versions', endpoints.getPaperVersions);
     };
 
     var endpoints = {
@@ -113,6 +114,26 @@
                         response.send({success: true,  paper: paperObj});
                     });
                 });
+        },
+
+        getPaperVersions: function(request, response) {
+            console.log('Get Paper - UserID:' + request.query.userID + ' ; PaperID: ' + request.query.paperID);
+            return PaperModel.findOne({
+                where:{
+                    userID:request.query.userID,
+                    id:request.query.paperID
+                }
+            }).then(function(paper){
+                console.log("---Exec: PaperVersion.findAll---");
+                return PaperVersion.findAll({
+                    where:{
+                        paperId:paper.id
+                    }
+                }).then(function(versions){
+                    console.log("---Exec: Send Response---");
+                    response.send({success: true,  paper: paper, versions:versions});
+                });
+            });
         },
 
         createPaper: function(req, res) {

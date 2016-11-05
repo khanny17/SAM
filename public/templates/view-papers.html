@@ -31,7 +31,7 @@
         <div  class="col-sm-1">
             <a href="#" ng-if="paper.Status === 'Pending Submission'" onclick="alert('not implemented')" class="btn btn-sm btn-default">Submit</a>  <!-- TODO implement submit functionality-->
             <a href="/update-paper/{{paper.paperId}}" ng-if="paper.Status === 'Pending Submission'" class="btn btn-sm btn-default">Update</a>
-            <a href="#" onclick="alert('not implemented')" ng-if="paper.Version > 1 " class="btn btn-sm btn-default">Revisions</a>  <!-- TODO implement functionality-->
+            <a href="/view-paper-versions/{{paper.paperId}}"  ng-if="paper.Version > 1 " class="btn btn-sm btn-default">Revisions</a>
         </div>
 
    <!--

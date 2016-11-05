@@ -1,0 +1,45 @@
+<style>
+    .row.grid:nth-child(1) {
+        background: lavenderblush;
+    }
+
+    .row.grid:nth-child(even) {
+        background: lavender;
+    }
+</style>
+
+<p ng-if="loadingPapers">Loading Papers...</p>
+
+<legend>Paper Version History</legend>
+<span ng-if="versions.length >= 1">
+    <div class="row grid table-bordered">
+        <div class="col-sm-2" style="background: burlywood">Title</div>
+        <div class="col-sm-3" style="background: burlywood">Description</div>
+        <div class="col-sm-3" style="background: burlywood">Contributing Authors</div>
+        <div class="col-sm-1" style="background: burlywood">Version</div>
+        <div class="col-sm-1" style="background: burlywood">Created On</div>
+        <div class="col-sm-2" style="background: burlywood">Action</div>
+    </div>
+
+    <div class="row grid table-bordered" ng-repeat="version in versions">
+        <div class="col-sm-2">{{version.Title}}</div>
+        <div class="col-sm-3">{{version.Description}}</div>
+        <div class="col-sm-3">{{version.ContributingAuthors}}</div>
+        <div class="col-sm-1">{{version.Version}}</div>
+        <div class="col-sm-1">{{version.createdAt | date:'short'}}</div>
+
+        <div  class="col-sm-2">
+            <span ng-if="version.Version == paper.CurrentVersion" >Current Version</span>
+             <a ng-if="version.Version != paper.CurrentVersion "  href="#"  class="btn btn-sm btn-default">Set As Current</a>
+        </div>
+
+
+    </div>
+</span>
+
+<span ng-if="versions.length == 0">
+    No versions available.<br>
+</span>
+
+<br/>
+<button class="btn btn-primary" type="button" onclick="window.location.href='/view-papers'">Back</button>

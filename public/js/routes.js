@@ -50,6 +50,11 @@
                         templateUrl: 'templates/view-papers.html',
                         controller: 'viewPapersController'
                     })
+                    .state('inside.view-paper-versions', {
+                        url: '/view-paper-versions/:paperID',
+                        templateUrl: 'templates/view-paper-versions.html',
+                        controller: 'viewPaperVersionsController'
+                    })
                     .state('inside.view-user', {
                         url: '/view-user', //The url for the state
                         templateUrl: 'templates/view-user.html', //The path to the html template
