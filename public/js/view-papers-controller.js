@@ -22,6 +22,22 @@
             document.getElementById("overlayScreen").style.height = "0%";
         });
 
+        $scope.submitPaper = function(paperId) {
+            document.getElementById("overlayScreen").style.width = "100%";
+            document.getElementById("overlayScreen").style.height = "100%";
+
+            $http.post('services/paper/submit-paper',  {params: {paperId: paperId }})
+                .then(function(){
+
+                    document.getElementById("overlayScreen").style.width = "0%";
+                    document.getElementById("overlayScreen").style.height = "0%";
+
+
+                    $state.reload();
+
+                });
+        };
+
 
     }]);
 

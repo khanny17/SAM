@@ -8,7 +8,7 @@
       {
         classMethods : {
           associate : function(models){
-            review.belongsTo(models.submission,{as : 'SubmissionID'});
+            review.belongsTo(models.submission,{as : 'Submission'});
             review.belongsTo(models.user,{as : 'PCM'});
           }
         }

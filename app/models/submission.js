@@ -11,7 +11,7 @@
         {
           classMethods : {
             associate : function(models){
-              submission.belongsTo(models.paper,{as : 'PaperID'});
+              submission.belongsTo(models.paper,{as : 'Paper'});
               submission.belongsTo(models.user,{as : 'PCC'});
               submission.belongsTo(models.user,{as : 'Reviewer1'});
               submission.belongsTo(models.user,{as : 'Reviewer2'});

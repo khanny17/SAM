@@ -29,7 +29,7 @@
 
         <div  class="col-sm-2">
             <span ng-if="version.Version == paper.CurrentVersion" >Current Version</span>
-             <a ng-if="version.Version != paper.CurrentVersion "  ng-click="updatePaperCurrentVersion(version.Version)"  class="btn btn-sm btn-default">Set As Current Version</a>
+            <a ng-if="version.Version != paper.CurrentVersion  && paper.Status=='Pending Submission'"  ng-click="updatePaperCurrentVersion(version.Version)"  class="btn btn-sm btn-default">Set As Current Version</a>
         </div>
 
 

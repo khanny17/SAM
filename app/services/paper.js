@@ -6,6 +6,7 @@
 
     var PaperModel = db.paper;
     var PaperVersion = db.paperVersion;
+    var PaperSubmission = db.submission;
 
     var init = function(router) {
         router.get('/get-papers', endpoints.getPapers);
@@ -15,6 +16,7 @@
         router.get('/get-all-papers', endpoints.getAllPapers);
         router.get('/get-paper-versions', endpoints.getPaperVersions);
         router.post('/update-paper-current-version', endpoints.updatePaperCurrentVersion);
+        router.post('/submit-paper', endpoints.submitPaper);
     };
 
     var endpoints = {
@@ -196,6 +198,21 @@
                         console.log("--Exec: Send response");
                         res.json({success: true, paper: paper});
                     });
+        },
+
+        submitPaper: function(req, res) {
+            console.log("--Exec: PaperModel.update");
+            return PaperModel.update({
+                Status:'Submitted'
+            },{ where: {id: req.body.params.paperId} })
+                .then(function(paper) {
+                    PaperSubmission.create({
+                        PaperId:req.body.params.paperId
+                    }).then(function(submission){
+                        console.log("--Exec: Send response");
+                        res.json({success: true, paper: submission});
+                    });
+                });
         }
     };
 
