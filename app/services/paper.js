@@ -163,22 +163,28 @@
 
         updatePaper: function(req, res) {
             console.log(req.body);
-            PaperVersion.create({
-                paperId:req.body.paperId,
-                userID:req.body.userID,
-                Version:(req.body.Version + 1),
-                ContributingAuthors:req.body.ContributingAuthors,
-                Description:req.body.Description,
-                Title:req.body.Title,
-                PaperFormat:"PDF"
-            }).then(function(version){
-                PaperModel.update({
-                    CurrentVersion:(req.body.Version +1)
-                },{ where: {id: req.body.paperId} })
-                    .then(function(paper) {
-                        res.json({success: true, paper: paper, version:version});
-                    });
+            return PaperVersion.max('Version',{
+                where:{paperId:req.body.paperId}
+            }).then(function(max){
+                return PaperVersion.create({
+                    paperId:req.body.paperId,
+                    userID:req.body.userID,
+                    Version:(max + 1),
+                    ContributingAuthors:req.body.ContributingAuthors,
+                    Description:req.body.Description,
+                    Title:req.body.Title,
+                    PaperFormat:"PDF"
+                }).then(function(version){
+                    return PaperModel.update({
+                        CurrentVersion:(max +1)
+                    },{ where: {id: req.body.paperId} })
+                        .then(function(paper) {
+                            res.json({success: true, paper: paper, version:version});
+                        });
+                });
             });
+
+
         },
 
         updatePaperCurrentVersion: function(req, res) {

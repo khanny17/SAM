@@ -36,7 +36,7 @@
                         document.getElementById("overlayScreen").style.width = "0%";
                         document.getElementById("overlayScreen").style.height = "0%";
 
-                        $state.go('inside.home');
+                        $state.go('inside.view-papers');
                     });
             };
 

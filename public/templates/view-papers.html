@@ -15,23 +15,23 @@
     <div class="row grid table-bordered">
         <div class="col-sm-3" style="background: burlywood">Title</div>
         <div class="col-sm-3" style="background: burlywood">Description</div>
-        <div class="col-sm-3" style="background: burlywood">Contributing Authors</div>
-        <div class="col-sm-1" style="background: burlywood">Version</div>
-        <div class="col-sm-1" style="background: burlywood">Status</div>
+        <div class="col-sm-2" style="background: burlywood">Contributing Authors</div>
+        <div class="col-sm-1" style="background: burlywood">Current Version</div>
+        <div class="col-sm-2" style="background: burlywood">Status</div>
         <div class="col-sm-1" style="background: burlywood">Action</div>
     </div>
 
     <div class="row grid table-bordered" ng-repeat="paper in papers">
         <div class="col-sm-3">{{paper.Title}}</div>
         <div class="col-sm-3">{{paper.Description}}</div>
-        <div class="col-sm-3">{{paper.ContributingAuthors}}</div>
+        <div class="col-sm-2">{{paper.ContributingAuthors}}</div>
         <div class="col-sm-1">{{paper.Version}}</div>
-        <div class="col-sm-1">{{paper.Status}}</div>
+        <div class="col-sm-2">{{paper.Status}}</div>
 
         <div  class="col-sm-1">
             <a href="#" ng-if="paper.Status === 'Pending Submission'" onclick="alert('not implemented')" class="btn btn-sm btn-default">Submit</a>  <!-- TODO implement submit functionality-->
             <a href="/update-paper/{{paper.paperId}}" ng-if="paper.Status === 'Pending Submission'" class="btn btn-sm btn-default">Update</a>
-            <a href="/view-paper-versions/{{paper.paperId}}"  ng-if="paper.Version > 1 " class="btn btn-sm btn-default">Revisions</a>
+            <a href="/view-paper-versions/{{paper.paperId}}"  class="btn btn-sm btn-default">Version History</a>
         </div>
 
    <!--
