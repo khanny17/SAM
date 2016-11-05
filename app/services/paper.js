@@ -14,6 +14,7 @@
         router.post('/update-paper', endpoints.updatePaper);
         router.get('/get-all-papers', endpoints.getAllPapers);
         router.get('/get-paper-versions', endpoints.getPaperVersions);
+        router.post('/update-paper-current-version', endpoints.updatePaperCurrentVersion);
     };
 
     var endpoints = {
@@ -178,6 +179,17 @@
                         res.json({success: true, paper: paper, version:version});
                     });
             });
+        },
+
+        updatePaperCurrentVersion: function(req, res) {
+            console.log("--Exec: PaperModel.update");
+            PaperModel.update({
+                    CurrentVersion:req.body.params.version
+                },{ where: {id: req.body.params.paperId} })
+                    .then(function(paper) {
+                        console.log("--Exec: Send response");
+                        res.json({success: true, paper: paper});
+                    });
         }
     };
 

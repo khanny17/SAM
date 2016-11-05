@@ -26,6 +26,19 @@
                     document.getElementById("overlayScreen").style.height = "0%";
                 });
 
+            $scope.updatePaperCurrentVersion = function(version) {
+                document.getElementById("overlayScreen").style.width = "100%";
+                document.getElementById("overlayScreen").style.height = "100%";
+
+                $http.post('services/paper/update-paper-current-version', {params: { paperId: $scope.paperID, version:  version }})
+                    .then(function(){
+
+                        document.getElementById("overlayScreen").style.width = "0%";
+                        document.getElementById("overlayScreen").style.height = "0%";
+
+                        $state.go('inside.home');
+                    });
+            };
 
         }]);
 
