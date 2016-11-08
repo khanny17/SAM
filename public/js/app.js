@@ -7,6 +7,8 @@
         'SAMRoutes',
         'AuthModule',
 
+        'FileReadDirective',
+
         'HomeControllerModule',
         'InsideControllerModule',
         'SubmitPaperControllerModule',
@@ -19,5 +21,7 @@
         'ViewPapersPCCControllerModule',
         'RatePaperPCCControllerModule',
         'ViewPaperVersionsControllerModule'
+
+
     ]);
 }());
