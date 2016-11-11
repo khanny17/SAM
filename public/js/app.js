@@ -7,6 +7,8 @@
         'SAMRoutes',
         'AuthModule',
 
+        'FileReadDirective',
+
         'HomeControllerModule',
         'InsideControllerModule',
         'SubmitPaperControllerModule',
