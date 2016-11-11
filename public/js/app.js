@@ -18,6 +18,8 @@
         'UpdateUserRoleControllerModule',
         'ViewPapersPCCControllerModule',
         'RatePaperPCCControllerModule',
-        'ViewPaperVersionsControllerModule'
+        'ViewPaperVersionsControllerModule',
+        'ViewPapersPCMControllerModule',
+        'RatePaperPCMControllerModule'
     ]);
 }());

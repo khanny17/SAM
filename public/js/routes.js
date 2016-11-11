@@ -60,6 +60,22 @@
                         templateUrl: 'templates/view-user.html', //The path to the html template
                         controller: 'viewUserController' //The path to the angular controller
                     })
+                    .state('inside.view-papers-pcm', {
+                        url: '/view-papers-pcm',
+                        templateUrl: 'templates/view-papers-pcm.html',
+                        controller: 'viewPapersPCMController'
+                     /*   data: {
+                            permissions: ['PCM'] //TODO - uncomment!
+                        }*/
+                    })
+                    .state('inside.rate-paper-pcm', {
+                        url: '/rate-paper-pcm/:paperID/:version',
+                        templateUrl: 'templates/rate-paper-pcm.html',
+                        controller: 'ratePaperPCMController'
+                        /*   data: {
+                         permissions: ['PCM'] //TODO - uncomment!
+                         }*/
+                    })
                     .state('inside.view-papers-pcc', {
                       url: '/view-papers-pcc',
                       templateUrl: 'templates/view-papers-pcc.html',
