@@ -12,7 +12,10 @@
             {
                 associate: function(models){
                     Paper.belongsTo(models.user);
+                    Paper.hasMany(models.paperVersion);
+                    Paper.hasMany(models.submission);
                 }
+
             }
         });
 
