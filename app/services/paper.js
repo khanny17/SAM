@@ -49,40 +49,41 @@
             }).then(function(data){
                 papers = data;
                 console.log("---Exec: PaperVersion.findAll---");
-             //   return PaperVersion.query("SELECT * FROM 'paperVersions' WHERE 'userID' ='1'", { type: PaperVersion.QueryTypes.SELECT})
+                //   return PaperVersion.query("SELECT * FROM 'paperVersions' WHERE 'userID' ='1'", { type: PaperVersion.QueryTypes.SELECT})
                 return PaperVersion.findAll({
-                        where:{
-                            userID:request.query.userID
-                        }
+                    where:{
+                        userID:request.query.userID
+                    }
                 });
-                }).then(function (versions) {
-                    var paperList=[];
+            }).then(function (versions) {
+                var paperList=[];
                 var paperObj;
-                    for(var i=0; i<papers.length; i++){
-                        for (var j=0; j<versions.length;j++){
-                            if (papers[i].id === versions[j].paperId && papers[i].CurrentVersion === versions[j].Version){
-                                paperObj={
-                                    ID: versions[j].ID,
-                                    Title:versions[j].Title,
-                                    ContributingAuthors:versions[j].ContributingAuthors,
-                                    Description:versions[j].Description,
-                                    Version:versions[j].Version,
-                                    PaperFormat:versions[j].PaperFormat,
-                                    createdAt:versions[j].createdAt,
-                                    updatedAt:versions[j].updatedAt,
-                                    paperId:versions[j].paperId,
-                                    userID:versions[j].userID,
-                                    Status:papers[i].Status,
-                                    originalCreatedDate:papers[i].createdAt
-                                };
-                                paperList.push(paperObj);
-                            }
+                for(var i=0; i<papers.length; i++){
+                    for (var j=0; j<versions.length;j++){
+                        if (papers[i].id === versions[j].paperId && papers[i].CurrentVersion === versions[j].Version){
+                            paperObj={
+                                ID: versions[j].ID,
+                                Title:versions[j].Title,
+                                ContributingAuthors:versions[j].ContributingAuthors,
+                                Description:versions[j].Description,
+                                Document:versions[j].Document,
+                                Version:versions[j].Version,
+                                PaperFormat:versions[j].PaperFormat,
+                                createdAt:versions[j].createdAt,
+                                updatedAt:versions[j].updatedAt,
+                                paperId:versions[j].paperId,
+                                userID:versions[j].userID,
+                                Status:papers[i].Status,
+                                originalCreatedDate:papers[i].createdAt
+                            };
+                            paperList.push(paperObj);
                         }
                     }
-                    console.log("--Sending response to client---");
+                }
+                console.log("--Sending response to client---");
 
                 for (var i=0; i<paperList.length;i++){
-                console.log(paperList[i].Status +";" + paperList[i].ID)
+                    console.log(paperList[i].Status +";" + paperList[i].ID)
                 }
 
                 response.send({success: true,  paperList: paperList});
@@ -95,9 +96,9 @@
             console.log(request.query.userID);
             PaperModel.findAll({
             })
-            .then(function(papers){
-                response.send(papers);
-            });
+                .then(function(papers){
+                    response.send(papers);
+                });
         },
 
         getPaper: function(request, response) {
@@ -108,30 +109,31 @@
                     id:request.query.paperID
                 }
             }).then(function(paper){
-                    return PaperVersion.find({
-                       where:{
-                           paperId:paper.id,
-                           Version:paper.CurrentVersion
-                       }
-                    }).then(function(version){
-                        var paperObj={
-                            ID: version.ID,
-                            Title:version.Title,
-                            ContributingAuthors:version.ContributingAuthors,
-                            Description:version.Description,
-                            Version:version.Version,
-                            PaperFormat:version.PaperFormat,
-                            createdAt:version.createdAt,
-                            updatedAt:version.updatedAt,
-                            paperId:version.paperId,
-                            userID:version.userID,
-                            Status:paper.Status,
-                            originalCreatedDate:paper.createdAt
-                        };
+                return PaperVersion.find({
+                    where:{
+                        paperId:paper.id,
+                        Version:paper.CurrentVersion
+                    }
+                }).then(function(version){
+                    var paperObj={
+                        ID: version.ID,
+                        Title:version.Title,
+                        ContributingAuthors:version.ContributingAuthors,
+                        Description:version.Description,
+                        Document:version.Document,
+                        Version:version.Version,
+                        PaperFormat:version.PaperFormat,
+                        createdAt:version.createdAt,
+                        updatedAt:version.updatedAt,
+                        paperId:version.paperId,
+                        userID:version.userID,
+                        Status:paper.Status,
+                        originalCreatedDate:paper.createdAt
+                    };
 
-                        response.send({success: true,  paper: paperObj});
-                    });
+                    response.send({success: true,  paper: paperObj});
                 });
+            });
         },
 
         getPaperVersions: function(request, response) {
@@ -161,21 +163,22 @@
                 Status:'Pending Submission',
                 CurrentVersion:1.0
             })
-            .then(function(paper) {
-                console.log("--------");
-                console.log(req.body.userID);
-                PaperVersion.create({
-                    paperId:paper.id,
-                    userID:req.body.userID,
-                    Version:1.0,
-                    ContributingAuthors:req.body.ContributingAuthors,
-                    Description:req.body.Description,
-                    Title:req.body.Title,
-                    PaperFormat:"PDF" //TODO - change this
-                }).then(function(version){
-                    res.json({success: true, paper: paper, version:version});
+                .then(function(paper) {
+                    console.log("--------");
+                    console.log(req.body.userID);
+                    PaperVersion.create({
+                        paperId:paper.id,
+                        userID:req.body.userID,
+                        Version:1.0,
+                        ContributingAuthors:req.body.ContributingAuthors,
+                        Description:req.body.Description,
+                        Document:req.body.Document,
+                        Title:req.body.Title,
+                        PaperFormat:"PDF" //TODO - change this
+                    }).then(function(version){
+                        res.json({success: true, paper: paper, version:version});
+                    });
                 });
-            });
         },
 
         updatePaper: function(req, res) {
@@ -190,6 +193,7 @@
                     ContributingAuthors:req.body.ContributingAuthors,
                     Description:req.body.Description,
                     Title:req.body.Title,
+                    Document:req.body.Document,
                     PaperFormat:"PDF"
                 }).then(function(version){
                     return PaperModel.update({
@@ -207,12 +211,12 @@
         updatePaperCurrentVersion: function(req, res) {
             console.log("--Exec: PaperModel.update");
             PaperModel.update({
-                    CurrentVersion:req.body.params.version
-                },{ where: {id: req.body.params.paperId} })
-                    .then(function(paper) {
-                        console.log("--Exec: Send response");
-                        res.json({success: true, paper: paper});
-                    });
+                CurrentVersion:req.body.params.version
+            },{ where: {id: req.body.params.paperId} })
+                .then(function(paper) {
+                    console.log("--Exec: Send response");
+                    res.json({success: true, paper: paper});
+                });
         },
 
         submitPaper: function(req, res) {
