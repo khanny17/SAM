@@ -33,11 +33,6 @@
                     return;
                 }
 
-                //Check if state requires query number
-                if(state.url.includes(':')){
-                    return;
-                }
-
                 //Check if user has permissions
                 if(state.data && state.data.permissions && 
                     !state.data.permissions.includes(AuthService.authenticatedUser().Role)){

@@ -4,6 +4,7 @@
     var db        = require('../models/db');
     var jwt       = require('jwt-simple');
     var UserModel = db.user;
+    var PaperModel = db.paper;
 
     var config = require('../config/database.js');
 
@@ -19,8 +20,9 @@
     var endpoints = {
 
         getUsers: function(req, res) {
-            UserModel.findAll({attributes: ['FirstName', 'LastName', 'Role', 'ID']})
+            UserModel.findAll({attributes: ['FirstName', 'LastName', 'Role', 'ID'], include: [{ model: PaperModel}]})
                 .then(function(users) {
+                    console.log(users)
                     res.send(users);
             });
         },

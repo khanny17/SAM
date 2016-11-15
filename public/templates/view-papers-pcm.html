@@ -1,0 +1,45 @@
+<style>
+    .row.grid:nth-child(1) {
+        background: lavenderblush;
+    }
+
+    .row.grid:nth-child(even) {
+        background: lavender;
+    }
+</style>
+
+<p ng-if="loadingPapers">Loading Papers...</p>
+
+<legend>PCM Review Papers</legend>
+<span ng-if="papers.length >= 1">
+    <div class="row grid table-bordered">
+        <div class="col-sm-3" style="background: burlywood">Title</div>
+        <div class="col-sm-3" style="background: burlywood">Description</div>
+        <div class="col-sm-2" style="background: burlywood">Contributing Authors</div>
+        <div class="col-sm-1" style="background: burlywood">Current Version</div>
+        <div class="col-sm-2" style="background: burlywood">Status</div>
+        <div class="col-sm-1" style="background: burlywood">Action</div>
+    </div>
+
+    <div class="row grid table-bordered" ng-repeat="paper in papers">
+        <div class="col-sm-3">{{paper.Title}}</div>
+        <div class="col-sm-3">{{paper.Description}}</div>
+        <div class="col-sm-2">{{paper.ContributingAuthors}}</div>
+        <div class="col-sm-1">{{paper.Version}}</div>
+        <div class="col-sm-2">{{paper.Status}}</div>
+
+        <div  class="col-sm-1">
+            <a ng-if="paper.Status=='Submitted'" class="btn btn-sm btn-default" href="/rate-paper-pcm/{{paper.paperId}}/{{paper.Version}}">Review Paper</a>
+            <span ng-if="paper.Status!='Submitted'" >N/A</span>
+        </div>
+
+
+    </div>
+</span>
+
+<span ng-if="papers.length == 0">
+    No Papers Available for {{contactAuthor}}.<br>
+</span>
+
+<br/>
+<button class="btn btn-primary" type="button" onclick="window.location.href='/home.html'">Back</button>
