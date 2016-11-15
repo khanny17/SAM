@@ -11,7 +11,7 @@
             classMethods: 
             {
                 associate: function(models){
-                    Paper.belongsTo(models.user);
+                    Paper.belongsTo(models.user, { as: 'userID' } );
                     Paper.hasMany(models.paperVersion);
                     Paper.hasMany(models.submission);
                 }
