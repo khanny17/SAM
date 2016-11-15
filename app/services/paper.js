@@ -7,11 +7,13 @@
     var PaperModel = db.paper;
     var PaperVersion = db.paperVersion;
     var PaperSubmission = db.submission;
+    var User = db.user;
 
     var init = function(router) {
         router.get('/get-papers', endpoints.getPapers);
         router.post('/create-paper', endpoints.createPaper);
         router.get('/get-paper', endpoints.getPaper);
+        router.get('/get-paper-by-version', endpoints.getPaperByVersion);
         router.post('/update-paper', endpoints.updatePaper);
         router.get('/get-all-papers', endpoints.getAllPapers);
         router.get('/get-paper-versions', endpoints.getPaperVersions);
@@ -21,6 +23,19 @@
     };
 
     var endpoints = {
+
+        getPaperByVersion: function (request, response) {
+            console.log('Get PaperID: ' + request.query.paperID + " Version: " + request.query.version );
+            return PaperVersion.findOne({
+                where: {
+                    paperId: request.query.paperID,
+                    Version:request.query.version
+                },
+                include: [PaperModel, User]
+            }).then(function (data) {
+                response.send({success: true, paper: data});
+            });
+        },
 
         getPapers: function(request, response) {
             console.log(request.query);
@@ -235,7 +250,7 @@
             },{ where: {id: req.body.params.paperId} })
                 .then(function(/*paper*/) {
                     PaperSubmission.create({
-                        PaperId:req.body.params.paperId
+                        paperId:req.body.params.paperId
                     }).then(function(submission){
                         console.log("--Exec: Send response");
                         res.json({success: true, paper: submission});
