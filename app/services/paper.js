@@ -15,6 +15,7 @@
         router.post('/update-paper', endpoints.updatePaper);
         router.get('/get-all-papers', endpoints.getAllPapers);
         router.get('/get-paper-versions', endpoints.getPaperVersions);
+        router.get('/download-document', endpoints.downloadDocument);
         router.post('/update-paper-current-version', endpoints.updatePaperCurrentVersion);
         router.post('/submit-paper', endpoints.submitPaper);
     };
@@ -67,8 +68,8 @@
                 }
                 console.log("--Sending response to client---");
 
-                for (var i=0; i<paperList.length;i++){
-                    console.log(paperList[i].Status +";" + paperList[i].ID)
+                for (i=0; i<paperList.length;i++){
+                    console.log(paperList[i].Status +";" + paperList[i].ID);
                 }
 
                 response.send({success: true,  paperList: paperList});
@@ -105,7 +106,8 @@
                         Title:version.Title,
                         ContributingAuthors:version.ContributingAuthors,
                         Description:version.Description,
-                        Document:version.Document,
+                        //Document:version.Document,  NOTE: we do not want to send the document on this endpoint, since it might be a lot of data
+                        //Instead, refer to the "download-document" endpoint
                         Version:version.Version,
                         PaperFormat:version.PaperFormat,
                         createdAt:version.createdAt,
@@ -118,6 +120,28 @@
 
                     response.send({success: true,  paper: paperObj});
                 });
+            });
+        },
+
+        downloadDocument: function(request, response) {
+            return PaperModel.findOne({
+                where:{
+                    id:request.query.paperID
+                }
+            }).then(function(paper){
+                if(!paper){
+                    console.log('ERROR: No paper found with id: ', request.query.paperID);
+                }
+
+
+                return PaperVersion.find({
+                    where:{
+                        paperId:paper.id,
+                        Version:paper.CurrentVersion
+                    }
+                });
+            }).then(function(version){
+                response.send(version.Document);
             });
         },
 
@@ -209,7 +233,7 @@
             return PaperModel.update({
                 Status:'Submitted'
             },{ where: {id: req.body.params.paperId} })
-                .then(function(paper) {
+                .then(function(/*paper*/) {
                     PaperSubmission.create({
                         PaperId:req.body.params.paperId
                     }).then(function(submission){

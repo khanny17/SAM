@@ -7,7 +7,7 @@
 
             $scope.paperID=$stateParams.paperID;
             $scope.versions = [];
-            $scope.paper;
+            $scope.paper = null;
             $scope.title = "SAM 2017 - Paper Version History";
             $scope.contactAuthor = AuthService.authenticatedUser().FirstName +" " + AuthService.authenticatedUser().LastName;
             $scope.userID =  AuthService.authenticatedUser().ID;

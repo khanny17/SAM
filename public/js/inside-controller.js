@@ -18,7 +18,7 @@
 
             $scope.isCurrentState = function(stateName){
                 return $state.current.name === stateName;
-            }
+            };
 
             //Set up the sidebar links
             var states = $state.get(); //get all the states
