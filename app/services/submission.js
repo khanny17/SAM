@@ -12,9 +12,23 @@
 
     var init = function (router) {
         router.get('/get-my-assigned-reviews', endpoints.getMyAssignedReviews);
+        router.get('/get-submission', endpoints.getSubmission);
     };
 
     var endpoints = {
+
+        getSubmission: function (request, response) {
+            console.log('Get PaperID: ' + request.query.paperID);
+            return PaperSubmission.findOne({
+                where: {
+                    paperId: request.query.paperID,
+                },
+                include: [PaperModel, Review]
+            }).then(function (data) {
+                response.send({success: true, submission: data});
+            });
+        },
+
 
         getMyAssignedReviews: function (request, response) {
             console.log("----------------------------------------------------------------------------------");
