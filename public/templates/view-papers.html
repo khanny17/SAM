@@ -22,7 +22,7 @@
     </div>
 
     <div class="row grid table-bordered" ng-repeat="paper in papers">
-        <div class="col-sm-3">{{paper.Title}}</div>
+        <div class="col-sm-3"><a target="_self" ng-click="downloadDocument(paper)" download="{{paper.Title}}">{{paper.Title}}</a></div>
         <div class="col-sm-3">{{paper.Description}}</div>
         <div class="col-sm-2">{{paper.ContributingAuthors}}</div>
         <div class="col-sm-1">{{paper.Version}}</div>

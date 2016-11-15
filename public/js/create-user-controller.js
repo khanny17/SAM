@@ -20,7 +20,7 @@
                             password: $scope.password,
                             firstName: $scope.firstName,
                             lastName: $scope.lastName
-                        }).then(function (response) {
+                        }).then(function () {
                               //  $scope.users.push(response.data);
                                 $scope.status ='User Created!';
 
@@ -30,6 +30,7 @@
                                 $state.go('inside.home');
                             },
                             function (error) {
+                                console.log(error);
                                 document.getElementById("overlayScreen").style.width = "0%";
                                 document.getElementById("overlayScreen").style.height = "0%";
 
