@@ -26,8 +26,39 @@
     <div class="col-sm-4">{{paper.ContributingAuthors}}</div>
     <div class="col-sm-3">{{paper.user.FirstName}} {{paper.user.LastName}}</div>
     <div class="col-sm-1">{{paper.Version}}</div>
-    <div class="col-sm-1"><a href="#">Assign</a></div>
+    <div class="col-sm-1"><a id="assign" ng-click="assign(paper)">Assign</a></div>
 </div>
+
+<div id="assignPcmDialogBox" title="Assign PCMs">
+  <form>
+    <p>Please select reviewers for the paper</p>
+    <div>
+      <label for="reviewer1">Reviewer 1</label>
+      <select id="reviewer1" ng-model="selectedReviewer1">
+        <option value="" disabled selected>Select</option>
+        <option ng-repeat="pcm in pcms" value="{{pcm}}">{{pcm.FirstName}} {{pcm.LastName}}</option>
+      </select>
+    </div>
+    <div>
+      <label for="reviewer2">Reviewer 2</label>
+      <select id="reviewer2" ng-model="selectedReviewer2">
+        <option value="" disabled selected>Select</option>
+        <option ng-repeat="pcm in pcms" value="{{pcm}}">{{pcm.FirstName}} {{pcm.LastName}}</option>
+      </select>
+    </div>
+    <div>
+      <label for="reviewer3">Reviewer 3</label>
+      <select id="reviewer3" ng-model="selectedReviewer3">
+        <option value="" disabled selected>Select</option>
+        <option ng-repeat="pcm in pcms" value="{{pcm}}">{{pcm.FirstName}} {{pcm.LastName}}</option>
+      </select>
+    </div>
+    <!-- <div>
+      <input type="submit" id="assign-submit" value="Assign"/>
+    </div> -->
+  </form>
+<div>
+
 
 <!-- <div>
     <p ng-if="loadingPapers">Loading Papers...</p>

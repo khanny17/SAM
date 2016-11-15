@@ -13,6 +13,7 @@
         router.post('/authenticate', endpoints.authenticate);
         router.get('/get-users', endpoints.getUsers);
         router.post('/update-roles',endpoints.updateRoles);
+        router.post('/get-pcms',endpoints.getPCMs);
     };
 
     var endpoints = {
@@ -22,6 +23,16 @@
                 .then(function(users) {
                     res.send(users);
             });
+        },
+
+        getPCMs: function(req, res){
+          UserModel.findAll({
+            where : {
+              Role:'PCM'
+            }
+          }).then(function(PCMs){
+            res.send(PCMs)
+          });
         },
 
         updateRoles: function(req, res) {
