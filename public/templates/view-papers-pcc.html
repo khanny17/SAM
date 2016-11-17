@@ -29,32 +29,36 @@
     <div class="col-sm-1"><a id="assign" ng-click="assign(paper)">Assign</a></div>
 </div>
 
-<div id="assignPcmDialogBox" title="Assign PCMs">
-  <form>
+<div id="assignPcmDialogBox" title="Assign Reviewers">
+  <form name="assignPcmForm">
     <p>Please select reviewers for the paper</p>
+    <p ng-if="valmsg">{{valmsg}}</p>
     <div>
       <label for="reviewer1">Reviewer 1</label>
-      <select id="reviewer1" ng-model="selectedReviewer1">
+      <select id="reviewer1" name="reviewer1" ng-model="selectedReviewer1" required="true">
         <option value="" disabled selected>Select</option>
         <option ng-repeat="pcm in pcms" value="{{pcm}}">{{pcm.FirstName}} {{pcm.LastName}}</option>
       </select>
+      <p ng-show="assignPcmForm.reviewer1.$invalid" class="help-block">This field is required.</p>
     </div>
     <div>
       <label for="reviewer2">Reviewer 2</label>
-      <select id="reviewer2" ng-model="selectedReviewer2">
+      <select id="reviewer2" name="reviewer2" ng-model="selectedReviewer2" required="true">
         <option value="" disabled selected>Select</option>
         <option ng-repeat="pcm in pcms" value="{{pcm}}">{{pcm.FirstName}} {{pcm.LastName}}</option>
       </select>
+      <p ng-show="assignPcmForm.reviewer2.$invalid" class="help-block">This field is required.</p>
     </div>
     <div>
       <label for="reviewer3">Reviewer 3</label>
-      <select id="reviewer3" ng-model="selectedReviewer3">
+      <select id="reviewer3" name="reviewer3" ng-model="selectedReviewer3" required="true">
         <option value="" disabled selected>Select</option>
         <option ng-repeat="pcm in pcms" value="{{pcm}}">{{pcm.FirstName}} {{pcm.LastName}}</option>
       </select>
+      <p ng-show="assignPcmForm.reviewer3.$invalid" class="help-block">This field is required.</p>
     </div>
     <!-- <div>
-      <input type="submit" id="assign-submit" value="Assign"/>
+      <button type="submit">Submit</submit>
     </div> -->
   </form>
 <div>

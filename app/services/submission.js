@@ -12,6 +12,8 @@
 
     var init = function (router) {
         router.get('/get-my-assigned-reviews', endpoints.getMyAssignedReviews);
+        router.get('/get-submission', endpoints.getSubmission);
+        router.get('/update-submission-with-reviewers',endpoints.updateSubmissionWithReviewers);
     };
 
     var endpoints = {
@@ -52,8 +54,33 @@
                     response.send({success: true, papers: data, submissions: paperSubmissions});
                 });
             });
+        },
+
+        getSubmission: function(req,res){
+          SubmissionModel.find({
+            where:{
+              paperId: req.query.paperId
+            }
+          }).then(function(submission){
+            res.send(submission);
+          });
+        },
+
+        updateSubmissionWithReviewers: function(request,response){
+
+            return SubmissionModel.update({
+              reviewer1 : req.body.params.reviewer1,
+              reviewer2 : req.body.params.reviewer2,
+              reviewer3 : req.body.params.reviewer3
+            },{
+              where :{
+                paperId : req.body.params.paperId
+              }
+            }).then(function(submission){
+              res.json({success: true, submission: submission});
+            });
+
         }
-    };
 
 /*
          getMyAssignedReviews:function (request, response) {
@@ -126,7 +153,7 @@
                 })
             }
   */
-
+    };
     module.exports = {
         init: init
     };

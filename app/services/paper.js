@@ -93,11 +93,39 @@
         getAllPapers: function(request, response) {
             console.log(request.query);
             console.log("----------------------------------------------------------------------------------");
-            console.log(request.query.userID);
-            PaperModel.findAll({
-            })
-                .then(function(papers){
-                    response.send(papers);
+
+            return PaperModel.findAll({
+
+            }).then(function(papers){
+                  var paperObjs = [];
+                  for (var paper in papers) {
+                    // if (object.hasOwnProperty(paper)) {papers
+                    // }
+                    console.log("paper-"+paper.id);
+                    return PaperVersion.find({
+                      paperId:paper.id,
+                      Version:paper.CurrentVersion
+                    }).then(function(version){
+                      console.log("version-"+version.ID);
+                      var paperObj={
+                          ID: version.ID,
+                          Title:version.Title,
+                          ContributingAuthors:version.ContributingAuthors,
+                          Description:version.Description,
+                          Document:version.Document,
+                          Version:version.Version,
+                          PaperFormat:version.PaperFormat,
+                          createdAt:version.createdAt,
+                          updatedAt:version.updatedAt,
+                          paperId:version.paperId,
+                          userID:version.userID,
+                          Status:paper.Status,
+                          originalCreatedDate:paper.createdAt
+                      };
+                      paperObjs.push(paperObj);
+                    })
+                  }
+                    response.send(paperObjs);
                 });
         },
 
