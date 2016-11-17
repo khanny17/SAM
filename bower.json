@@ -6,6 +6,7 @@
     "font-awesome": "latest",
     "angular": "latest",
     "angular-ui-router": "latest",
-    "angular-animate": "^1.5.8"
+    "angular-animate": "^1.5.8",
+    "angular-bootstrap": "latest"
   }
 }

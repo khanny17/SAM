@@ -18,7 +18,7 @@
 
             $scope.isCurrentState = function(stateName){
                 return $state.current.name === stateName;
-            }
+            };
 
             //Set up the sidebar links
             var states = $state.get(); //get all the states
@@ -30,6 +30,11 @@
 
                 //Check if state is an inside state
                 if(name.length <= 1 || name[0] !== 'inside') {
+                    return;
+                }
+
+                //Check if state requires query number
+                if(state.url.includes(':')){
                     return;
                 }
 

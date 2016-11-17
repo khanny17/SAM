@@ -18,6 +18,7 @@
               submission.belongsTo(models.user,{as : 'Reviewer2',foreignKey: 'Reviewer2ID' });
               submission.belongsTo(models.user,{as : 'Reviewer3', foreignKey: 'Reviewer3ID'});
               submission.hasMany(models.review);
+              submission.hasMany(models.PCCReview);
 
             }
           }

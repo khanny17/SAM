@@ -39,6 +39,7 @@
 
         updateRoles: function(req, res) {
 
+            var i = 0;
             var newPCM = req.body.params.newPCM;
             var newPCC = req.body.params.newPCC;
 
@@ -49,7 +50,7 @@
                 }
             );
 
-            for (var i = 0; i < newPCM.length; i++) {
+            for (i = 0; i < newPCM.length; i++) {
                 UserModel.update({
                         Role: 'PCM'
                     }, {
@@ -59,7 +60,7 @@
                     }
                 );
             }
-            for (var i = 0; i < newPCC.length; i++) {
+            for (i = 0; i < newPCC.length; i++) {
                 UserModel.update({
                         Role: 'PCC'
                     }, {

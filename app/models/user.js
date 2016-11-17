@@ -36,6 +36,7 @@
                     User.hasMany(models.paper, {as: 'papers'});
 
                     User.hasMany(models.review, {as: 'PCM', foreignKey: 'PCMID'});
+                    User.hasMany(models.PCCReview, {as: 'PCC', foreignKey: 'PCCID'});
 
                     User.hasMany(models.submission,{as : 'PCC', foreignKey: 'PCCID'});
                     User.hasMany(models.submission,{as : 'Reviewer1', foreignKey: 'Reviewer1ID'});
