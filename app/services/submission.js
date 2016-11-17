@@ -13,6 +13,7 @@
     var init = function (router) {
         router.get('/get-my-assigned-reviews', endpoints.getMyAssignedReviews);
         router.get('/get-submission', endpoints.getSubmission);
+        router.get('/get-all-submissions', endpoints.getAllSubmissions);
     };
 
     var endpoints = {
@@ -25,7 +26,61 @@
                 },
                 include: [PaperModel, Review]
             }).then(function (data) {
-                response.send({success: true, submission: data});
+                response.send({success: true, submissions: data});
+            });
+        },
+
+        getAllSubmissions: function (request, response) {
+            /*
+             SELECT
+             paperversions.paperId             AS "PaperId",
+             paperversions.ID                  AS "PaperVersionId",
+             submissions.ID                    AS "SubmissionId",
+             papers.CurrentVersion             AS "CurrentVersion",
+             papers.Status                     AS "PaperStatus",
+             papers.userID                     AS "PaperAuthorId",
+             papers.createdAt                  AS "OriginalCreatedAt",
+             paperversions.Title               AS "PaperTitle",
+             paperversions.ContributingAuthors AS "PaperContibutingAuthors",
+             paperversions.Description         AS "PaperDescription",
+             paperversions.Document            AS "PaperDocument",
+             paperversions.PaperFormat         AS "PaperFormat",
+             paperversions.createdAt           AS "VersionCreatedAt",
+             submissions.PCCID                 AS "SubmissionPCCId",
+             submissions.Reviewer1ID           AS "SubmissionReviewer1Id",
+             submissions.Reviewer2ID           AS "SubmissionReviewer2Id",
+             submissions.Reviewer3ID           AS "SubmissionReviewer3Id",
+             submissions.createdAt             AS "SubmissionCreatedAt"
+             FROM paperVersions
+             INNER JOIN papers
+             ON (paperVersions.paperId = papers.id AND paperVersions.Version = papers.CurrentVersion)
+             INNER JOIN submissions ON (papers.id = submissions.paperId)
+             WHERE papers.Status = "Submitted"
+             */
+
+            var sql_query ='SELECT paperversions.paperId AS "PaperId", paperversions.ID AS "PaperVersionId", submissions.ID AS "SubmissionId", papers.CurrentVersion AS "CurrentVersion", papers.Status AS "PaperStatus", papers.userID AS "PaperAuthorId", papers.createdAt AS "OriginalCreatedAt", paperversions.Title AS "PaperTitle", paperversions.ContributingAuthors AS "PaperContibutingAuthors", paperversions.Description AS "PaperDescription", paperversions.Document AS "PaperDocument", paperversions.PaperFormat AS "PaperFormat", paperversions.createdAt AS "VersionCreatedAt", submissions.PCCID AS "SubmissionPCCId", submissions.Reviewer1ID AS "SubmissionReviewer1Id", submissions.Reviewer2ID AS "SubmissionReviewer2Id", submissions.Reviewer3ID AS "SubmissionReviewer3Id", submissions.createdAt AS "SubmissionCreatedAt" FROM paperVersions INNER JOIN papers ON (paperVersions.paperId = papers.id AND paperVersions.Version = papers.CurrentVersion) INNER JOIN submissions ON (papers.id = submissions.paperId) WHERE papers.Status = "Submitted"';
+
+            return  db.sequelize.query(sql_query)
+                .then(function (data) {
+                    console.log(data);
+                    response.send({success: true, submissions: data});
+            });
+        },
+
+
+        getAllSubmissions2: function (request, response) {
+            var papers;
+            var paperSubmissions;
+            return PaperSubmission.findOne({
+                include: [PaperModel, Review]
+            }).then(function (data) {
+                paperSubmissions = data;
+                return db.sequelize.query("SELECT * FROM paperVersions INNER JOIN `papers`  ON (`paperVersions`.`paperId` = `papers`.`id`   AND `paperVersions`.`Version` = `papers`.`CurrentVersion` ) WHERE `papers`.Status = 'Submitted'")
+                    .then(function (data) {
+                        console.log(data);
+                        papers = data;
+                        response.send({success: true, papers: data, submissions: paperSubmissions});
+                    });
             });
         },
 
