@@ -12,61 +12,61 @@
 <form ng-submit="ratePaper()" class="form-horizontal">
     <fieldset>
         <legend>PCM - Review & Rate Paper</legend>
-        <span>Paper Status: {{paper.Status}}</span>
+        <span>Paper Status: {{paper[0].PaperStatus}}</span>
 
         <div class="form-group">
             <label class="col-md-4 control-label">Contact Author:</label>
             <div class="col-md-4">
-                <label class="control-label">{{paper.user.FirstName}}&nbsp;{{paper.user.LastName}}&nbsp;({{paper.user.Email}})</label>
+                <label class="control-label">{{paper[0].UserFirstName}}&nbsp;{{paper[0].UserLastName}}&nbsp;({{paper[0].UserEmail}})</label>
             </div>
         </div>
 
         <div class="form-group">
             <label class="col-md-4 control-label">Paper Title:</label>
             <div class="col-md-4">
-                <label class="control-label">{{paper.Title}}</label>
+                <label class="control-label">{{paper[0].PaperTitle}}</label>
             </div>
         </div>
 
         <div class="form-group">
             <label class="col-md-4 control-label">Paper Description:</label>
             <div class="col-md-4">
-                <label class="control-label">{{paper.Description}}</label>
+                <label class="control-label">{{paper[0].PaperDescription}}</label>
             </div>
         </div>
 
         <div class="form-group">
             <label class="col-md-4 control-label">Contributing Authors:</label>
             <div class="col-md-4">
-                <label class="control-label">{{paper.ContributingAuthors}}</label>
+                <label class="control-label">{{paper[0].PaperContibutingAuthors}}</label>
             </div>
         </div>
 
         <div class="form-group">
             <label class="col-md-4 control-label">Contributing Authors:</label>
             <div class="col-md-4">
-                <label class="control-label">{{paper.PaperFormat}}</label>
+                <label class="control-label">{{paper[0].PaperFormat}}</label>
             </div>
         </div>
 
         <div class="form-group">
             <label class="col-md-4 control-label">Version:</label>
             <div class="col-md-1">
-                <label class="col-md-1 control-label">{{paper.Version}}</label>
+                <label class="col-md-1 control-label">{{paper[0].CurrentVersion}}</label>
             </div>
         </div>
 
         <div class="form-group">
             <label class="col-md-4 control-label">This Version Created On:</label>
             <div class="col-md-5">
-                <label class="col-md-4 control-label">{{paper.createdAt | date:'medium'}}</label>
+                <label class="col-md-4 control-label">{{paper[0].VersionCreatedAt | date:'medium'}}</label>
             </div>
         </div>
 
         <div class="form-group">
             <label class="col-md-4 control-label">Original Version Created On:</label>
             <div class="col-md-5">
-                <label class="col-md-4 control-label">{{paper.paper.createdAt | date:'medium'}}</label>
+                <label class="col-md-4 control-label">{{paper[0].OriginalCreatedAt | date:'medium'}}</label>
             </div>
         </div>
 

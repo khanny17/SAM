@@ -10,7 +10,7 @@
 
 <p ng-if="loadingPapers">Loading Papers...</p>
 
-<legend>PCM Review Papers</legend>
+<legend>PCM Set Paper Preference</legend>
 <span ng-if="papers.length >= 1">
     <div class="row grid table-bordered">
         <div class="col-sm-3" style="background: burlywood">Title</div>
@@ -24,12 +24,12 @@
     <div class="row grid table-bordered" ng-repeat="paper in papers">
         <div class="col-sm-3">{{paper.PaperTitle}}</div>
         <div class="col-sm-3">{{paper.PaperDescription}}</div>
-        <div class="col-sm-2">{{paper.PaperContributingAuthors}}</div>
+        <div class="col-sm-2">{{paper.PaperContibutingAuthors}}</div>
         <div class="col-sm-1">{{paper.CurrentVersion}}</div>
         <div class="col-sm-2">{{paper.PaperStatus}}</div>
 
         <div  class="col-sm-1">
-            <a ng-if="paper.PaperStatus=='Submitted'" class="btn btn-sm btn-default" href="/rate-paper-pcm/{{paper.SubmissionId}}">Review Paper</a>
+            <a ng-if="paper.PaperStatus=='Submitted'" class="btn btn-sm btn-default" onclick="alert('TODO')">Set As Preferred</a>
             <span ng-if="paper.PaperStatus!='Submitted'" >N/A</span>
         </div>
 
