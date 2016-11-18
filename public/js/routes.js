@@ -69,9 +69,17 @@
                         }*/
                     })
                     .state('inside.rate-paper-pcm', {
-                        url: '/rate-paper-pcm/:paperID/:version',
+                        url: '/rate-paper-pcm/:submissionId',
                         templateUrl: 'templates/rate-paper-pcm.html',
                         controller: 'ratePaperPCMController'
+                        /*   data: {
+                         permissions: ['PCM'] //TODO - uncomment!
+                         }*/
+                    })
+                    .state('inside.set-paper-preference-pcm', {
+                        url: '/set-paper-preference-pcm',
+                        templateUrl: 'templates/set-paper-preference-pcm.html',
+                        controller: 'setPaperPreferencePCMController'
                         /*   data: {
                          permissions: ['PCM'] //TODO - uncomment!
                          }*/

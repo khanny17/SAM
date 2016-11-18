@@ -1,12 +1,12 @@
 (function () {
     'use strict';
 
-    angular.module('ViewPapersPCMControllerModule',  ['AuthModule'])
+    angular.module('SetPaperPreferencePCMControllerModule',  ['AuthModule'])
 
-        .controller('viewPapersPCMController', ['$scope', '$http','AuthService','$state','$window', function($scope, $http, AuthService,$state,$window) {
+        .controller('setPaperPreferencePCMController', ['$scope', '$http','AuthService', function($scope, $http, AuthService) {
 
             $scope.papers = [];
-            $scope.title = "SAM 2017 - PCM Review Paper";
+            $scope.title = "SAM 2017 - PCM Set Paper Preference";
             $scope.contactAuthor = AuthService.authenticatedUser().FirstName +" " + AuthService.authenticatedUser().LastName;
             $scope.userID =  AuthService.authenticatedUser().ID;
             $scope.loadingPaper = true;
@@ -14,7 +14,7 @@
             document.getElementById("overlayScreen").style.width = "100%";
             document.getElementById("overlayScreen").style.height = "100%";
 
-            $http.get('services/submission/get-my-assigned-submission-reviews', {params: { userID:  $scope.userID }})
+            $http.get('services/submission/get-all-submissions')
                 .then(function(response){
                     $scope.papers = response.data.submissions[0];
                     $scope.loadingPapers = false;
