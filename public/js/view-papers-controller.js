@@ -47,16 +47,11 @@
                 $scope.downloadDocument = function(paper) {
                     $http.get('services/paper/download-document', { params: { paperID: paper.paperId } })
                         .then(function(response) {
-                            //console.log(response.data);
-                            //console.log(atob(response.data));
-                            //var blob = new Blob([response.data] , {type:'text/html'});
-                            //console.log(blob);
-                            ////document.location.href = window.URL.createObjectURL(blob);
-                            //document.location.href = "data:text/html;base64," + response.data;
-                            var blob = b64toBlob(response.data, 'text/html');
+                            var blob = b64toBlob(response.data.file, 'application/octet-stream');
                             var url = URL.createObjectURL(blob);
+                            var a = document.createElement('a');
                             a.href = url;
-                            a.download = fileName;
+                            a.download = response.data.fileName;
                             a.click();
                             URL.revokeObjectURL(url);
                         });

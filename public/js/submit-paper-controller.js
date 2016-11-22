@@ -21,10 +21,16 @@
             });
 */
 
+        $scope.isValid = function(){
+            return ($scope.paper.Document && $scope.format);
+        };
 
         $scope.submitPaper = function() {
+
             document.getElementById("overlayScreen").style.width = "100%";
             document.getElementById("overlayScreen").style.height = "100%";
+
+            $scope.paper.PaperFormat = $scope.format;
 
             $http.post('services/paper/create-paper', $scope.paper)
             .then(function(){

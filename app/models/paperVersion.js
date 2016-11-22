@@ -14,9 +14,9 @@
                 },
                 ContributingAuthors: DataTypes.STRING,
                 Description: DataTypes.STRING,
-                Document: DataTypes.BLOB,
+                Document: DataTypes.BLOB('long'),
                 Version: DataTypes.FLOAT,
-                PaperFormat:DataTypes.ENUM('DOC','PDF')
+                PaperFormat:DataTypes.ENUM('DOC','PDF', 'DOCX')
             },
             {
                 classMethods:
