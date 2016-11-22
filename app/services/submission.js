@@ -14,21 +14,60 @@
         router.get('/get-my-assigned-reviews', endpoints.getMyAssignedReviews);
         router.get('/get-submission', endpoints.getSubmission);
         router.get('/update-submission-with-reviewers',endpoints.updateSubmissionWithReviewers);
+        router.get('/get-my-assigned-submission-reviews', endpoints.getMyAssignedSubmissionReviews);
         router.get('/get-all-submissions', endpoints.getAllSubmissions);
+        router.get('/get-submission-by-id', endpoints.getSubmissionById);
     };
 
     var endpoints = {
 
-        getSubmission: function (request, response) {
-            console.log('Get PaperID: ' + request.query.paperID);
-            return PaperSubmission.findOne({
-                where: {
-                    paperId: request.query.paperID,
-                },
-                include: [PaperModel, Review]
-            }).then(function (data) {
-                response.send({success: true, submissions: data});
-            });
+
+        getSubmissionById: function (request, response) {
+            var submissionId = request.query.submissionId;
+
+            /*
+             SELECT
+             paperversions.paperId             AS "PaperId",
+             paperversions.ID                  AS "PaperVersionId",
+             submissions.ID                    AS "SubmissionId",
+             papers.CurrentVersion             AS "CurrentVersion",
+             papers.Status                     AS "PaperStatus",
+             papers.userID                     AS "PaperAuthorId",
+             papers.createdAt                  AS "OriginalCreatedAt",
+             paperversions.Title               AS "PaperTitle",
+             paperversions.ContributingAuthors AS "PaperContibutingAuthors",
+             paperversions.Description         AS "PaperDescription",
+             paperversions.Document            AS "PaperDocument",
+             paperversions.PaperFormat         AS "PaperFormat",
+             paperversions.createdAt           AS "VersionCreatedAt",
+             submissions.PCCID                 AS "SubmissionPCCId",
+             submissions.Reviewer1ID           AS "SubmissionReviewer1Id",
+             submissions.Reviewer2ID           AS "SubmissionReviewer2Id",
+             submissions.Reviewer3ID           AS "SubmissionReviewer3Id",
+             submissions.createdAt             AS "SubmissionCreatedAt",
+             users.FirstName                   AS "UserFirstName",
+             users.LastName                    AS "UserLastName",
+             users.Email                       AS "UserEmail"
+             FROM paperVersions
+             INNER JOIN papers
+             ON (paperVersions.paperId = papers.id AND paperVersions.Version = papers.CurrentVersion)
+             INNER JOIN submissions ON (papers.id = submissions.paperId)
+             INNER JOIN users ON (users.ID = papers.userID)
+             WHERE submissions.ID = "111" <--- Note: change this
+             */
+
+            var sql_query ='SELECT paperversions.paperId AS "PaperId", paperversions.ID AS "PaperVersionId", submissions.ID AS "SubmissionId", papers.CurrentVersion AS "CurrentVersion", papers.Status AS "PaperStatus", papers.userID AS "PaperAuthorId", papers.createdAt AS "OriginalCreatedAt", paperversions.Title AS "PaperTitle", paperversions.ContributingAuthors AS "PaperContibutingAuthors", paperversions.Description AS "PaperDescription", paperversions.Document AS "PaperDocument", paperversions.PaperFormat AS "PaperFormat", paperversions.createdAt AS "VersionCreatedAt", submissions.PCCID AS "SubmissionPCCId", submissions.Reviewer1ID AS "SubmissionReviewer1Id", submissions.Reviewer2ID AS "SubmissionReviewer2Id", submissions.Reviewer3ID AS "SubmissionReviewer3Id", submissions.createdAt AS "SubmissionCreatedAt", users.FirstName AS "UserFirstName",users.LastName AS "UserLastName", users.Email AS "UserEmail"' +
+                'FROM paperVersions ' +
+                'INNER JOIN papers ON (paperVersions.paperId = papers.id AND paperVersions.Version = papers.CurrentVersion) ' +
+                'INNER JOIN submissions ON (papers.id = submissions.paperId) ' +
+                'INNER JOIN users ON (users.ID = papers.userID)' +
+                'WHERE submissions.ID = "'+submissionId+'"';
+
+            return  db.sequelize.query(sql_query)
+                .then(function (data) {
+                    console.log(data);
+                    response.send({success: true, submission: data});
+                });
         },
 
         getAllSubmissions: function (request, response) {
@@ -51,15 +90,24 @@
              submissions.Reviewer1ID           AS "SubmissionReviewer1Id",
              submissions.Reviewer2ID           AS "SubmissionReviewer2Id",
              submissions.Reviewer3ID           AS "SubmissionReviewer3Id",
-             submissions.createdAt             AS "SubmissionCreatedAt"
+             submissions.createdAt             AS "SubmissionCreatedAt",
+             users.FirstName                   AS "UserFirstName",
+             users.LastName                    AS "UserLastName",
+             users.Email                       AS "UserEmail"
              FROM paperVersions
              INNER JOIN papers
              ON (paperVersions.paperId = papers.id AND paperVersions.Version = papers.CurrentVersion)
              INNER JOIN submissions ON (papers.id = submissions.paperId)
+             INNER JOIN users ON (users.ID = papers.userID)
              WHERE papers.Status = "Submitted"
              */
 
-            var sql_query ='SELECT paperversions.paperId AS "PaperId", paperversions.ID AS "PaperVersionId", submissions.ID AS "SubmissionId", papers.CurrentVersion AS "CurrentVersion", papers.Status AS "PaperStatus", papers.userID AS "PaperAuthorId", papers.createdAt AS "OriginalCreatedAt", paperversions.Title AS "PaperTitle", paperversions.ContributingAuthors AS "PaperContibutingAuthors", paperversions.Description AS "PaperDescription", paperversions.Document AS "PaperDocument", paperversions.PaperFormat AS "PaperFormat", paperversions.createdAt AS "VersionCreatedAt", submissions.PCCID AS "SubmissionPCCId", submissions.Reviewer1ID AS "SubmissionReviewer1Id", submissions.Reviewer2ID AS "SubmissionReviewer2Id", submissions.Reviewer3ID AS "SubmissionReviewer3Id", submissions.createdAt AS "SubmissionCreatedAt" FROM paperVersions INNER JOIN papers ON (paperVersions.paperId = papers.id AND paperVersions.Version = papers.CurrentVersion) INNER JOIN submissions ON (papers.id = submissions.paperId) WHERE papers.Status = "Submitted"';
+            var sql_query ='SELECT paperversions.paperId AS "PaperId", paperversions.ID AS "PaperVersionId", submissions.ID AS "SubmissionId", papers.CurrentVersion AS "CurrentVersion", papers.Status AS "PaperStatus", papers.userID AS "PaperAuthorId", papers.createdAt AS "OriginalCreatedAt", paperversions.Title AS "PaperTitle", paperversions.ContributingAuthors AS "PaperContibutingAuthors", paperversions.Description AS "PaperDescription", paperversions.Document AS "PaperDocument", paperversions.PaperFormat AS "PaperFormat", paperversions.createdAt AS "VersionCreatedAt", submissions.PCCID AS "SubmissionPCCId", submissions.Reviewer1ID AS "SubmissionReviewer1Id", submissions.Reviewer2ID AS "SubmissionReviewer2Id", submissions.Reviewer3ID AS "SubmissionReviewer3Id", submissions.createdAt AS "SubmissionCreatedAt", users.FirstName AS "UserFirstName",users.LastName AS "UserLastName", users.Email AS "UserEmail"' +
+                'FROM paperVersions ' +
+                'INNER JOIN papers ON (paperVersions.paperId = papers.id AND paperVersions.Version = papers.CurrentVersion) ' +
+                'INNER JOIN submissions ON (papers.id = submissions.paperId) ' +
+                'INNER JOIN users ON (users.ID = papers.userID)' +
+                'WHERE papers.Status = "Submitted"';
 
             return  db.sequelize.query(sql_query)
                 .then(function (data) {
@@ -68,60 +116,51 @@
             });
         },
 
+        getMyAssignedSubmissionReviews: function (request, response) {
+            var review_pcmID = request.query.userID;
 
-        getAllSubmissions2: function (request, response) {
-            var papers;
-            var paperSubmissions;
-            return PaperSubmission.findOne({
-                include: [PaperModel, Review]
-            }).then(function (data) {
-                paperSubmissions = data;
-                return db.sequelize.query("SELECT * FROM paperVersions INNER JOIN `papers`  ON (`paperVersions`.`paperId` = `papers`.`id`   AND `paperVersions`.`Version` = `papers`.`CurrentVersion` ) WHERE `papers`.Status = 'Submitted'")
-                    .then(function (data) {
-                        console.log(data);
-                        papers = data;
-                        response.send({success: true, papers: data, submissions: paperSubmissions});
-                    });
-            });
-        },
+            /*
+             SELECT
+             paperversions.paperId             AS "PaperId",
+             paperversions.ID                  AS "PaperVersionId",
+             submissions.ID                    AS "SubmissionId",
+             papers.CurrentVersion             AS "CurrentVersion",
+             papers.Status                     AS "PaperStatus",
+             papers.userID                     AS "PaperAuthor",
+             papers.createdAt                  AS "OriginalCreatedAt",
+             paperversions.Title               AS "PaperTitle",
+             paperversions.ContributingAuthors AS "PaperContibutingAuthors",
+             paperversions.Description         AS "PaperDescription",
+             paperversions.Document            AS "PaperDocument",
+             paperversions.PaperFormat         AS "PaperFormat",
+             paperversions.createdAt           AS "VersionCreatedAt",
+             submissions.PCCID                 AS "SubmissionPCCId",
+             submissions.Reviewer1ID           AS "SubmissionReviewer1Id",
+             submissions.Reviewer2ID           AS "SubmissionReviewer2Id",
+             submissions.Reviewer3ID           AS "SubmissionReviewer3Id",
+             submissions.createdAt             AS "SubmissionCreatedAt",
+             users.FirstName                   AS "UserFirstName",
+             users.LastName                    AS "UserLastName",
+             users.Email                       AS "UserEmail"
 
+             FROM paperVersions
+             INNER JOIN papers ON (paperVersions.paperId = papers.id AND paperVersions.Version = papers.CurrentVersion)
+             INNER JOIN submissions ON (papers.id = submissions.paperId)
+             INNER JOIN users ON (users.ID = papers.userID)
+             WHERE submissions.Reviewer1ID = '51' OR submissions.Reviewer2ID = '51' OR submissions.Reviewer3ID = '51' // <--- NOTE: change the ids
+             */
 
-        getMyAssignedReviews: function (request, response) {
-            console.log("----------------------------------------------------------------------------------");
-            console.log(request.query.userID);
-            console.log("----------------------------------------------------------------------------------");
-            var userId = request.query.userID;
-            var papers;
-            var paperSubmissions;
-            //queries the Submission table for reviews that are assigned to 'me'
-            return PaperSubmission.findAll({
-                where: {
-                    $or: [
-                        {Reviewer1ID: {$eq: userId}},
-                        {Reviewer2ID: {$eq: userId}},
-                        {Reviewer3ID: {$eq: userId}}
-                    ]
-                },
-                include: [Review]
-            }).then(function (data) {
-                paperSubmissions = data;
-                // this loop builds an "OR" statement with paper id
-                var str=' WHERE (';
-                for(var i=0;i<data.length;i++) {
-                    str = str + "`paperVersions`.`paperId` = " + data[i].paperId;
-                    if (i != data.length-1)
-                        str = str + " OR "
-                }
-                str = str + ')'
-                console.log(str);
-                // queries the version table to get the current version of the papers that are assigned to 'me'
-                return db.sequelize.query("SELECT * FROM paperVersions LEFT OUTER JOIN `papers`  ON `paperVersions`.`paperId` = `papers`.`id` " + str +  " AND `paperVersions`.`Version` = `papers`.`CurrentVersion`")
+            var sql_query = 'SELECT paperversions.paperId AS "PaperId", paperversions.ID AS "PaperVersionId", submissions.ID AS "SubmissionId", papers.CurrentVersion AS "CurrentVersion", papers.Status AS "PaperStatus", papers.userID AS "PaperAuthor", papers.createdAt AS "OriginalCreatedAt", paperversions.Title AS "PaperTitle", paperversions.ContributingAuthors AS "PaperContibutingAuthors", paperversions.Description AS "PaperDescription", paperversions.Document AS "PaperDocument", paperversions.PaperFormat AS "PaperFormat", paperversions.createdAt AS "VersionCreatedAt", submissions.PCCID AS "SubmissionPCCId", submissions.Reviewer1ID AS "SubmissionReviewer1Id", submissions.Reviewer2ID AS "SubmissionReviewer2Id", submissions.Reviewer3ID AS "SubmissionReviewer3Id", submissions.createdAt AS "SubmissionCreatedAt", users.FirstName AS "UserFirstName",users.LastName AS "UserLastName", users.Email AS "UserEmail"' +
+                'FROM paperVersions ' +
+                'INNER JOIN papers ON (paperVersions.paperId = papers.id AND paperVersions.Version = papers.CurrentVersion) ' +
+                'INNER JOIN submissions ON (papers.id = submissions.paperId) ' +
+                'INNER JOIN users ON (users.ID = papers.userID)' +
+                'WHERE submissions.Reviewer1ID = "'+review_pcmID+'" OR submissions.Reviewer2ID = "'+review_pcmID+'" OR submissions.Reviewer3ID = "'+review_pcmID+'"';
+
+            return db.sequelize.query(sql_query)
                 .then(function (data) {
-                    console.log(data);
-                    papers = data;
-                    response.send({success: true, papers: data, submissions: paperSubmissions});
-                });
-            });
+                    response.send({success: true, submissions: data});
+                })
         },
 
         getSubmission: function(req,res){
@@ -222,10 +261,10 @@
             }
   */
     };
+
     module.exports = {
         init: init
     };
 
-}
-    ()
-    );
+  }()
+);

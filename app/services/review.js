@@ -12,26 +12,66 @@
 
         var init = function (router) {
             router.post('/submit-pcm-review', endpoints.submitReview);
-          //  router.get('/get-my-reviews', endpoints.getMyReviews);
             router.get('/get-my-review-by-submission-id', endpoints.getMyReviewBySubmissionId);
         };
 
         var endpoints = {
 
             getMyReviewBySubmissionId: function (request, response) {
-                var review_submissionID = request.query.reviewSubmissionID;
+                var review_submissionID = request.query.submissionId;
                 var review_pcmID = request.query.userID;
+                console.log('------------------------------------------------------------------');
+                console.log(review_submissionID);
+                /*
+                 SELECT
+                 paperversions.paperId             AS "PaperId",
+                 paperversions.ID                  AS "PaperVersionId",
+                 submissions.ID                    AS "SubmissionId",
+                 papers.CurrentVersion             AS "CurrentVersion",
+                 papers.Status                     AS "PaperStatus",
+                 papers.userID                     AS "PaperAuthor",
+                 papers.createdAt                  AS "OriginalCreatedAt",
+                 paperversions.Title               AS "PaperTitle",
+                 paperversions.ContributingAuthors AS "PaperContibutingAuthors",
+                 paperversions.Description         AS "PaperDescription",
+                 paperversions.Document            AS "PaperDocument",
+                 paperversions.PaperFormat         AS "PaperFormat",
+                 paperversions.createdAt           AS "VersionCreatedAt",
+                 submissions.PCCID                 AS "SubmissionPCCId",
+                 submissions.Reviewer1ID           AS "SubmissionReviewer1Id",
+                 submissions.Reviewer2ID           AS "SubmissionReviewer2Id",
+                 submissions.Reviewer3ID           AS "SubmissionReviewer3Id",
+                 submissions.createdAt             AS "SubmissionCreatedAt",
+                 reviews.ID                        AS "ReviewId",
+                 reviews.Rating                    AS "ReviewRating",
+                 reviews.Comment                   AS "ReviewComment",
+                 reviews.PCMID                     AS "ReviewPCMId",
+                 reviews.createdAt                 AS "ReviewCreatedAt",
+                 users.FirstName                   AS "UserFirstName",
+                 users.LastName                    AS "UserLastName",
+                 users.Email                       AS "UserEmail"
 
-                return Review.findOne({
-                    where: {
-                        submissionID: review_submissionID,
-                        PCMID:review_pcmID
-                    },
-                    include: [PaperSubmission]
-                }).then(function (data) {
+                 FROM paperVersions
+                 INNER JOIN papers ON (paperVersions.paperId = papers.id AND paperVersions.Version = papers.CurrentVersion)
+                 INNER JOIN submissions ON (papers.id = submissions.paperId)
+                 INNER JOIN reviews ON (reviews.submissionID = submissions.ID)
+                 INNER JOIN users ON (users.ID = papers.userID)
+                 WHERE submissions.ID = "21" AND PCMID="51" // <---NOTE: Change these values
+                 */
+                var sql_query = 'SELECT paperversions.paperId AS "PaperId", paperversions.ID AS "PaperVersionId", submissions.ID AS "SubmissionId", papers.CurrentVersion AS "CurrentVersion", papers.Status AS "PaperStatus", papers.userID AS "PaperAuthor", papers.createdAt AS "OriginalCreatedAt", paperversions.Title AS "PaperTitle", paperversions.ContributingAuthors AS "PaperContibutingAuthors", paperversions.Description AS "PaperDescription", paperversions.Document AS "PaperDocument", paperversions.PaperFormat AS "PaperFormat", paperversions.createdAt AS "VersionCreatedAt", submissions.PCCID AS "SubmissionPCCId", submissions.Reviewer1ID AS "SubmissionReviewer1Id", submissions.Reviewer2ID AS "SubmissionReviewer2Id", submissions.Reviewer3ID AS "SubmissionReviewer3Id", submissions.createdAt AS "SubmissionCreatedAt", reviews.ID AS "ReviewId", reviews.Rating AS "ReviewRating", reviews.Comment AS "ReviewComment", reviews.PCMID AS "ReviewPCMId", reviews.createdAt AS "ReviewCreatedAt",users.FirstName AS "UserFirstName",users.LastName AS "UserLastName", users.Email AS "UserEmail" ' +
+                    'FROM paperVersions ' +
+                    'INNER JOIN papers ON (paperVersions.paperId = papers.id AND paperVersions.Version = papers.CurrentVersion) ' +
+                    'INNER JOIN submissions ON (papers.id = submissions.paperId) ' +
+                    'INNER JOIN reviews ON (reviews.submissionID = submissions.ID) ' +
+                    'INNER JOIN users ON (users.ID = papers.userID)' +
+                    'WHERE submissions.ID = "'+review_submissionID+'" AND PCMID="'+review_pcmID+'"';
+
+                return db.sequelize.query(sql_query)
+                .then(function (data) {
                     response.send({success: true, review: data});
                 });
             },
+
 
             submitReview: function (request, response) {
                 var review_id = request.body.params.review_id;

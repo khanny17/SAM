@@ -22,6 +22,7 @@
         'RatePaperPCCControllerModule',
         'ViewPaperVersionsControllerModule',
         'ViewPapersPCMControllerModule',
-        'RatePaperPCMControllerModule'
+        'RatePaperPCMControllerModule',
+        'SetPaperPreferencePCMControllerModule'
     ]);
 }());
