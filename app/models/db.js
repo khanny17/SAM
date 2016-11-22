@@ -9,7 +9,7 @@
     var sequelize = new Sequelize('swen_745', 'b70785980f9954', '608a8b63', {
         host: 'us-cdbr-azure-east-c.cloudapp.net',
         dialect: 'mysql', // mysql sqlite
-        //storage: 'c:\database.sqlite'
+        //storage: 'c:\database.sqlite',
         pool: {
             max: 5,
             min: 0,

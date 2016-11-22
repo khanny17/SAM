@@ -156,7 +156,10 @@
                     }
                 });
             }).then(function(version){
-                response.send(version.Document);
+                response.send({
+                    file: "" + version.Document,
+                    fileName: version.Title + '.' + version.PaperFormat
+                });
             });
         },
 
@@ -198,7 +201,7 @@
                         Description:req.body.Description,
                         Document:req.body.Document,
                         Title:req.body.Title,
-                        PaperFormat:"PDF" //TODO - change this
+                        PaperFormat: req.body.PaperFormat.toUpperCase()
                     }).then(function(version){
                         res.json({success: true, paper: paper, version:version});
                     });
