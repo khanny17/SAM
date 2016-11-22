@@ -17,6 +17,13 @@
         </div>
 
         <div class="form-group">
+            <label class="col-md-4 control-label">File: *</label>
+            <div class="col-md-4">
+                <input type="file" accept=".doc,.docx,.pdf" class="form-control" fileread="paper.Document" format="format" required />
+            </div>
+        </div>
+
+        <div class="form-group">
             <label class="col-md-4 control-label">Paper Description: *</label>
             <div class="col-md-4">
             <textarea class="form-control" ng-model="paper.Description" placeholder="Description" style="height:150px"
@@ -31,6 +38,14 @@
                       style="height:150px"></textarea>
             </div>
         </div>
+
+        <div class="form-group">
+            <label class="col-md-4 control-label">Paper:</label>
+            <div class="col-md-4">
+                <a target="_self" ng-click="downloadDocument(paper)" download="{{paper.Title}}">Click to download</a>
+            </div>
+        </div>
+
 
         <div class="form-group">
             <label class="col-md-4 control-label">Status:</label>
@@ -64,8 +79,8 @@
         <div class="form-group">
             <label class="col-md-4 control-label"></label>
             <div class="col-md-8">
-                <button class="btn btn-primary" type="submit">Update</button>
-                <button class="btn btn-danger" type="button" onclick="window.location.href='/home.html'">Cancel</button>
+                <button class="btn btn-primary" type="submit" ng-disabled="!isValid()">Update</button>
+                <button class="btn btn-danger" type="button" ui-sref="inside.home">Cancel</button>
             </div>
         </div>
     </fieldset>

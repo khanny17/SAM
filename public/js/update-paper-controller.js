@@ -12,6 +12,9 @@
             $scope.userID =  AuthService.authenticatedUser().ID;
             $scope.loadingPaper = true;
 
+            $scope.isValid = function(){
+                return ($scope.paper.Document && $scope.format);
+            };
 
             document.getElementById("overlayScreen").style.width = "100%";
             document.getElementById("overlayScreen").style.height = "100%";
@@ -25,6 +28,18 @@
 
                 });
 
+            $scope.downloadDocument = function(paper) {
+                $http.get('services/paper/download-document', { params: { paperID: paper.paperId } })
+                    .then(function(response) {
+                        var blob = b64toBlob(response.data.file, 'application/octet-stream');
+                        var url = URL.createObjectURL(blob);
+                        var a = document.createElement('a');
+                        a.href = url;
+                        a.download = response.data.fileName;
+                        a.click();
+                        URL.revokeObjectURL(url);
+                    });
+            };
 
             $scope.updatePaper = function() {
                 document.getElementById("overlayScreen").style.width = "100%";
@@ -39,6 +54,30 @@
                         $state.go('inside.view-papers');
                     });
             };
+
+            function b64toBlob(b64Data, contentType, sliceSize) {
+                contentType = contentType || '';
+                sliceSize = sliceSize || 512;
+
+                var byteCharacters = atob(b64Data);
+                var byteArrays = [];
+
+                for (var offset = 0; offset < byteCharacters.length; offset += sliceSize) {
+                    var slice = byteCharacters.slice(offset, offset + sliceSize);
+
+                    var byteNumbers = new Array(slice.length);
+                    for (var i = 0; i < slice.length; i++) {
+                        byteNumbers[i] = slice.charCodeAt(i);
+                    }
+
+                    var byteArray = new Uint8Array(byteNumbers);
+
+                    byteArrays.push(byteArray);
+                }
+
+                var blob = new Blob(byteArrays, {type: contentType});
+                return blob;
+            }
 
 
         }]);
