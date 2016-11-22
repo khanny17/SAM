@@ -3,7 +3,7 @@
 
     angular.module('SetPaperPreferencePCMControllerModule',  ['AuthModule'])
 
-        .controller('setPaperPreferencePCMController', ['$scope', '$http','AuthService', function($scope, $http, AuthService) {
+        .controller('setPaperPreferencePCMController', ['$scope', '$http','AuthService','$window', function($scope, $http, AuthService, $window) {
 
             $scope.papers = [];
             $scope.title = "SAM 2017 - PCM Set Paper Preference";
@@ -21,6 +21,33 @@
                     document.getElementById("overlayScreen").style.width = "0%";
                     document.getElementById("overlayScreen").style.height = "0%";
                 });
+
+
+            $scope.submitPreference = function(submissionId) {
+                var result = $window.confirm("Paper preference cannot be reverted. Proceed with preference?");
+                if(result !== true) {
+                    return;
+                }
+
+                document.getElementById("overlayScreen").style.width = "100%";
+                document.getElementById("overlayScreen").style.height = "100%";
+
+                $http.post('services/paperPreference/set-paper-preference', {
+                    params: {
+                        pcmid: $scope.userID,
+                        submissionId: submissionId
+                    }
+                })
+                    .then(function(){
+                        //TODO go to a different page
+                        $scope.paperCreated = true;
+
+                        document.getElementById("overlayScreen").style.width = "0%";
+                        document.getElementById("overlayScreen").style.height = "0%";
+
+                        $state.go('inside.home');
+                    });
+            };
 
         }]);
 

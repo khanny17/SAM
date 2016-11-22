@@ -29,7 +29,7 @@
         <div class="col-sm-2">{{paper.PaperStatus}}</div>
 
         <div  class="col-sm-1">
-            <a ng-if="paper.PaperStatus=='Submitted'" class="btn btn-sm btn-default" onclick="alert('TODO')">Set As Preferred</a>
+            <a ng-if="paper.PaperStatus=='Submitted'" class="btn btn-sm btn-default" ng-click="submitPreference(paper.SubmissionId)">Set As Preferred</a>
             <span ng-if="paper.PaperStatus!='Submitted'" >N/A</span>
         </div>
 

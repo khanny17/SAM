@@ -7,7 +7,7 @@
 
     var init = function(router) {
         router.get('/get-paperPreferences', endpoints.getPaperPreferences);
-        router.post('/create-paperPreferences', endpoints.createPaperPreferences);
+        router.post('/set-paper-preference', endpoints.setPaperPreference);
     };
 
     var endpoints = {
@@ -19,11 +19,11 @@
                 });
         },
 
-        createPaperPreferences: function(req, res) {
+        setPaperPreference: function(req, res) {
 
             PaperPreferenceModel.create({
-                PCMID: res.body.pcmid, //change this
-                SubmissionId: res.body.submissionId //change this
+                PCMID: req.body.params.pcmid, //change this
+                SubmissionID: req.body.params.submissionId //change this
             })
                 .then(function(paperPreference) {
                     res.send(paperPreference);
