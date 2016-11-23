@@ -11,7 +11,8 @@
 <p ng-if="loadingPapers">Loading Papers...</p>
 
 <legend>PCM Set Paper Preference</legend>
-<span ng-if="papers.length >= 1">
+<h3>Papers Available for Preference</h3>
+<span ng-if="availablePapers.length >= 1">
     <div class="row grid table-bordered">
         <div class="col-sm-3" style="background: burlywood">Title</div>
         <div class="col-sm-3" style="background: burlywood">Description</div>
@@ -21,7 +22,7 @@
         <div class="col-sm-1" style="background: burlywood">Action</div>
     </div>
 
-    <div class="row grid table-bordered" ng-repeat="paper in papers">
+    <div class="row grid table-bordered" ng-repeat="paper in availablePapers">
         <div class="col-sm-3">{{paper.PaperTitle}}</div>
         <div class="col-sm-3">{{paper.PaperDescription}}</div>
         <div class="col-sm-2">{{paper.PaperContibutingAuthors}}</div>
@@ -32,13 +33,37 @@
             <a ng-if="paper.PaperStatus=='Submitted'" class="btn btn-sm btn-default" ng-click="submitPreference(paper.SubmissionId)">Set As Preferred</a>
             <span ng-if="paper.PaperStatus!='Submitted'" >N/A</span>
         </div>
+    </div>
+</span>
+<span ng-if="availablePapers.length == 0">
+    No Papers Available.<br>
+</span>
 
+<br><br>
 
+<h3>My Preferred Papers</h3>
+<span ng-if="myPreferredPapers.length >= 1">
+    <div class="row grid table-bordered">
+        <div class="col-sm-3" style="background: burlywood">Title</div>
+        <div class="col-sm-3" style="background: burlywood">Description</div>
+        <div class="col-sm-2" style="background: burlywood">Contributing Authors</div>
+        <div class="col-sm-1" style="background: burlywood">Current Version</div>
+        <div class="col-sm-1" style="background: burlywood">Status</div>
+        <div class="col-sm-2" style="background: burlywood">Preference Date</div>
+    </div>
+
+    <div class="row grid table-bordered" ng-repeat="paper in myPreferredPapers">
+        <div class="col-sm-3">{{paper.PaperTitle}}</div>
+        <div class="col-sm-3">{{paper.PaperDescription}}</div>
+        <div class="col-sm-2">{{paper.PaperContibutingAuthors}}</div>
+        <div class="col-sm-1">{{paper.CurrentVersion}}</div>
+        <div class="col-sm-1">{{paper.PaperStatus}}</div>
+        <div class="col-sm-2">{{paper.PaperPreferenceCreatedAt | date:'short'}}</div>
     </div>
 </span>
 
-<span ng-if="papers.length == 0">
-    No Papers Available for {{contactAuthor}}.<br>
+<span ng-if="myPreferredPapers.length == 0">
+    No Preferred  Papers Available for {{contactAuthor}}.<br>
 </span>
 
 <br/>
