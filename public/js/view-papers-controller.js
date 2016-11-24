@@ -23,6 +23,8 @@
                             document.getElementById("overlayScreen").style.width = "0%";
                             document.getElementById("overlayScreen").style.height = "0%";
                         }
+                        document.getElementById("overlayScreen").style.width = "100%";
+                        document.getElementById("overlayScreen").style.height = "100%";
                         $http.get('services/paper/get-papers', {params: { userID:  $scope.userID }})
                             .then(function(response){
                                 $scope.papers = response.data.paperList;

@@ -23,6 +23,8 @@
                         document.getElementById("overlayScreen").style.height = "0%";
                         return;
                     }
+                    document.getElementById("overlayScreen").style.width = "100%";
+                    document.getElementById("overlayScreen").style.height = "100%";
                     $http.get('services/paperPreference/get-my-paper-preferences', {params: {userID: $scope.userID}})
                         .then(function (response) {
                             $scope.myPreferredPapers = response.data.preferences[0];
