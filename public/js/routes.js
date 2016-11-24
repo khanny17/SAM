@@ -84,6 +84,14 @@
                          permissions: ['PCM'] //TODO - uncomment!
                          }*/
                     })
+                    .state('inside.manage-deadlines', {
+                        url: '/manage-deadlines',
+                        templateUrl: 'templates/manage-deadlines.html',
+                        controller: 'manageDeadlineController'
+                        /*   data: {
+                         permissions: ['PCM'] //TODO - uncomment!
+                         }*/
+                    })
                     .state('inside.view-papers-pcc', {
                       url: '/view-papers-pcc',
                       templateUrl: 'templates/view-papers-pcc.html',
