@@ -79,6 +79,7 @@
                 var review_comment = request.body.params.review_comment;;
                 var review_submissionID = request.body.params.review_submissionID;
                 var review_pcmID = request.body.params.review_pcmID;
+                var paper_id = request.body.params.paper_id;
 
                 /*
                 if (review_id == undefined || review_id == null || review_id==''){
@@ -102,7 +103,12 @@
                     PCMID:review_pcmID
                 })
                     .then(function (data) {
-                    response.send({success: true, review: data});
+                        return PaperModel.update({
+                            Status:'Review In-Progress'
+                        },{ where: {id: paper_id} })
+                            .then(function(paper) {
+                                response.send({success: true, review: data});
+                        });
                 });
             }
         };
