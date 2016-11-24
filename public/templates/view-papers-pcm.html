@@ -30,9 +30,8 @@
         <div class="col-sm-2">{{paper.PaperStatus}}</div>
 
         <div class="col-sm-1">
-            <a ng-if="paper.PaperStatus=='Submitted'" class="btn btn-sm btn-default"
-               href="/rate-paper-pcm/{{paper.SubmissionId}}">Review Paper</a>
-            <span ng-if="paper.PaperStatus!='Submitted'">N/A</span>
+            <a ng-if="paper.PaperStatus=='Review In-Progress' || paper.PaperStatus=='Review Pending' || paper.PaperStatus=='Review Conflict'" class="btn btn-sm btn-default" href="/rate-paper-pcm/{{paper.SubmissionId}}">Review Paper</a>
+            <span ng-if="paper.PaperStatus=='Submitted' || paper.PaperStatus=='Review Complete' || paper.PaperStatus=='Pending Submission'">N/A</span>
         </div>
 
 
