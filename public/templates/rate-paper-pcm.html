@@ -43,9 +43,9 @@
         </div>
 
         <div class="form-group">
-            <label class="col-md-4 control-label">Contributing Authors:</label>
+            <label class="col-md-4 control-label">Paper:</label>
             <div class="col-md-4">
-                <label class="control-label">{{paper[0].PaperFormat}}</label>
+                <a target="_self" ng-click="downloadDocument(paper[0].PaperId)" download="{{paper[0].PaperTitle}}">Click to download</a>
             </div>
         </div>
 
