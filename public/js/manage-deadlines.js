@@ -44,7 +44,6 @@
                         document.getElementById("overlayScreen").style.width = "0%";
                         document.getElementById("overlayScreen").style.height = "0%";
 
-                        $window.location.reload();
                     });
             };
 
