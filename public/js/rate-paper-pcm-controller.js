@@ -11,7 +11,7 @@
             $scope.contactAuthor = AuthService.authenticatedUser().FirstName + " " + AuthService.authenticatedUser().LastName;
             $scope.userID = AuthService.authenticatedUser().ID;
             $scope.loadingPaper = true;
-
+            $scope.paperID = '';
             $scope.reviewComment = '';
             $scope.reviewRating = '';
             $scope.reviewID = '';
@@ -24,6 +24,7 @@
                 .then(function (response) {
                     if (response.data.review != null && response.data.review[0].length>0) {
                         $scope.paper = response.data.review[0];
+                        $scope.paperID = $scope.paper[0].PaperId;
                         $scope.reviewID = $scope.paper[0].ReviewId;
                         $scope.reviewRating = $scope.paper[0].ReviewRating;
                         $scope.reviewComment = $scope.paper[0].ReviewComment;
@@ -32,6 +33,7 @@
                         $http.get('services/submission/get-submission-by-id', {params: {submissionId: $scope.submissionID}})
                             .then(function(response){
                                 $scope.paper = response.data.submission[0];
+                                $scope.paperID = $scope.paper[0].PaperId;
                             });
                     }
                     $scope.loadingPapers = false;
@@ -49,6 +51,7 @@
                 var review_comment = $scope.reviewComment;
                 var review_submissionID = $scope.paper[0].SubmissionId;
                 var review_pcmID = $scope.userID;
+                var paper_id = $scope.paperID;
 
                 $http.post('services/review/submit-pcm-review', {
                     params: {
@@ -56,7 +59,8 @@
                         review_rating: review_rating,
                         review_comment: review_comment,
                         review_submissionID: review_submissionID,
-                        review_pcmID: review_pcmID
+                        review_pcmID: review_pcmID,
+                        paper_id:paper_id
                     }
                 })
                     .then(function (response) {
