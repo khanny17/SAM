@@ -8,9 +8,10 @@
     }
 </style>
 
-<p ng-if="loadingPapers">Loading Papers...</p>
 
 <legend>PCM Review Papers</legend>
+<p ng-if="deadlinePassed">This feature has been disabled. The deadline for reviewing papers has passed.</p>
+<span ng-if="!deadlinePassed">
 <span ng-if="papers.length >= 1">
     <div class="row grid table-bordered">
         <div class="col-sm-3" style="background: burlywood">Title</div>
@@ -28,9 +29,10 @@
         <div class="col-sm-1">{{paper.CurrentVersion}}</div>
         <div class="col-sm-2">{{paper.PaperStatus}}</div>
 
-        <div  class="col-sm-1">
-            <a ng-if="paper.PaperStatus=='Submitted'" class="btn btn-sm btn-default" href="/rate-paper-pcm/{{paper.SubmissionId}}">Review Paper</a>
-            <span ng-if="paper.PaperStatus!='Submitted'" >N/A</span>
+        <div class="col-sm-1">
+            <a ng-if="paper.PaperStatus=='Submitted'" class="btn btn-sm btn-default"
+               href="/rate-paper-pcm/{{paper.SubmissionId}}">Review Paper</a>
+            <span ng-if="paper.PaperStatus!='Submitted'">N/A</span>
         </div>
 
 
@@ -40,6 +42,6 @@
 <span ng-if="papers.length == 0">
     No Papers Available for {{contactAuthor}}.<br>
 </span>
-
+</span>
 <br/>
 <button class="btn btn-primary" type="button" onclick="window.location.href='/home.html'">Back</button>

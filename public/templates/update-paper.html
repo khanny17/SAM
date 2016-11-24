@@ -1,29 +1,31 @@
-<form ng-submit="updatePaper()" class="form-horizontal">
-    <fieldset>
-        <legend>Update Paper</legend>
+<legend>Update Paper</legend>
+<p ng-if="deadlinePassed">This feature has been disabled. The deadline for paper creation & upload has passed.</p>
 
-        <div class="form-group">
+<form ng-submit="updatePaper()" class="form-horizontal">
+    <fieldset >
+
+        <div class="form-group" ng-if="!deadlinePassed">
             <label class="col-md-4 control-label">Contact Author:</label>
             <div class="col-md-4">
                 <label class="control-label">{{contactAuthor}}</label>
             </div>
         </div>
 
-        <div class="form-group">
+        <div class="form-group" ng-if="!deadlinePassed">
             <label class="col-md-4 control-label">Paper Title: *</label>
             <div class="col-md-4">
                 <input class="form-control" ng-model="paper.Title" placeholder="Title" required/>
             </div>
         </div>
 
-        <div class="form-group">
+        <div class="form-group" >
             <label class="col-md-4 control-label">File: *</label>
             <div class="col-md-4">
                 <input type="file" accept=".doc,.docx,.pdf" class="form-control" fileread="paper.Document" format="format" required />
             </div>
         </div>
 
-        <div class="form-group">
+        <div class="form-group" ng-if="!deadlinePassed">
             <label class="col-md-4 control-label">Paper Description: *</label>
             <div class="col-md-4">
             <textarea class="form-control" ng-model="paper.Description" placeholder="Description" style="height:150px"
@@ -31,7 +33,7 @@
             </div>
         </div>
 
-        <div class="form-group">
+        <div class="form-group" ng-if="!deadlinePassed">
             <label class="col-md-4 control-label">Contributing Authors:</label>
             <div class="col-md-4">
             <textarea class="form-control" ng-model="paper.ContributingAuthors" placeholder="Contributing Authors"
@@ -39,7 +41,7 @@
             </div>
         </div>
 
-        <div class="form-group">
+        <div class="form-group" ng-if="!deadlinePassed">
             <label class="col-md-4 control-label">Paper:</label>
             <div class="col-md-4">
                 <a target="_self" ng-click="downloadDocument(paper)" download="{{paper.Title}}">Click to download</a>
@@ -47,28 +49,28 @@
         </div>
 
 
-        <div class="form-group">
+        <div class="form-group" ng-if="!deadlinePassed">
             <label class="col-md-4 control-label">Status:</label>
             <div class="col-md-4">
                 <label class="col-md-4 control-label" >{{paper.Status}}</label>
             </div>
         </div>
 
-        <div class="form-group">
+        <div class="form-group" ng-if="!deadlinePassed">
             <label class="col-md-4 control-label">Created On:</label>
             <div class="col-md-5">
                 <label class="col-md-5 control-label" >{{paper.originalCreatedDate | date:'medium'}}</label>
             </div>
         </div>
 
-        <div class="form-group">
+        <div class="form-group" ng-if="!deadlinePassed">
             <label class="col-md-4 control-label">Last Updated:</label>
             <div class="col-md-5">
                 <label class="col-md-5 control-label" >{{paper.updatedAt | date:'medium'}}</label>
             </div>
         </div>
 
-        <div class="form-group">
+        <div class="form-group" ng-if="!deadlinePassed">
             <label class="col-md-4 control-label">Current Version/Revision:</label>
             <div class="col-md-4">
                 <label class="col-md-1 control-label" >{{paper.Version}}</label>
@@ -76,7 +78,7 @@
         </div>
 
 
-        <div class="form-group">
+        <div class="form-group" ng-if="!deadlinePassed">
             <label class="col-md-4 control-label"></label>
             <div class="col-md-8">
                 <button class="btn btn-primary" type="submit" ng-disabled="!isValid()">Update</button>

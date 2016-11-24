@@ -11,17 +11,28 @@
                 $scope.contactAuthor = AuthService.authenticatedUser().FirstName +" " + AuthService.authenticatedUser().LastName;
                 $scope.userID =  AuthService.authenticatedUser().ID;
                 $scope.loadingPaper = true;
+                $scope.deadlinePassed = false;
 
                 document.getElementById("overlayScreen").style.width = "100%";
                 document.getElementById("overlayScreen").style.height = "100%";
 
-                $http.get('services/paper/get-papers', {params: { userID:  $scope.userID }})
-                    .then(function(response){
-                        $scope.papers = response.data.paperList;
-                        $scope.loadingPapers = false;
-                        document.getElementById("overlayScreen").style.width = "0%";
-                        document.getElementById("overlayScreen").style.height = "0%";
+                $http.get('services/deadline/get-is-deadline-passed', {params: {deadline_name: 'Submission Deadline'}})
+                    .then(function (response) {
+                        if (response.data.status) {
+                            $scope.deadlinePassed = true;
+                            document.getElementById("overlayScreen").style.width = "0%";
+                            document.getElementById("overlayScreen").style.height = "0%";
+                        }
+                        $http.get('services/paper/get-papers', {params: { userID:  $scope.userID }})
+                            .then(function(response){
+                                $scope.papers = response.data.paperList;
+                                $scope.loadingPapers = false;
+                                document.getElementById("overlayScreen").style.width = "0%";
+                                document.getElementById("overlayScreen").style.height = "0%";
+                            });
                     });
+
+
 
                 $scope.submitPaper = function(paperId) {
                     var result = $window.confirm("Paper submission cannot be reverted. Proceed with submission?");

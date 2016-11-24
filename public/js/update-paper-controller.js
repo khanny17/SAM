@@ -11,6 +11,7 @@
             $scope.contactAuthor = AuthService.authenticatedUser().FirstName +" " + AuthService.authenticatedUser().LastName;
             $scope.userID =  AuthService.authenticatedUser().ID;
             $scope.loadingPaper = true;
+            $scope.deadlinePassed = false;
 
             $scope.isValid = function(){
                 return ($scope.paper.Document && $scope.format);
@@ -19,14 +20,22 @@
             document.getElementById("overlayScreen").style.width = "100%";
             document.getElementById("overlayScreen").style.height = "100%";
 
-            $http.get('services/paper/get-paper', {params: { userID:  $scope.userID, paperID: $scope.paperID }})
-                .then(function(response){
-                    $scope.paper = response.data.paper;
-                    $scope.loadingPapers = false;
+            $http.get('services/deadline/get-is-deadline-passed', {params: {deadline_name: 'Submission Deadline'}})
+                .then(function (response) {
+                    if (response.data.status) {
+                        $scope.deadlinePassed = true;
+                    }
+                    $http.get('services/paper/get-paper', {params: { userID:  $scope.userID, paperID: $scope.paperID }})
+                        .then(function(response){
+                            $scope.paper = response.data.paper;
+                            $scope.loadingPapers = false;
+                        });
                     document.getElementById("overlayScreen").style.width = "0%";
                     document.getElementById("overlayScreen").style.height = "0%";
-
                 });
+
+
+
 
             $scope.downloadDocument = function(paper) {
                 $http.get('services/paper/download-document', { params: { paperID: paper.paperId } })

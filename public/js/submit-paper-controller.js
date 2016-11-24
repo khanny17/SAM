@@ -11,15 +11,21 @@
         $scope.contactAuthor = AuthService.authenticatedUser().FirstName +" " + AuthService.authenticatedUser().LastName;
         $scope.paper.userID =  AuthService.authenticatedUser().ID;
         $scope.paper.Status='Pending Submission';
+        $scope.deadlinePassed = false;
 
-/*
-        $http.get('services/user/get-users')
-            .then(function(response){
-                console.log('Get User Completed');
-                $scope.users = response.data;
-                $scope.loadingUser = false;
+
+        document.getElementById("overlayScreen").style.width = "100%";
+        document.getElementById("overlayScreen").style.height = "100%";
+
+        $http.get('services/deadline/get-is-deadline-passed', {params: {deadline_name: 'Submission Deadline'}})
+            .then(function (response) {
+                if (response.data.status) {
+                    $scope.deadlinePassed = true;
+                }
+                document.getElementById("overlayScreen").style.width = "0%";
+                document.getElementById("overlayScreen").style.height = "0%";
             });
-*/
+
 
         $scope.isValid = function(){
             return ($scope.paper.Document && $scope.format);
