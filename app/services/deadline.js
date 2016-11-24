@@ -69,6 +69,7 @@
 
                 return DeadlineModel.bulkCreate([
                     {Deadline: 'Submission Deadline', Date: date_value},
+                    {Deadline: 'Author Notification Deadline', Date: date_value},
                     {Deadline: 'Review Deadline', Date: date_value},
                     {Deadline: 'Review Selection Deadline', Date: date_value}
                 ])
