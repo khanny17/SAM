@@ -24,6 +24,7 @@
         'ViewPapersPCMControllerModule',
         'RatePaperPCMControllerModule',
         'SetPaperPreferencePCMControllerModule',
-        'ManageDeadlinesControllerModule'
+        'ManageDeadlinesControllerModule',
+        'SetReviewTemplateControllerModule'
     ]);
 }());

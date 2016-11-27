@@ -92,6 +92,14 @@
                          permissions: ['PCM'] //TODO - uncomment!
                          }*/
                     })
+                    .state('inside.set-review-template', {
+                        url: '/set-review-template',
+                        templateUrl: 'templates/set-template-review.html',
+                        controller: 'setReviewTemplateController'
+                        /*   data: {
+                         permissions: ['PCM'] //TODO - uncomment!
+                         }*/
+                    })
                     .state('inside.view-papers-pcc', {
                       url: '/view-papers-pcc',
                       templateUrl: 'templates/view-papers-pcc.html',
