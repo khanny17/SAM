@@ -15,7 +15,8 @@
             $scope.reviewComment = '';
             $scope.reviewRating = '';
             $scope.reviewID = '';
-
+            $scope.reviewDocument = '';
+            $scope.reviewTemplate = [];
 
             document.getElementById("overlayScreen").style.width = "100%";
             document.getElementById("overlayScreen").style.height = "100%";
@@ -28,6 +29,8 @@
                         $scope.reviewID = $scope.paper[0].ReviewId;
                         $scope.reviewRating = $scope.paper[0].ReviewRating;
                         $scope.reviewComment = $scope.paper[0].ReviewComment;
+                        $scope.reviewDocument = $scope.paper[0].ReviewDocument;
+                        $scope.reviewPaperFormat = $scope.paper[0].ReviewPaperFormat;
                     }
                     else {
                         $http.get('services/submission/get-submission-by-id', {params: {submissionId: $scope.submissionID}})
@@ -36,16 +39,22 @@
                                 $scope.paperID = $scope.paper[0].PaperId;
                             });
                     }
+                    $http.get('services/templateReview/get-template-review')
+                        .then(function (response) {
+                            $scope.reviewTemplate = response.data.templates;
+                            document.getElementById("overlayScreen").style.width = "0%";
+                            document.getElementById("overlayScreen").style.height = "0%";
+                        });
+
                     $scope.loadingPapers = false;
-                    document.getElementById("overlayScreen").style.width = "0%";
-                    document.getElementById("overlayScreen").style.height = "0%";
                 });
 
 
             $scope.ratePaper = function () {
                 document.getElementById("overlayScreen").style.width = "100%";
                 document.getElementById("overlayScreen").style.height = "100%";
-
+                var review_document = $scope.reviewDocument;
+                var review_paperFormat = $scope.format;
                 var review_id = $scope.reviewID;
                 var review_rating = $scope.reviewRating;
                 var review_comment = $scope.reviewComment;
@@ -60,7 +69,9 @@
                         review_comment: review_comment,
                         review_submissionID: review_submissionID,
                         review_pcmID: review_pcmID,
-                        paper_id:paper_id
+                        paper_id:paper_id,
+                        review_document:review_document,
+                        review_paperFormat: review_paperFormat
                     }
                 })
                     .then(function (response) {
@@ -72,9 +83,39 @@
                     });
             };
 
+            $scope.isValid = function(){
+                return ($scope.reviewDocument && $scope.format);
+            };
 
             $scope.downloadDocument = function(paperId) {
                 $http.get('services/paper/download-document', { params: { paperID: paperId } })
+                    .then(function(response) {
+                        var blob = b64toBlob(response.data.file, 'application/octet-stream');
+                        var url = URL.createObjectURL(blob);
+                        var a = document.createElement('a');
+                        a.href = url;
+                        a.download = response.data.fileName;
+                        a.click();
+                        URL.revokeObjectURL(url);
+                    });
+            };
+
+            $scope.downloadReviewDocument = function(reviewId) {
+                var fileName = $scope.paper[0].PaperTitle + "--Review-" + $scope.contactAuthor;
+                $http.get('services/review/download-document', { params: { id: reviewId, fileName:fileName } })
+                    .then(function(response) {
+                        var blob = b64toBlob(response.data.file, 'application/octet-stream');
+                        var url = URL.createObjectURL(blob);
+                        var a = document.createElement('a');
+                        a.href = url;
+                        a.download = response.data.fileName;
+                        a.click();
+                        URL.revokeObjectURL(url);
+                    });
+            };
+
+            $scope.downloadReviewTemplate = function() {
+                $http.get('services/templateReview/download-document', { params: { id: $scope.reviewTemplate[0].ID } })
                     .then(function(response) {
                         var blob = b64toBlob(response.data.file, 'application/octet-stream');
                         var url = URL.createObjectURL(blob);

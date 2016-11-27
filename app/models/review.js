@@ -8,7 +8,9 @@
                     autoIncrement: true
                 },
           Rating : DataTypes.INTEGER,
-          Comment : DataTypes.STRING
+          Comment : DataTypes.STRING,
+          Document: DataTypes.BLOB('long'),
+          PaperFormat:DataTypes.ENUM('DOC','DOCX')
         },
       {
         classMethods : {
