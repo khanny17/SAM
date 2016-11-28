@@ -3,7 +3,7 @@
 
     angular.module('ViewPapersPCCControllerModule', ['AuthModule'])
 
-    .controller('viewPapersPCCController', ['$scope', '$http','AuthService', function($scope, $http, AuthService){
+    .controller('viewPapersPCCController', ['$scope', '$http','AuthService','$window', function($scope, $http, AuthService,$window){
 
       $scope.papers = [];
       $scope.title = "SAM 2017 - View Papers";
@@ -14,60 +14,128 @@
       $scope.selectedReviewer2=null;
       $scope.selectedReviewer3=null;
       $scope.valmsg="";
+      $scope.action={readOnly:false};
       var paper = null;
       var paperAuthor = null;
 
-      $http.get('services/paper/get-all-papers').then(function(response){
-        console.log("inside get papers!")
-          $scope.papers = response.data;
+      loadPapers();
+
+      function loadPapers(){
+        $http.get('services/submission/get-all-submissions').then(function(response){
+          console.log("inside get papers!")
+          $scope.papers = response.data.submissions[0];
           console.log($scope.papers);
           $scope.loadingPapers = false;
-      });
-
-      $scope.assign = function(p){
-        paper=p;
-        paperAuthor=paper.user;
-        $http.get('services/user/get-pcms').then(function(response){
-          $scope.pcms = response.data;
         });
-         dialog.dialog( "open" );
       }
 
-        //$scope.submitAssignment = function(){
-      function submitAssignment(){
+      $("#assignPcmDialogBox").dialog({
+        autoOpen: false,
+        height: 400,
+        width: 350,
+        modal: true,
+
+        buttons: [
+          // {
+          //   text:"Submit",
+          //   click:submitAssignment
+          // },
+          {
+            text:"Cancel",
+            click:function() {
+              reset();
+              $(this).dialog("close");
+            }
+          }
+        ],
+        close: function() {
+          reset();
+        }
+      });
+
+
+      $scope.assign = function(p){
+        console.log("Inside assign function!");
+        paper=p;
+        var paperAuthorID=paper.PaperAuthorId;
+        console.log("paper author id : "+paperAuthorID);
+        $http.get('services/user/get-user-by-id',{params:{ID:paperAuthorID}}).then(function(response){
+          paperAuthor=response.data;
+          console.log(paperAuthor);
+        });
+        $http.get('services/user/get-pcms').then(function(response){
+          console.log("inside assign!");
+          $scope.pcms = response.data;
+          console.log($scope.pcms);
+          makeDialogEditable();
+          $("#assignPcmDialogBox").dialog("open");
+        });
+      }
+
+      $scope.view = function(p){
+        console.log("Inside view!");
+        paper = p;
+        var paperAuthorID=paper.PaperAuthorId;
+        console.log("paper author id : "+paperAuthorID);
+        $http.get('services/user/get-user-by-id',{params:{ID:paperAuthorID}}).then(function(response){
+          paperAuthor=response.data;
+          console.log(paperAuthor);
+        });
+
+        $http.get('services/user/get-pcms').then(function(response){
+          console.log("inside assign!");
+          $scope.pcms = response.data;
+          $scope.selectedReviewer1 = paper.SubmissionReviewer1Id;
+          $scope.selectedReviewer2 = paper.SubmissionReviewer2Id;
+          $scope.selectedReviewer3 = paper.SubmissionReviewer3Id;
+          console.log($scope.pcms);
+          makeDialogReadonly();
+          $("#assignPcmDialogBox").dialog("open");
+        });
+      }
+
+      $scope.submitAssignment=function(){
+
+        console.log("Reviewer 1 : "+$scope.selectedReviewer1);
+        console.log("Reviewer 2 : "+$scope.selectedReviewer2);
+        console.log("Reviewer 3 : "+$scope.selectedReviewer3);
+
+        if(!validate()){
+          return;
+        }
+
         var result = $window.confirm("Are you sure?");
         if(result!=true){
           return;
         }
-        if(!validate()){
-          return;
-        }
-        // var submission;
-        // $http.get('services/submission/get-submission', {params: { paperID: paper.ID }}).then(function(response){
-        //     submission = response.data;
-        // })
 
-        //update submission
+        console.log("updating submission with paper id "+paper.PaperId);
         $http.post('services/submission/update-submission-with-reviewers',
           {
             params: {
-              paperID: paper.ID,
+              paperID: paper.PaperId,
               reviewer1:$scope.selectedReviewer1,
               reviewer2:$scope.selectedReviewer2,
-              Reviewer3:$scope.selectedReviewer3
+              reviewer3:$scope.selectedReviewer3
              }
            }).then(function(response){
-             console.log(response.success);
-           })
+             console.log(response.data.success);
+           });
+           reset();
+           $("#assignPcmDialogBox").dialog("close");
+           loadPapers();
         }
 
       function validate(){
         if($scope.selectedReviewer1==$scope.selectedReviewer2 || $scope.selectedReviewer2==$scope.selectedReviewer3 || $scope.selectedReviewer1==$scope.selectedReviewer3){
           $scope.valmsg = "Please select a different reviewer in each of the field";
+          console.log($scope.valmsg);
+          $scope.$apply();
           return false;
         }
-        if(paperAuthor==$scope.selectedReviewer1 || paperAuthor==$scope.selectedReviewer2 || paperAuthor==$scope.selectedReviewer3){
+        if(paperAuthor.ID==$scope.selectedReviewer1 || paperAuthor.ID==$scope.selectedReviewer2 || paperAuthor.ID==$scope.selectedReviewer3){
           $scope.valmsg = "You cannot select the author of the paper as a reviewer";
+          console.log($scope.valmsg);
           return false;
         }
         return true;
@@ -82,33 +150,19 @@
         $scope.selectedReviewer3=null;
       }
 
-      var dialog = $( "#assignPcmDialogBox" ).dialog({
-        autoOpen: false,
-        height: 400,
-        width: 350,
-        modal: true,
-        buttons: {
-          "Submit": submitAssignment,
-          Cancel: function() {
-            reset();
-            dialog.dialog( "close" );
-          }
-        },
-        close: function() {
-          reset();
-          form[ 0 ].reset();
-          // allFields.removeClass( "ui-state-error" );
-        }
-      });
+      function makeDialogReadonly(){
+        $("#reviewer1").attr("disabled", "disabled");
+        $("#reviewer2").attr("disabled", "disabled");
+        $("#reviewer3").attr("disabled", "disabled");
+        $("#submit").hide()
+      }
 
-      var form = dialog.find( "form" ).on( "submit", function( event ) {
-        event.preventDefault();
-        submitAssignment();
-      });
-
-      // $( "#assign" ).button().on( "click", function() {
-      //   dialog.dialog( "open" );
-      // });
+      function makeDialogEditable(){
+        $("#reviewer1").removeAttr("disabled");
+        $("#reviewer2").removeAttr("disabled");
+        $("#reviewer3").removeAttr("disabled");
+        $("#submit").show()
+      }
 
     }]);
 

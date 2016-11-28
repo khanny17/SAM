@@ -11,16 +11,14 @@
     var User = db.user;
 
     var init = function (router) {
-        router.get('/get-my-assigned-reviews', endpoints.getMyAssignedReviews);
         router.get('/get-submission', endpoints.getSubmission);
-        router.get('/update-submission-with-reviewers',endpoints.updateSubmissionWithReviewers);
+        router.post('/update-submission-with-reviewers',endpoints.updateSubmissionWithReviewers);
         router.get('/get-my-assigned-submission-reviews', endpoints.getMyAssignedSubmissionReviews);
         router.get('/get-all-submissions', endpoints.getAllSubmissions);
         router.get('/get-submission-by-id', endpoints.getSubmissionById);
     };
 
     var endpoints = {
-
 
         getSubmissionById: function (request, response) {
             var submissionId = request.query.submissionId;
@@ -164,7 +162,7 @@
         },
 
         getSubmission: function(req,res){
-          SubmissionModel.find({
+          PaperSubmission.find({
             where:{
               paperId: req.query.paperId
             }
@@ -174,19 +172,23 @@
         },
 
         updateSubmissionWithReviewers: function(request,response){
+          console.log("inside updateSubmissionWithReviewers paperId : "+request.body.params.paperID);
+          console.log("reviewer1 : "+request.body.params.reviewer1);
+          console.log("reviewer2 : "+request.body.params.reviewer2);
+          console.log("reviewer3 : "+request.body.params.reviewer3);
 
-            return SubmissionModel.update({
-              reviewer1 : req.body.params.reviewer1,
-              reviewer2 : req.body.params.reviewer2,
-              reviewer3 : req.body.params.reviewer3
-            },{
-              where :{
-                paperId : req.body.params.paperId
-              }
-            }).then(function(submission){
-              res.json({success: true, submission: submission});
-            });
-
+          PaperSubmission.update({
+            Reviewer1ID : request.body.params.reviewer1,
+            Reviewer2ID : request.body.params.reviewer2,
+            Reviewer3ID : request.body.params.reviewer3
+          },{
+            where :{
+              paperId : request.body.params.paperID
+            }
+          })
+          .then(function(submission){
+            response.json({success: true, submission: submission});
+          });
         }
 
 /*
