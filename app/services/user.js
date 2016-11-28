@@ -14,7 +14,9 @@
         router.post('/authenticate', endpoints.authenticate);
         router.get('/get-users', endpoints.getUsers);
         router.post('/update-roles',endpoints.updateRoles);
-        router.post('/get-pcms',endpoints.getPCMs);
+        router.get('/get-pcms',endpoints.getPCMs);
+        router.get('/get-user-by-id',endpoints.getUserByID);
+
     };
 
     var endpoints = {
@@ -25,6 +27,16 @@
                     console.log(users)
                     res.send(users);
             });
+        },
+
+        getUserByID : function(req,res){
+          UserModel.findOne({
+            where:{
+              ID : req.query.ID
+            }
+          }).then(function(user){
+            res.send(user);
+          });
         },
 
         getPCMs: function(req, res){
