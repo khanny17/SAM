@@ -249,7 +249,7 @@
                     Description:req.body.Description,
                     Title:req.body.Title,
                     Document:req.body.Document,
-                    PaperFormat:"PDF"
+                    PaperFormat: req.body.PaperFormat.toUpperCase()
                 }).then(function(version){
                     return PaperModel.update({
                         CurrentVersion:(max +1)

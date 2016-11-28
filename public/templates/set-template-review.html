@@ -1,0 +1,45 @@
+<legend>Admin - Set Review Template</legend>
+
+
+<form ng-submit="updateTemplate()" class="form-horizontal">
+    <fieldset >
+
+        <div class="form-group" >
+            <label class="col-md-4 control-label">File: *</label>
+            <div class="col-md-4">
+                <input type="file" accept=".doc,.docx,.pdf" class="form-control" fileread="reviewTemplate[0].Document" format="format" required />
+            </div>
+        </div>
+
+        <div class="form-group" >
+            <label class="col-md-4 control-label">Existing Template:</label>
+            <div class="col-md-4">
+                <a target="_self" ng-click="downloadDocument(paper)" download="{{reviewTemplate[0].Title}}">Click to download</a>
+            </div>
+        </div>
+
+
+        <div class="form-group">
+            <label class="col-md-4 control-label">Created On:</label>
+            <div class="col-md-5">
+                <label class="col-md-5 control-label" >{{reviewTemplate[0].createdAt | date:'medium'}}</label>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="col-md-4 control-label">Last Updated:</label>
+            <div class="col-md-5">
+                <label class="col-md-5 control-label" >{{reviewTemplate[0].updatedAt | date:'medium'}}</label>
+            </div>
+        </div>
+
+
+        <div class="form-group">
+            <label class="col-md-4 control-label"></label>
+            <div class="col-md-8">
+                <button class="btn btn-primary" type="submit" ng-disabled="!isValid()">Update</button>
+                <button class="btn btn-danger" type="button" ui-sref="inside.home">Cancel</button>
+            </div>
+        </div>
+    </fieldset>
+</form>

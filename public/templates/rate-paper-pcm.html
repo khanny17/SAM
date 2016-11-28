@@ -43,9 +43,9 @@
         </div>
 
         <div class="form-group">
-            <label class="col-md-4 control-label">Contributing Authors:</label>
+            <label class="col-md-4 control-label">Paper:</label>
             <div class="col-md-4">
-                <label class="control-label">{{paper[0].PaperFormat}}</label>
+                <a style="cursor: pointer" target="_self" ng-click="downloadDocument(paper[0].PaperId)" download="{{paper[0].PaperTitle}}">Click to download</a>
             </div>
         </div>
 
@@ -85,10 +85,31 @@
             </div>
         </div>
 
+        <div class="form-group" >
+            <label class="col-md-4 control-label">Review File: *</label>
+            <div class="col-md-4">
+                <input type="file" accept=".doc,.docx" class="form-control" fileread="reviewDocument" format="format" required />
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="col-md-4 control-label">Current Review:</label>
+            <div class="col-md-4">
+                <a style="cursor: pointer" target="_self" ng-click="downloadReviewDocument(reviewID)" download="{{reviewDocument.PaperTitle}}--Review--{{contactAuthor}}">Click to download</a>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="col-md-4 control-label">Review Template:</label>
+            <div class="col-md-4">
+                <a style="cursor: pointer" target="_self" ng-click="downloadReviewTemplate()" download="{{reviewTemplate[0].Title}}">Click to download</a>
+            </div>
+        </div>
+
         <div class="form-group">
             <label class="col-md-4 control-label"></label>
             <div class="col-md-8">
-                <button class="btn btn-primary" type="submit">Update</button>
+                <button class="btn btn-primary" type="submit" ng-disabled="!isValid()">Update</button>
                 <button class="btn btn-default" type="button" onclick="window.location.href='/view-papers-pcm'">Cancel
                 </button>
             </div>

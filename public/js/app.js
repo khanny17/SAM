@@ -23,6 +23,8 @@
         'ViewPaperVersionsControllerModule',
         'ViewPapersPCMControllerModule',
         'RatePaperPCMControllerModule',
-        'SetPaperPreferencePCMControllerModule'
+        'SetPaperPreferencePCMControllerModule',
+        'ManageDeadlinesControllerModule',
+        'SetReviewTemplateControllerModule'
     ]);
 }());

@@ -22,7 +22,7 @@
     var endpoints = {
 
         getUsers: function(req, res) {
-            UserModel.findAll({attributes: ['FirstName', 'LastName', 'Role', 'ID'], include: [{ model: PaperModel}]})
+            UserModel.findAll({attributes: ['FirstName', 'LastName', 'Role', 'ID']})
                 .then(function(users) {
                     console.log(users)
                     res.send(users);

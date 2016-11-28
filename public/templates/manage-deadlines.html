@@ -1,0 +1,23 @@
+
+<legend>Admin Manage Deadlines</legend>
+
+<span ng-if="deadlines.length >= 1">
+    <div class="row grid table-bordered">
+        <div class="col-sm-4" style="background: burlywood">Deadline Name</div>
+        <div class="col-sm-4" style="background: burlywood">Deadline Date</div>
+        <div class="col-sm-4" style="background: burlywood">Action</div>
+    </div>
+
+    <div class="row grid table-bordered" ng-repeat="deadline in deadlines">
+        <div class="col-sm-3">{{deadline.Deadline}}</div>
+        <div class="col-sm-3">{{deadline.Date}}</div>
+
+        <div  class="col-sm-1">
+            <a class="btn btn-sm btn-default" ng-click="updateDeadline(deadline)">Update Deadline</a>
+        </div>
+    </div>
+</span>
+<span ng-if="deadlines.length == 0">
+    No Deadlines Available.<br>
+    <a class="btn btn-sm btn-default" ng-click="setDefaultDeadlines()">Set Default Deadlines</a>
+</span>

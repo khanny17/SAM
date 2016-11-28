@@ -5,7 +5,8 @@
         var PaperPreference = sequelize.define("paperPreference", {
             ID: {
                 type: DataTypes.INTEGER,
-                primaryKey: true
+                primaryKey: true,
+                autoIncrement: true
             }
         },
             {
