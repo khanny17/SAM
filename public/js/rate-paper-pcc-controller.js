@@ -13,7 +13,8 @@
             $scope.loadingPaper = true;
             $scope.paperID = '';
             $scope.reviews = [];
-
+            $scope.reviewRating = 0;
+            $scope.reviewComment = '';
 
             document.getElementById("overlayScreen").style.width = "100%";
             document.getElementById("overlayScreen").style.height = "100%";
@@ -26,8 +27,18 @@
                     $http.get('services/review/get-all-reviews-by-submission-id', {params: {submissionId: $scope.submissionID}})
                         .then(function(response){
                             $scope.reviews = response.data.reviews[0];
+                            console.log($scope.reviews);
                             document.getElementById("overlayScreen").style.width = "0%";
                             document.getElementById("overlayScreen").style.height = "0%";
+                            $http.get('services/pcc-review/get-pcc-review-by-submissionId',{params: {submissionId: $scope.submissionID}})
+                              .then(function(response){
+
+                                if(response.data.pccReviews.length==1){
+                                  $scope.reviewRating = response.data.pccReviews[0].Rating;
+                                  $scope.reviewComment = response.data.pccReviews[0].Comment;
+                                  //disable submit and conflict buttons
+                                }
+                              });
                             $scope.loadingPapers = false;
                         });
                 });
@@ -36,25 +47,25 @@
             $scope.ratePaper = function () {
                 document.getElementById("overlayScreen").style.width = "100%";
                 document.getElementById("overlayScreen").style.height = "100%";
-                var review_document = $scope.reviewDocument;
-                var review_paperFormat = $scope.format;
-                var review_id = $scope.reviewID;
+                // var review_document = $scope.reviewDocument;
+                // var review_paperFormat = $scope.format;
+                // var review_id = $scope.reviewID;
                 var review_rating = $scope.reviewRating;
                 var review_comment = $scope.reviewComment;
                 var review_submissionID = $scope.paper[0].SubmissionId;
-                var review_pcmID = $scope.userID;
+                // var review_pcmID = $scope.userID;
                 var paper_id = $scope.paperID;
 
-                $http.post('services/review/submit-pcm-review', {
+                $http.post('services/pcc-review/submit-pcc-review', {
                     params: {
-                        review_id: review_id,
+                        // review_id: review_id,
                         review_rating: review_rating,
                         review_comment: review_comment,
                         review_submissionID: review_submissionID,
-                        review_pcmID: review_pcmID,
-                        paper_id:paper_id,
-                        review_document:review_document,
-                        review_paperFormat: review_paperFormat
+                        // review_pcmID: review_pcmID,
+                        // paper_id:paper_id,
+                        // review_document:review_document,
+                        // review_paperFormat: review_paperFormat
                     }
                 })
                     .then(function (response) {
@@ -62,7 +73,7 @@
                         document.getElementById("overlayScreen").style.width = "0%";
                         document.getElementById("overlayScreen").style.height = "0%";
 
-                        $state.go('inside.view-papers-pcm');
+                        $state.go('inside.view-papers-pcc');
                     });
             };
 
@@ -120,6 +131,32 @@
 
                 var blob = new Blob(byteArrays, {type: contentType});
                 return blob;
+            }
+
+            $scope.sendConflictNotification = function(){
+              console.log("In sendConflictNotification");
+              $http.post('services/paper/update-paper-status',
+             {
+               params: {
+                 paperID: $scope.paperID,
+                 status: "Review Conflict"
+               }
+             }).then(function(response){
+               console.log(response.data.success);
+               var pcms = [];
+               for (var i in $scope.reviews) {
+                 pcms.push( $scope.reviews[i].ReviewPCMId);
+               }
+               console.log(pcms);
+               $http.post('services/notification/create-notification',
+                   {
+                       Text: 'Paper review conflict notification for  paper ' + $scope.paper[0].PaperTitle+',for author '+$scope.paper[0].UserFirstName+' '+$scope.paper[0].UserLastName +'.',
+                       userIds: pcms
+                   })
+                   .then(function () {
+                     console.log("notification sent!");
+                   });
+             });
             }
 
 

@@ -63,6 +63,13 @@
 <!-- END: Paper Details -->
 <!-- START: Review Details -->
         <div ng-repeat="review in reviews">
+          <hr>
+        <div class="form-group">
+            <label class="col-md-4 control-label">Reviewer: </label>
+            <div class="col-md-5">
+                <label class="col-md-4 control-label">{{review.ReviewerFirstName}}&nbsp;{{review.ReviewerLastName}}&nbsp;({{review.ReviewerEmail}})</label>
+            </div>
+        </div>
 
         <div class="form-group">
             <label class="col-md-4 control-label">Review Comments: </label>
@@ -88,11 +95,27 @@
 <!-- END: Review Details -->
 
         <div class="form-group">
+            <label class="col-md-4 control-label">Final Review Rating: *</label>
+            <div class="col-md-5">
+                <input type="number" max="5" min="0" class="form-control" ng-model="reviewRating" required>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="col-md-4 control-label">Final Review Comments: *</label>
+            <div class="col-md-5">
+                <textarea class="form-control" ng-model="reviewComment" placeholder="Review Comments"
+                          style="height:150px" required></textarea>
+            </div>
+        </div>
+
+        <div class="form-group">
             <label class="col-md-4 control-label"></label>
             <div class="col-md-8">
-                <button class="btn btn-primary" type="submit" >Update</button>
-                <button class="btn btn-default" type="button" onclick="window.location.href='/view-papers-pcm'">Cancel
+                <button class="btn btn-primary" type="submit" >Submit Rating</button>
+                <button class="btn btn-default" type="button" onclick="window.location.href='/view-papers-pcc'">Cancel
                 </button>
+                <button type="button" class="btn btn-default" ng-click="sendConflictNotification()">Conflict</button>
             </div>
         </div>
 
@@ -101,4 +124,3 @@
 </form>
 
 <br/>
-

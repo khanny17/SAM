@@ -114,7 +114,7 @@
                       }
                     })
                     .state('inside.rate-paper-pcc', {
-                      url: '/rate-paper/:submissionId',
+                      url: '/rate-paper-pcc/:submissionId',
                       templateUrl: 'templates/rate-paper-pcc.html',
                       controller: 'ratePaperPCCController',
                       data: {

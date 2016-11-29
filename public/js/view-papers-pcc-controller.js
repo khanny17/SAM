@@ -120,6 +120,15 @@
              }
            }).then(function(response){
              console.log(response.data.success);
+             $http.post('services/paper/update-paper-status',
+            {
+              params: {
+                paperID: paper.PaperId,
+                status: "Review Pending"
+              }
+            }).then(function(response){
+              console.log(response.data.success);
+            });
            });
            reset();
            $("#assignPcmDialogBox").dialog("close");

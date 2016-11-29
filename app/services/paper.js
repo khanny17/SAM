@@ -20,6 +20,7 @@
         router.get('/download-document', endpoints.downloadDocument);
         router.post('/update-paper-current-version', endpoints.updatePaperCurrentVersion);
         router.post('/submit-paper', endpoints.submitPaper);
+        router.post('/update-paper-status', endpoints.updatePaperStatus);
     };
 
     var endpoints = {
@@ -259,8 +260,6 @@
                         });
                 });
             });
-
-
         },
 
         updatePaperCurrentVersion: function(req, res) {
@@ -272,6 +271,20 @@
                     console.log("--Exec: Send response");
                     res.json({success: true, paper: paper});
                 });
+        },
+
+        updatePaperStatus: function(req,res) {
+          console.log("Uodate paper status");
+          PaperModel.update({
+            Status : req.body.params.status
+          },{
+            where: {
+              id : req.body.params.paperID
+            }
+          }).then(function(paper){
+            console.log("--Exec: Send response");
+            res.json({success: true, paper: paper});
+          })
         },
 
         submitPaper: function(req, res) {

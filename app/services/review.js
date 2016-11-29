@@ -97,49 +97,54 @@
                 console.log('------------------------------------------------------------------');
                 console.log(review_submissionID);
                 /*
-                 SELECT
-                 paperversions.paperId             AS "PaperId",
-                 paperversions.ID                  AS "PaperVersionId",
-                 submissions.ID                    AS "SubmissionId",
-                 papers.CurrentVersion             AS "CurrentVersion",
-                 papers.Status                     AS "PaperStatus",
-                 papers.userID                     AS "PaperAuthor",
-                 papers.createdAt                  AS "OriginalCreatedAt",
-                 paperversions.Title               AS "PaperTitle",
-                 paperversions.ContributingAuthors AS "PaperContibutingAuthors",
-                 paperversions.Description         AS "PaperDescription",
-                 paperversions.Document            AS "PaperDocument",
-                 paperversions.PaperFormat         AS "PaperFormat",
-                 paperversions.createdAt           AS "VersionCreatedAt",
-                 submissions.PCCID                 AS "SubmissionPCCId",
-                 submissions.Reviewer1ID           AS "SubmissionReviewer1Id",
-                 submissions.Reviewer2ID           AS "SubmissionReviewer2Id",
-                 submissions.Reviewer3ID           AS "SubmissionReviewer3Id",
-                 submissions.createdAt             AS "SubmissionCreatedAt",
-                 reviews.ID                        AS "ReviewId",
-                 reviews.Rating                    AS "ReviewRating",
-                 reviews.Comment                   AS "ReviewComment",
-                 reviews.PCMID                     AS "ReviewPCMId",
-                 reviews.createdAt                 AS "ReviewCreatedAt",
-                 reviews.Document                  AS "ReviewDocument",
-                 reviews.PaperFormat               AS "ReviewPaperFormat",
-                 users.FirstName                   AS "UserFirstName",
-                 users.LastName                    AS "UserLastName",
-                 users.Email                       AS "UserEmail"
+                SELECT
+                paperversions.paperId             AS "PaperId",
+                paperversions.ID                  AS "PaperVersionId",
+                submissions.ID                    AS "SubmissionId",
+                papers.CurrentVersion             AS "CurrentVersion",
+                papers.Status                     AS "PaperStatus",
+                papers.userID                     AS "PaperAuthor",
+                papers.createdAt                  AS "OriginalCreatedAt",
+                paperversions.Title               AS "PaperTitle",
+                paperversions.ContributingAuthors AS "PaperContibutingAuthors",
+                paperversions.Description         AS "PaperDescription",
+                paperversions.Document            AS "PaperDocument",
+                paperversions.PaperFormat         AS "PaperFormat",
+                paperversions.createdAt           AS "VersionCreatedAt",
+                submissions.PCCID                 AS "SubmissionPCCId",
+                submissions.Reviewer1ID           AS "SubmissionReviewer1Id",
+                submissions.Reviewer2ID           AS "SubmissionReviewer2Id",
+                submissions.Reviewer3ID           AS "SubmissionReviewer3Id",
+                submissions.createdAt             AS "SubmissionCreatedAt",
+                reviews.ID                        AS "ReviewId",
+                reviews.Rating                    AS "ReviewRating",
+                reviews.Comment                   AS "ReviewComment",
+                reviews.PCMID                     AS "ReviewPCMId",
+                reviews.createdAt                 AS "ReviewCreatedAt",
+                reviews.Document                  AS "ReviewDocument",
+                reviews.PaperFormat               AS "ReviewPaperFormat",
+                users.FirstName                   AS "UserFirstName",
+                users.LastName                    AS "UserLastName",
+                users.Email                       AS "UserEmail",
+                reviewer.FirstName                AS "ReviewerFirstName",
+                reviewer.LastName                 AS "ReviewerLastName",
+                reviewer.Email                    AS "ReviewerEmail"
 
-                 FROM paperVersions
-                 INNER JOIN papers ON (paperVersions.paperId = papers.id AND paperVersions.Version = papers.CurrentVersion)
-                 INNER JOIN submissions ON (papers.id = submissions.paperId)
-                 INNER JOIN reviews ON (reviews.submissionID = submissions.ID)
-                 INNER JOIN users ON (users.ID = papers.userID)
-                 WHERE submissions.ID = "21" // <---NOTE: Change these values
+                FROM paperVersions
+                INNER JOIN papers ON (paperVersions.paperId = papers.id AND paperVersions.Version = papers.CurrentVersion)
+                INNER JOIN submissions ON (papers.id = submissions.paperId)
+                INNER JOIN reviews ON (reviews.submissionID = submissions.ID)
+                INNER JOIN users ON (users.ID = papers.userID)
+                INNER JOIN users AS reviewer ON (reviewer.ID = reviews.PCMID)
+                WHERE submissions.ID = "1"// <---NOTE: Change these values
                  */
-                var sql_query = 'SELECT paperversions.paperId AS "PaperId", paperversions.ID AS "PaperVersionId", submissions.ID AS "SubmissionId", papers.CurrentVersion AS "CurrentVersion", papers.Status AS "PaperStatus", papers.userID AS "PaperAuthor", papers.createdAt AS "OriginalCreatedAt", paperversions.Title AS "PaperTitle", paperversions.ContributingAuthors AS "PaperContibutingAuthors", paperversions.Description AS "PaperDescription", paperversions.Document AS "PaperDocument", paperversions.PaperFormat AS "PaperFormat", paperversions.createdAt AS "VersionCreatedAt", submissions.PCCID AS "SubmissionPCCId", submissions.Reviewer1ID AS "SubmissionReviewer1Id", submissions.Reviewer2ID AS "SubmissionReviewer2Id", submissions.Reviewer3ID AS "SubmissionReviewer3Id", submissions.createdAt AS "SubmissionCreatedAt", reviews.ID AS "ReviewId", reviews.Rating AS "ReviewRating", reviews.Comment AS "ReviewComment", reviews.PCMID AS "ReviewPCMId", reviews.createdAt AS "ReviewCreatedAt",reviews.Document AS "ReviewDocument", reviews.PaperFormat AS "ReviewPaperFormat",users.FirstName AS "UserFirstName",users.LastName AS "UserLastName", users.Email AS "UserEmail" ' +
+                var sql_query = 'SELECT paperversions.paperId AS "PaperId", paperversions.ID AS "PaperVersionId", submissions.ID AS "SubmissionId", papers.CurrentVersion AS "CurrentVersion", papers.Status AS "PaperStatus", papers.userID AS "PaperAuthor", papers.createdAt AS "OriginalCreatedAt", paperversions.Title AS "PaperTitle", paperversions.ContributingAuthors AS "PaperContibutingAuthors", paperversions.Description AS "PaperDescription", paperversions.Document AS "PaperDocument", paperversions.PaperFormat AS "PaperFormat", paperversions.createdAt AS "VersionCreatedAt", submissions.PCCID AS "SubmissionPCCId", submissions.Reviewer1ID AS "SubmissionReviewer1Id", submissions.Reviewer2ID AS "SubmissionReviewer2Id", submissions.Reviewer3ID AS "SubmissionReviewer3Id", submissions.createdAt AS "SubmissionCreatedAt", reviews.ID AS "ReviewId", reviews.Rating AS "ReviewRating", reviews.Comment AS "ReviewComment", reviews.PCMID AS "ReviewPCMId", reviews.createdAt AS "ReviewCreatedAt",reviews.Document AS "ReviewDocument", reviews.PaperFormat AS "ReviewPaperFormat",users.FirstName AS "UserFirstName",users.LastName AS "UserLastName", users.Email AS "UserEmail", reviewer.FirstName AS "ReviewerFirstName", reviewer.LastName AS "ReviewerLastName", reviewer.Email AS "ReviewerEmail"' +
                     'FROM paperVersions ' +
                     'INNER JOIN papers ON (paperVersions.paperId = papers.id AND paperVersions.Version = papers.CurrentVersion) ' +
                     'INNER JOIN submissions ON (papers.id = submissions.paperId) ' +
                     'INNER JOIN reviews ON (reviews.submissionID = submissions.ID) ' +
                     'INNER JOIN users ON (users.ID = papers.userID)' +
+                    'INNER JOIN users AS reviewer ON (reviewer.ID = reviews.PCMID)' +
                     'WHERE submissions.ID = "'+review_submissionID+'"';
 
                 return db.sequelize.query(sql_query)

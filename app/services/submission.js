@@ -105,7 +105,7 @@
                 'INNER JOIN papers ON (paperVersions.paperId = papers.id AND paperVersions.Version = papers.CurrentVersion) ' +
                 'INNER JOIN submissions ON (papers.id = submissions.paperId) ' +
                 'INNER JOIN users ON (users.ID = papers.userID)' +
-                'WHERE papers.Status = "Submitted"';
+                'WHERE papers.Status <> "Pending Submission"';
 
             return  db.sequelize.query(sql_query)
                 .then(function (data) {
