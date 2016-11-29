@@ -30,6 +30,11 @@
                         templateUrl: 'templates/home.html', //The path to the html template
                         controller: 'homeController' //The path to the angular controller
                     })
+                    .state('inside.notifications', {
+                        url: '/notifications', //The url for the state
+                        templateUrl: 'templates/notifications.html', //The path to the html template
+                        controller: 'notificationsController' //The path to the angular controller
+                    })
                     .state('inside.submit-paper', {
                         url: '/submit-paper',
                         templateUrl: 'templates/submit-paper.html',
