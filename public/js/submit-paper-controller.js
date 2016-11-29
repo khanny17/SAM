@@ -6,7 +6,7 @@
     .controller('submitPaperController', ['$scope', '$http','AuthService','$state', function($scope, $http, AuthService,$state) {
         
         $scope.paper = {};
-        $scope.title = "SAM 2017 - Submit Paper";
+        $scope.title = "SAM 2017 - Create Paper";
         $scope.users = [];
         $scope.PCCs = [];
         $scope.contactAuthor = AuthService.authenticatedUser().FirstName +" " + AuthService.authenticatedUser().LastName;
