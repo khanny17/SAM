@@ -15,6 +15,7 @@
         router.get('/get-users', endpoints.getUsers);
         router.post('/update-roles',endpoints.updateRoles);
         router.get('/get-pcms',endpoints.getPCMs);
+        router.get('/get-pccs',endpoints.getPCCs);
         router.get('/get-user-by-id',endpoints.getUserByID);
 
     };
@@ -47,6 +48,16 @@
           }).then(function(PCMs){
             res.send(PCMs)
           });
+        },
+
+        getPCCs: function(req, res){
+            UserModel.findAll({
+                where : {
+                    Role:'PCC'
+                }
+            }).then(function(PCMs){
+                res.send(PCMs)
+            });
         },
 
         updateRoles: function(req, res) {
