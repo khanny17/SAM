@@ -9,9 +9,11 @@
                 $scope.papers = [];
                 $scope.title = "SAM 2017 - Submit Paper";
                 $scope.contactAuthor = AuthService.authenticatedUser().FirstName +" " + AuthService.authenticatedUser().LastName;
+                $scope.contactAuthorEmail = AuthService.authenticatedUser().Email;
                 $scope.userID =  AuthService.authenticatedUser().ID;
                 $scope.loadingPaper = true;
                 $scope.deadlinePassed = false;
+                $scope.PCCs = [];
 
                 document.getElementById("overlayScreen").style.width = "100%";
                 document.getElementById("overlayScreen").style.height = "100%";
@@ -34,7 +36,12 @@
                             });
                     });
 
-
+                $http.get('services/user/get-pccs')
+                    .then(function (response) {
+                        for(var i=0;i<response.data.length;i++){
+                            $scope.PCCs.push(response.data[i].ID);
+                        }
+                    });
 
                 $scope.submitPaper = function(paperId) {
                     var result = $window.confirm("Paper submission cannot be reverted. Proceed with submission?");
@@ -47,10 +54,22 @@
 
                     $http.post('services/paper/submit-paper',  {params: {paperId: paperId }})
                         .then(function(){
+                            $http.post('services/notification/create-notification',
+                                {
+                                    Text: 'Paper Submission Notification: ' + $scope.contactAuthor + '('+$scope.contactAuthorEmail+') submitted a paper for review.',
+                                    userIds: $scope.PCCs
+                                })
+                                .then(function () {
+                                    $http.post('services/notification/create-notification',
+                                        {
+                                            Text: 'Paper Submission Notification: Your paper has been submitted.',
+                                            userIds: [$scope.userID ]
+                                        });
+
+                                });
 
                             document.getElementById("overlayScreen").style.width = "0%";
                             document.getElementById("overlayScreen").style.height = "0%";
-
 
                             $state.reload();
 
