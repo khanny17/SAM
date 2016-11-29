@@ -11,6 +11,7 @@
         $scope.PCCs = [];
         $scope.contactAuthor = AuthService.authenticatedUser().FirstName +" " + AuthService.authenticatedUser().LastName;
         $scope.paper.userID =  AuthService.authenticatedUser().ID;
+        $scope.contactAuthorEmail = AuthService.authenticatedUser().Email;
         $scope.paper.Status='Pending Submission';
         $scope.deadlinePassed = false;
 
@@ -51,7 +52,7 @@
             .then(function(){
                 $http.post('services/notification/create-notification',
                     {
-                        Text: 'New Paper Notification: '+$scope.contactAuthor+' created a new paper',
+                        Text: 'New Paper Notification: '+$scope.contactAuthor+ '('+$scope.contactAuthorEmail+') created a new paper.',
                         userIds: $scope.PCCs
                     })
                     .then(function(){
@@ -59,7 +60,7 @@
                             {
                                 Text: 'New Paper Notification: Your paper has been created. Please remember to submit it.',
                                 userIds: [ $scope.paper.userID]
-                            })
+                            });
                         $scope.paperCreated = true;
 
                         document.getElementById("overlayScreen").style.width = "0%";
