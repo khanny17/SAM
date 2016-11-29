@@ -3,7 +3,15 @@
 
     angular.module('InsideControllerModule', ['AuthModule'])
 
-        .controller('insideController', ['$scope', '$state', 'AuthService',  function($scope, $state, AuthService) {
+        .controller('insideController', ['$scope', '$state', '$http', 'AuthService',  function($scope, $state, $http, AuthService) {
+
+            $scope.hasNotifications = false;
+            // --- Get notifications out of db and decide if we have new ones
+            $http.get('services/notification/has-notifications', {params: { userID:  $scope.userID }})
+            .then(function(response) {
+                $scope.hasNotifications = true;
+            });
+
 
             $scope.title = "SAM 2017";
 
