@@ -55,8 +55,8 @@
                 where : {
                     Role:'PCC'
                 }
-            }).then(function(PCMs){
-                res.send(PCMs)
+            }).then(function(PCCs){
+                res.send(PCCs)
             });
         },
 
