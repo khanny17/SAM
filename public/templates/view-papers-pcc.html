@@ -29,6 +29,7 @@
     <div class="col-sm-1">
       <a id="assign" ng-show="!paper.SubmissionReviewer1Id" ng-click="assign(paper)">Assign</a>
       <a id="view" ng-show="paper.SubmissionReviewer1Id" ng-click="view(paper)">View</a>
+      <a id="rate" ng-show="paper.SubmissionReviewer1Id" href="/rate-paper-pcc/{{paper.SubmissionId}}">View</a>
     </div>
 </div>
 
