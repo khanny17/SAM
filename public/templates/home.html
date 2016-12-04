@@ -6,12 +6,20 @@
     <div ng-if="user.Role == 'Author'">
       <a ui-sref="inside.submit-paper">Create a Paper</a>
       <a ui-sref="inside.view-papers">View Papers</a>
-      <a ui-sref="inside.update-user-role">Update User Role</a>
-      <a ui-sref="inside.view-papers-pcm">PCM Review Papers</a>
-      <a ui-sref="inside.set-paper-preference-pcm">PCM Set Paper Preference</a>
+    </div>
+    <div ng-if="user.Role == 'PCM'">
+        <a ui-sref="inside.submit-paper">Create a Paper</a>
+        <a ui-sref="inside.view-papers">View Papers</a>
+        <a ui-sref="inside.view-papers-pcm">PCM Review Papers</a>
+        <a ui-sref="inside.set-paper-preference-pcm">PCM Set Paper Preference</a>
     </div>
     <div ng-if="user.Role == 'PCC'">
       <a ui-sref="inside.view-papers">View Papers</a>
       <a ui-sref="inside.rate-paper">Rate Paper</a>
+    </div>
+    <div ng-if="user.Role == 'Admin'">
+        <a ui-sref="inside.manage-deadlines">Manage Deadlines</a>
+        <a ui-sref="inside.set-review-template">Set Review Template</a>
+        <a ui-sref="inside.update-user-role">Update User Role</a>
     </div>
 </div>
