@@ -48,7 +48,10 @@
                     .state('inside.update-user-role', {
                         url: '/update-user-role',
                         templateUrl: 'templates/update-user-role.html',
-                        controller: 'updateUserRoleController'
+                        controller: 'updateUserRoleController',
+                        data: {
+                            permissions: ['Admin']
+                        }
                     })
                     .state('inside.view-papers', {
                         url: '/view-papers',
@@ -68,42 +71,42 @@
                     .state('inside.view-papers-pcm', {
                         url: '/view-papers-pcm',
                         templateUrl: 'templates/view-papers-pcm.html',
-                        controller: 'viewPapersPCMController'
-                     /*   data: {
-                            permissions: ['PCM'] //TODO - uncomment!
-                        }*/
+                        controller: 'viewPapersPCMController',
+                        data: {
+                            permissions: ['PCM']
+                        }
                     })
                     .state('inside.rate-paper-pcm', {
                         url: '/rate-paper-pcm/:submissionId',
                         templateUrl: 'templates/rate-paper-pcm.html',
-                        controller: 'ratePaperPCMController'
-                        /*   data: {
-                         permissions: ['PCM'] //TODO - uncomment!
-                         }*/
+                        controller: 'ratePaperPCMController',
+                           data: {
+                         permissions: ['PCM']
+                         }
                     })
                     .state('inside.set-paper-preference-pcm', {
                         url: '/set-paper-preference-pcm',
                         templateUrl: 'templates/set-paper-preference-pcm.html',
-                        controller: 'setPaperPreferencePCMController'
-                        /*   data: {
-                         permissions: ['PCM'] //TODO - uncomment!
-                         }*/
+                        controller: 'setPaperPreferencePCMController',
+                           data: {
+                         permissions: ['PCM']
+                         }
                     })
                     .state('inside.manage-deadlines', {
                         url: '/manage-deadlines',
                         templateUrl: 'templates/manage-deadlines.html',
-                        controller: 'manageDeadlineController'
-                        /*   data: {
-                         permissions: ['PCM'] //TODO - uncomment!
-                         }*/
+                        controller: 'manageDeadlineController',
+                           data: {
+                         permissions: ['Admin']
+                         }
                     })
                     .state('inside.set-review-template', {
                         url: '/set-review-template',
                         templateUrl: 'templates/set-template-review.html',
-                        controller: 'setReviewTemplateController'
-                        /*   data: {
-                         permissions: ['PCM'] //TODO - uncomment!
-                         }*/
+                        controller: 'setReviewTemplateController',
+                           data: {
+                         permissions: ['Admin']
+                         }
                     })
                     .state('inside.view-papers-pcc', {
                       url: '/view-papers-pcc',
