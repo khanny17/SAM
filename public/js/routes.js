@@ -35,7 +35,7 @@
                         templateUrl: 'templates/notifications.html', //The path to the html template
                         controller: 'notificationsController' //The path to the angular controller
                     })
-                    .state('inside.submit-paper', {
+                    .state('inside.create-paper', {
                         url: '/submit-paper',
                         templateUrl: 'templates/submit-paper.html',
                         controller: 'submitPaperController'
@@ -66,7 +66,10 @@
                     .state('inside.view-user', {
                         url: '/view-user', //The url for the state
                         templateUrl: 'templates/view-user.html', //The path to the html template
-                        controller: 'viewUserController' //The path to the angular controller
+                        controller: 'viewUserController', //The path to the angular controller
+                        data: {
+                            permissions: ['Admin']
+                        }
                     })
                     .state('inside.view-papers-pcm', {
                         url: '/view-papers-pcm',
