@@ -1,6 +1,9 @@
 (function () {
     'use strict';
 
+
+    var io      = require('../../server');
+
     var db = require('../models/db');
     var Notification = db.notification;
 
@@ -33,7 +36,8 @@
         hasNotifications: function(request, response) {
             return Notification.findAll({
                 where:{
-                    userID: request.query.userID
+                    userID: request.query.userID,
+                    Viewed:0
                 }
             }).then(function(data){
                 data.forEach(function(notification) {
@@ -52,6 +56,11 @@
                     Text: request.body.Text,
                     Viewed: false
                 });
+
+                console.log(global.clients);
+                var socket = global.clients[userId];
+                if (socket != undefined)
+                    socket.emit('notification message', 'New Notification Alert! \n \n'+ request.body.Text + '\n \n');
             });
 
             response.send({success: true});

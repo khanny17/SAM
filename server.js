@@ -8,10 +8,15 @@ var methodOverride = require('method-override');
 var passport       = require('passport');
 var jwt            = require('jwt-simple');
 
+var http = require('http').Server(app);
+var io      = require('socket.io')(http);
+
+global.io = io;
+
 // Configuration
     
 // Server port
-var port = process.env.PORT || 8080; 
+var port = process.env.PORT || 8080;
 
 // get all data/stuff of the body (POST) parameters
 // parse application/json 
@@ -47,12 +52,30 @@ require(__dirname + '/app/models/db');
 // --- Send Single Page Application for all other routes ---
 // Since we route on the frontend, every route except for our services routes should just send
 // index.html. Our frontend JS will handle the routing from there
+
 app.get('*', function(req, res) {
-    res.sendfile(__dirname + '/public/index.html'); 
+   res.sendfile(__dirname + '/public/index.html');
 });
 
 
+
+
 // Start App on the port 
-app.listen(port);               
+//app.listen(port);
+
+global.clients = {};
+io.on('connection', function(socket){
+    console.log('socket: a user connected ->'+socket.handshake.query.userid);
+
+
+    clients[socket.handshake.query.userid] = socket;
+
+    socket.on('disconnect', function(){
+        console.log('user disconnected');
+    });
+});
+http.listen(port, function(){
+    console.log('listening on *:'+port);
+})
 
 console.log('Server running on ' + port);

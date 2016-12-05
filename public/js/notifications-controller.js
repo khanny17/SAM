@@ -13,6 +13,8 @@
                 $scope.notifications = response.data;
             });
 
+            $scope.$root.$broadcast("refreshNotification");
+
 
             $scope.createTestNotification = function() {
                 $http.post('services/notification/create-notification', 
