@@ -15,6 +15,7 @@
             $scope.reviews = [];
             $scope.reviewRating = 0;
             $scope.reviewComment = '';
+            $scope.submitDisabled = false;
 
             document.getElementById("overlayScreen").style.width = "100%";
             document.getElementById("overlayScreen").style.height = "100%";
@@ -23,6 +24,10 @@
                 .then(function (response) {
                     $scope.paper = response.data.submission[0];
                     $scope.paperID = $scope.paper[0].PaperId;
+
+                    if($scope.paper[0].PaperStatus=='Review Conflict'){
+                      $scope.submitDisabled = true;
+                    }
 
                     $http.get('services/review/get-all-reviews-by-submission-id', {params: {submissionId: $scope.submissionID}})
                         .then(function(response){
@@ -145,6 +150,7 @@
 
             $scope.sendConflictNotification = function(){
               console.log("In sendConflictNotification");
+              $scope.submitDisabled=true;
               $http.post('services/paper/update-paper-status',
              {
                params: {
