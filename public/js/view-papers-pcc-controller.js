@@ -121,14 +121,24 @@
            }).then(function(response){
              console.log(response.data.success);
              $http.post('services/paper/update-paper-status',
-            {
-              params: {
-                paperID: paper.PaperId,
-                status: "Review Pending"
-              }
-            }).then(function(response){
-              console.log(response.data.success);
-            });
+                {
+                  params: {
+                    paperID: paper.PaperId,
+                    status: "Review Pending"
+                  }
+                }).then(function(response){
+                  console.log(response.data.success);
+                });
+
+              $http.post('services/notification/create-notification',
+                {
+                    Text: 'You have been assigned paper' + paper.PaperTitle+' for review.',
+                    userIds: [paper.PaperAuthorId]
+                })
+                .then(function () {
+                  console.log("notification sent!");
+                });
+
            });
            reset();
            $("#assignPcmDialogBox").dialog("close");

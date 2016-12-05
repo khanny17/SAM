@@ -73,7 +73,17 @@
                         document.getElementById("overlayScreen").style.width = "0%";
                         document.getElementById("overlayScreen").style.height = "0%";
 
+                        $http.post('services/notification/create-notification',
+                            {
+                                Text: 'Final rating for paper ' + $scope.paper[0].PaperTitle+' has been updated.',
+                                userIds: [$scope.paper.userID]
+                            })
+                            .then(function () {
+                              console.log("notification sent!");
+                            });
+
                         $state.go('inside.view-papers-pcc');
+
                     });
             };
 
