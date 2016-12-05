@@ -76,7 +76,7 @@
                         $http.post('services/notification/create-notification',
                             {
                                 Text: 'Final rating for paper ' + $scope.paper[0].PaperTitle+' has been updated.',
-                                userIds: [$scope.paper.userID]
+                                userIds: [$scope.paper[0].PaperAuthorId]
                             })
                             .then(function () {
                               console.log("notification sent!");

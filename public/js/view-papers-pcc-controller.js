@@ -120,6 +120,7 @@
              }
            }).then(function(response){
              console.log(response.data.success);
+             console.log(paper.PaperId);
              $http.post('services/paper/update-paper-status',
                 {
                   params: {
@@ -128,21 +129,23 @@
                   }
                 }).then(function(response){
                   console.log(response.data.success);
+                  var pcms = [];
+                  pcms.push( $scope.selectedReviewer1);
+                  pcms.push( $scope.selectedReviewer2);
+                  pcms.push( $scope.selectedReviewer3);
+                  $http.post('services/notification/create-notification',
+                    {
+                        Text: 'You have been assigned paper' + paper.PaperTitle+' for review.',
+                        userIds: pcms
+                    })
+                    .then(function () {
+                      console.log("notification sent!");
+                    });
+                    reset();
+                    $("#assignPcmDialogBox").dialog("close");
+                    loadPapers();
                 });
-
-              $http.post('services/notification/create-notification',
-                {
-                    Text: 'You have been assigned paper' + paper.PaperTitle+' for review.',
-                    userIds: [paper.PaperAuthorId]
-                })
-                .then(function () {
-                  console.log("notification sent!");
-                });
-
            });
-           reset();
-           $("#assignPcmDialogBox").dialog("close");
-           loadPapers();
         }
 
       function validate(){
@@ -155,6 +158,7 @@
         if(paperAuthor.ID==$scope.selectedReviewer1 || paperAuthor.ID==$scope.selectedReviewer2 || paperAuthor.ID==$scope.selectedReviewer3){
           $scope.valmsg = "You cannot select the author of the paper as a reviewer";
           console.log($scope.valmsg);
+          $scope.$apply();
           return false;
         }
         return true;
