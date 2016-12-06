@@ -3,6 +3,7 @@
 
     var db = require('../models/db');
     var PCCReviewModel = db.PCCReview;
+    var PaperModel = db.paper;
 
     var init = function(router) {
         router.post('/submit-pcc-review', endpoints.createPCCReview);
@@ -13,12 +14,16 @@
 
         createPCCReview: function(req, res) {
           console.log("in createPCCReview!");
-            PCCReviewModel.create({
+            return PCCReviewModel.create({
               Rating:req.body.params.review_rating,
               Comment:req.body.params.review_comment,
               submissionID:req.body.params.review_submissionID
             }).then(function(pccReview) {
+                return PaperModel.update({
+                    Status:'Review Complete'
+                },{ where: {id: req.body.params.paper_id} }).then(function(){
                     res.send(pccReview);
+                })
                 });
         },
 
