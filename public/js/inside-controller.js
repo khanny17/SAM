@@ -6,15 +6,21 @@
         .controller('insideController', ['$scope', '$state', '$http', 'AuthService', function ($scope, $state, $http, AuthService) {
             $scope.contactAuthor = AuthService.authenticatedUser().FirstName + " " + AuthService.authenticatedUser().LastName;
             $scope.userID = AuthService.authenticatedUser().ID;
-
+            $scope.hasNotifications = false;
 
             var user = 'userid=' + $scope.userID;
             var socket = io.connect({query: user});
             socket.on('notification message', function (msg) {
                 alert(msg);
                 $scope.hasNotifications = true;
+                $scope.$apply();
             });
             console.log(socket);
+
+            $http.get('services/notification/has-notifications', {params: {userID: $scope.userID}})
+                .then(function (response) {
+                    $scope.hasNotifications = response.data;
+                });
 
             // Code that is executed every time view is opened
             $scope.$on('refreshNotification', function (event, args) {

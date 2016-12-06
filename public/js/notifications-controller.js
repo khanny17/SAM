@@ -11,9 +11,9 @@
             $http.get('services/notification/get-notifications', {params: { userID:  user.ID }})
             .then(function(response) {
                 $scope.notifications = response.data;
+                $scope.$root.$broadcast("refreshNotification");
             });
 
-            $scope.$root.$broadcast("refreshNotification");
 
 
             $scope.createTestNotification = function() {
