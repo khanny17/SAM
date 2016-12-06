@@ -13,7 +13,7 @@
             $scope.loadingPaper = true;
             $scope.paperID = '';
             $scope.reviews = [];
-            $scope.reviewRating = 0;
+            $scope.reviewRating;
             $scope.reviewComment = '';
             $scope.submitDisabled = false;
 
@@ -68,7 +68,7 @@
                         review_comment: review_comment,
                         review_submissionID: review_submissionID,
                         // review_pcmID: review_pcmID,
-                        // paper_id:paper_id,
+                         paper_id:paper_id
                         // review_document:review_document,
                         // review_paperFormat: review_paperFormat
                     }
@@ -80,7 +80,7 @@
 
                         $http.post('services/notification/create-notification',
                             {
-                                Text: 'Final rating for paper ' + $scope.paper[0].PaperTitle+' has been updated.',
+                                Text: 'Final rating for paper ' + $scope.paper[0].PaperTitle+' has been updated. Final Rating: '+$scope.reviewRating,
                                 userIds: [$scope.paper[0].PaperAuthorId]
                             })
                             .then(function () {
@@ -171,6 +171,7 @@
                    })
                    .then(function () {
                      console.log("notification sent!");
+                     $state.go('inside.view-papers-pcc');
                    });
              });
             }
