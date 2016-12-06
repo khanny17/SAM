@@ -21,12 +21,18 @@
       loadPapers();
 
       function loadPapers(){
-        $http.get('services/submission/get-all-submissions').then(function(response){
+          document.getElementById("overlayScreen").style.width = "100%";
+          document.getElementById("overlayScreen").style.height = "100%";
+
+          $http.get('services/submission/get-all-submissions').then(function(response){
           console.log("inside get papers!")
           $scope.papers = response.data.submissions[0];
           console.log($scope.papers);
           $scope.loadingPapers = false;
-        });
+              document.getElementById("overlayScreen").style.width = "0%";
+              document.getElementById("overlayScreen").style.height = "0%";
+
+          });
       }
 
       $("#assignPcmDialogBox").dialog({
@@ -186,6 +192,43 @@
         $("#reviewer3").removeAttr("disabled");
         $("#submit").show()
       }
+
+        $scope.downloadDocument = function(paper) {
+            $http.get('services/paper/download-document', { params: { paperID: paper.PaperId } })
+                .then(function(response) {
+                    var blob = b64toBlob(response.data.file, 'application/octet-stream');
+                    var url = URL.createObjectURL(blob);
+                    var a = document.createElement('a');
+                    a.href = url;
+                    a.download = response.data.fileName;
+                    a.click();
+                    URL.revokeObjectURL(url);
+                });
+        };
+
+        function b64toBlob(b64Data, contentType, sliceSize) {
+            contentType = contentType || '';
+            sliceSize = sliceSize || 512;
+
+            var byteCharacters = atob(b64Data);
+            var byteArrays = [];
+
+            for (var offset = 0; offset < byteCharacters.length; offset += sliceSize) {
+                var slice = byteCharacters.slice(offset, offset + sliceSize);
+
+                var byteNumbers = new Array(slice.length);
+                for (var i = 0; i < slice.length; i++) {
+                    byteNumbers[i] = slice.charCodeAt(i);
+                }
+
+                var byteArray = new Uint8Array(byteNumbers);
+
+                byteArrays.push(byteArray);
+            }
+
+            var blob = new Blob(byteArrays, {type: contentType});
+            return blob;
+        }
 
     }]);
 

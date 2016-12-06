@@ -9,33 +9,33 @@
 
 <p ng-if="loadingPapers">Loading Papers...</p>
 <p ng-if="!loadingPapers"><h2>Submitted Papers</h2></p>
-<legend>View papers for PCC</legend>
+<legend>PCC - Assign & Rate Papers</legend>
 
 <div class="row grid table-bordered">
     <div class="col-sm-2" style="background: burlywood">Title</div>
     <div class="col-sm-2" style="background: burlywood">Description</div>
     <div class="col-sm-2" style="background: burlywood">Contributing Authors</div>
-    <div class="col-sm-2" style="background: burlywood">contact Author</div>
+    <div class="col-sm-2" style="background: burlywood">Contact Author</div>
     <div class="col-sm-1" style="background: burlywood">Revision</div>
     <div class="col-sm-1" style="background: burlywood">Action</div>
 </div>
 
 <div class="row grid table-bordered" ng-repeat="paper in papers">
-    <div class="col-sm-2">{{paper.PaperTitle}}</div>
+    <div class="col-sm-2"><a style="cursor: pointer" target="_self" ng-click="downloadDocument(paper)" download="{{paper.PaperTitle}}">{{paper.PaperTitle}}</a></div>
     <div class="col-sm-2">{{paper.PaperDescription}}</div>
     <div class="col-sm-2">{{paper.PaperContibutingAuthors}}</div>
     <div class="col-sm-2">{{paper.UserFirstName}} {{paper.UserLastName}}</div>
     <div class="col-sm-1">{{paper.CurrentVersion}}</div>
     <div class="col-sm-1">
-      <a id="assign" ng-show="!paper.SubmissionReviewer1Id" ng-click="assign(paper)">Assign</a>
+      <a id="assign" style="cursor: pointer" ng-show="!paper.SubmissionReviewer1Id" ng-click="assign(paper)">Assign</a>
       <div ng-show = "paper.SubmissionReviewer1Id">
-        <a id="view" ng-click="view(paper)">View</a>|
-        <a id="rate" href="/rate-paper-pcc/{{paper.SubmissionId}}">Rate</a>
+        <a style="cursor: pointer" id="view" ng-click="view(paper)">View</a>|
+        <a style="cursor: pointer" id="rate" href="/rate-paper-pcc/{{paper.SubmissionId}}">Rate</a>
       </div>
     </div>
 </div>
 
-<div id="assignPcmDialogBox" title="Assign Reviewers">
+<div id="assignPcmDialogBox" title="Assign Reviewers" >
   <form name="assignPcmForm" ng-submit="submitAssignment()">
     <p>Please select reviewers for the paper</p>
     <div ng-if="valmsg" class="errorMsg">
