@@ -58,6 +58,11 @@
                         templateUrl: 'templates/view-papers.html',
                         controller: 'viewPapersController'
                     })
+                    .state('inside.view-final-paper', {
+                        url: '/view-final-paper/:paperID',
+                        templateUrl: 'templates/view-final-paper.html',
+                        controller: 'viewFinalPaperController'
+                    })
                     .state('inside.view-paper-versions', {
                         url: '/view-paper-versions/:paperID',
                         templateUrl: 'templates/view-paper-versions.html',

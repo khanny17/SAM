@@ -26,6 +26,7 @@
         'SetPaperPreferencePCMControllerModule',
         'ManageDeadlinesControllerModule',
         'NotificationsControllerModule',
-        'SetReviewTemplateControllerModule'
+        'SetReviewTemplateControllerModule',
+        'ViewFinalPaperControllerModule'
     ]);
 }());

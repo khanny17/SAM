@@ -1,0 +1,123 @@
+<p ng-if="loadingPapers">Loading Papers...</p>
+<form  class="form-horizontal">
+    <fieldset>
+        <legend>Final Paper Rating</legend>
+        <!-- START: Paper Details -->
+        <span>Paper Status: {{paper[0].PaperStatus}}</span>
+
+        <div class="form-group">
+            <label class="col-md-4 control-label">Contact Author:</label>
+            <div class="col-md-4">
+                <label class="control-label">{{paper[0].UserFirstName}}&nbsp;{{paper[0].UserLastName}}&nbsp;({{paper[0].UserEmail}})</label>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="col-md-4 control-label">Paper Title:</label>
+            <div class="col-md-4">
+                <label class="control-label">{{paper[0].PaperTitle}}</label>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="col-md-4 control-label">Paper Description:</label>
+            <div class="col-md-4">
+                <label class="control-label">{{paper[0].PaperDescription}}</label>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="col-md-4 control-label">Contributing Authors:</label>
+            <div class="col-md-4">
+                <label class="control-label">{{paper[0].PaperContibutingAuthors}}</label>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="col-md-4 control-label">Paper:</label>
+            <div class="col-md-4">
+                <a style="cursor: pointer" target="_self" ng-click="downloadDocument(paper[0].PaperId)" download="{{paper[0].PaperTitle}}">Click to download</a>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="col-md-4 control-label">Version:</label>
+            <div class="col-md-1">
+                <label class="col-md-1 control-label">{{paper[0].CurrentVersion}}</label>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="col-md-4 control-label">This Version Created On:</label>
+            <div class="col-md-5">
+                <label class="col-md-4 control-label">{{paper[0].VersionCreatedAt | date:'medium'}}</label>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="col-md-4 control-label">Original Version Created On:</label>
+            <div class="col-md-5">
+                <label class="col-md-4 control-label">{{paper[0].OriginalCreatedAt | date:'medium'}}</label>
+            </div>
+        </div>
+        <!-- END: Paper Details -->
+        <!-- START: Review Details -->
+        <div ng-repeat="review in reviews">
+            <hr>
+            <div class="form-group">
+                <label class="col-md-4 control-label">Reviewer: </label>
+                <div class="col-md-5">
+                    <label class="col-md-4 control-label">{{review.ReviewerFirstName}}&nbsp;{{review.ReviewerLastName}}&nbsp;({{review.ReviewerEmail}})</label>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="col-md-4 control-label">Review Comments: </label>
+                <div class="col-md-5">
+                    <label class="col-md-4 control-label">{{review.ReviewComment}}</label>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="col-md-4 control-label">Review Rating: </label>
+                <div class="col-md-5">
+                    <label class="col-md-4 control-label">{{review.ReviewRating}}</label>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="col-md-4 control-label">Review Document:</label>
+                <div class="col-md-4">
+                    <a style="cursor: pointer" target="_self" ng-click="downloadReviewDocument(review.ReviewId)" download="{{paper[0].PaperTitle}}--Review">Click to download</a>
+                </div>
+            </div>
+        </div>
+        <!-- END: Review Details -->
+<hr><hr>
+        <div class="form-group">
+            <label class="col-md-4 control-label">Final Review Rating:</label>
+            <div class="col-md-5">
+                <label class="col-md-4 control-label">{{reviewRating}}</label>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="col-md-4 control-label">Final Review Comments:</label>
+            <div class="col-md-5">
+                <label class="col-md-4 control-label">{{reviewComment}}</label>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="col-md-4 control-label"></label>
+            <div class="col-md-8">
+                <button class="btn btn-default" type="button" onclick="window.location.href='/'">Home
+                </button>
+            </div>
+        </div>
+
+
+    </fieldset>
+</form>
+
+<br/>

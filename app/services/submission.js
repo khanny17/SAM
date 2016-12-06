@@ -12,6 +12,7 @@
 
     var init = function (router) {
         router.get('/get-submission', endpoints.getSubmission);
+        router.get('/get-submission-by-paperId', endpoints.getSubmissionByPaperID);
         router.post('/update-submission-with-reviewers',endpoints.updateSubmissionWithReviewers);
         router.get('/get-my-assigned-submission-reviews', endpoints.getMyAssignedSubmissionReviews);
         router.get('/get-all-submissions', endpoints.getAllSubmissions);
@@ -19,6 +20,55 @@
     };
 
     var endpoints = {
+
+        getSubmissionByPaperID: function (request, response) {
+            var paperId = request.query.paperId;
+
+            /*
+             SELECT
+             paperversions.paperId             AS "PaperId",
+             paperversions.ID                  AS "PaperVersionId",
+             submissions.ID                    AS "SubmissionId",
+             papers.CurrentVersion             AS "CurrentVersion",
+             papers.Status                     AS "PaperStatus",
+             papers.userID                     AS "PaperAuthorId",
+             papers.createdAt                  AS "OriginalCreatedAt",
+             paperversions.Title               AS "PaperTitle",
+             paperversions.ContributingAuthors AS "PaperContibutingAuthors",
+             paperversions.Description         AS "PaperDescription",
+             paperversions.Document            AS "PaperDocument",
+             paperversions.PaperFormat         AS "PaperFormat",
+             paperversions.createdAt           AS "VersionCreatedAt",
+             submissions.PCCID                 AS "SubmissionPCCId",
+             submissions.Reviewer1ID           AS "SubmissionReviewer1Id",
+             submissions.Reviewer2ID           AS "SubmissionReviewer2Id",
+             submissions.Reviewer3ID           AS "SubmissionReviewer3Id",
+             submissions.createdAt             AS "SubmissionCreatedAt",
+             users.FirstName                   AS "UserFirstName",
+             users.LastName                    AS "UserLastName",
+             users.Email                       AS "UserEmail"
+             FROM paperVersions
+             INNER JOIN papers
+             ON (paperVersions.paperId = papers.id AND paperVersions.Version = papers.CurrentVersion)
+             INNER JOIN submissions ON (papers.id = submissions.paperId)
+             INNER JOIN users ON (users.ID = papers.userID)
+             WHERE submissions.ID = "111" <--- Note: change this
+             */
+
+            var sql_query ='SELECT paperversions.paperId AS "PaperId", paperversions.ID AS "PaperVersionId", submissions.ID AS "SubmissionId", papers.CurrentVersion AS "CurrentVersion", papers.Status AS "PaperStatus", papers.userID AS "PaperAuthorId", papers.createdAt AS "OriginalCreatedAt", paperversions.Title AS "PaperTitle", paperversions.ContributingAuthors AS "PaperContibutingAuthors", paperversions.Description AS "PaperDescription", paperversions.Document AS "PaperDocument", paperversions.PaperFormat AS "PaperFormat", paperversions.createdAt AS "VersionCreatedAt", submissions.PCCID AS "SubmissionPCCId", submissions.Reviewer1ID AS "SubmissionReviewer1Id", submissions.Reviewer2ID AS "SubmissionReviewer2Id", submissions.Reviewer3ID AS "SubmissionReviewer3Id", submissions.createdAt AS "SubmissionCreatedAt", users.FirstName AS "UserFirstName",users.LastName AS "UserLastName", users.Email AS "UserEmail"' +
+                'FROM paperVersions ' +
+                'INNER JOIN papers ON (paperVersions.paperId = papers.id AND paperVersions.Version = papers.CurrentVersion) ' +
+                'INNER JOIN submissions ON (papers.id = submissions.paperId) ' +
+                'INNER JOIN users ON (users.ID = papers.userID)' +
+                'WHERE submissions.paperId = "'+paperId+'"';
+
+            return  db.sequelize.query(sql_query)
+                .then(function (data) {
+                    console.log(data);
+                    response.send({success: true, submission: data});
+                });
+        },
+
 
         getSubmissionById: function (request, response) {
             var submissionId = request.query.submissionId;
